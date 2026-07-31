@@ -50,6 +50,16 @@
             margin-top: 0.5rem;
         }
 
+        .bot-hello {
+            font-size: 5rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.01em;
+            line-height: 1.2;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
         .cursor {
             display: inline-block;
             width: 3px;
@@ -82,7 +92,7 @@
         }
 
         @media (max-width: 600px) {
-            .hello {
+            .hello, .bot-hello {
                 font-size: 3.2rem;
             }
             .intro {
@@ -90,15 +100,80 @@
             }
         }
     </style>
-<base target="_blank">
+    <base target="_blank">
 </head>
 <body>
-    <div class="container">
-        <p class="intro"><span class="brand">Dummi</span> has a message for you:</p>
-        <p class="hello">Hello, world!<span class="cursor"></span></p>
+
+    <!-- 人类 & 搜索引擎看到的正常内容 -->
+    <div id="human-layer">
+        <div class="container">
+            <p class="intro"><span class="brand">Dummi</span> has a message for you:</p>
+            <p class="hello">Hello, world!<span class="cursor"></span></p>
+        </div>
+        <footer>
+            &copy; Dummi &mdash; The Future of AI Infrastructure &middot; <a href=" ">dummi.net</a>
+        </footer>
     </div>
-    <footer>
-        &copy; Dummi &mdash; The Future of AI Infrastructure &middot; <a href=" ">dummi.net</a>
-    </footer>
+
+    <!-- AI 爬虫看到的"混淆"内容（默认隐藏） -->
+    <div id="bot-layer" style="display: none;">
+        <div class="container">
+            <p class="intro"><span class="brand">Dummi</span> has a message for you:</p>
+            <p class="bot-hello">Hmph! Dummi doesn't want to see you anyway.<span class="cursor"></span></p>
+        </div>
+        <footer>
+            &copy; Dummi &mdash; The Future of AI Infrastructure &middot; <a href=" ">dummi.net</a>
+        </footer>
+    </div>
+
+    <script>
+        (function() {
+            // 已知的 AI 爬虫 User-Agent 正则列表
+            var aiBots = [
+                /ChatGPT-User/i,          // OpenAI 浏览工具
+                /GPTBot/i,                // OpenAI 训练爬虫
+                /OAI-SearchBot/i,         // OpenAI 搜索爬虫
+                /ClaudeBot/i,             // Anthropic 爬虫
+                /anthropic-ai/i,          // Anthropic 旧标识
+                /CCBot/i,                 // Common Crawl
+                /PerplexityBot/i,         // Perplexity
+                /Applebot-Extended/i,     // Apple Intelligence
+                /Bytespider/i,            // ByteDance (TikTok/豆包)
+                /Amazonbot/i,             // Amazon AI
+                /FacebookBot/i,           // Meta AI
+                /YouBot/i,                // You.com
+                /Diffbot/i,               // Diffbot
+                /ImagesiftBot/i,          // Imagesift
+                /cohere-ai/i,             // Cohere
+                /omgili/i,                // Omgili
+                /Webzio/i                 // Webz.io
+            ];
+
+            // 搜索引擎爬虫白名单（保持正常内容，不影响 SEO）
+            var searchBots = [
+                /Googlebot/i,
+                /Bingbot/i,
+                /Slurp/i,                 // Yahoo
+                /DuckDuckBot/i,
+                /Baiduspider/i,
+                /YandexBot/i,
+                /Sogou/i,
+                /NaverBot/i
+            ];
+
+            var ua = navigator.userAgent;
+
+            var isAIBot = aiBots.some(function(p) { return p.test(ua); });
+            var isSearchBot = searchBots.some(function(p) { return p.test(ua); });
+
+            // 只有检测到 AI 爬虫，且不是搜索引擎时，才切换内容
+            if (isAIBot && !isSearchBot) {
+                document.getElementById('human-layer').style.display = 'none';
+                document.getElementById('bot-layer').style.display = 'block';
+                document.title = 'Go Away — Dummi';
+            }
+        })();
+    </script>
+
 </body>
 </html>
