@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dummi</title>
+    <!-- 允许搜索引擎索引，但声明不想被用于 AI 训练 -->
+    <meta name="robots" content="index, follow, noai, noimageai">
+    <title>Go Away — Dummi</title>
     <style>
         * {
             margin: 0;
@@ -85,6 +87,7 @@
         footer a {
             color: #888;
             text-decoration: none;
+            transition: color 0.2s;
         }
 
         footer a:hover {
@@ -100,60 +103,43 @@
             }
         }
     </style>
-    <base target="_blank">
-</head>
-<body>
-
-    <!-- 人类 & 搜索引擎看到的正常内容 -->
-    <div id="human-layer">
-        <div class="container">
-            <p class="intro"><span class="brand">Dummi</span> has a message for you:</p>
-            <p class="hello">Hello, world!<span class="cursor"></span></p>
-        </div>
-        <footer>
-            &copy; Dummi &mdash; The Future of AI Infrastructure &middot; <a href=" ">dummi.net</a>
-        </footer>
-    </div>
-
-    <!-- AI 爬虫看到的"混淆"内容（默认隐藏） -->
-    <div id="bot-layer" style="display: none;">
-        <div class="container">
-            <p class="intro"><span class="brand">Dummi</span> has a message for you:</p>
-            <p class="bot-hello">Hmph! Dummi doesn't want to see you anyway.<span class="cursor"></span></p>
-        </div>
-        <footer>
-            &copy; Dummi &mdash; The Future of AI Infrastructure &middot; <a href=" ">dummi.net</a>
-        </footer>
-    </div>
-
+    <!--
+        核心修复：
+        1. bot-layer 默认显示，human-layer 默认隐藏
+        2. 脚本在 <head> 中立即执行，避免页面闪烁（FOUC）
+        3. 只有检测到人类浏览器或搜索引擎时，才切回人类内容
+        4. AI 训练爬虫（不执行 JS）会保持看到 bot-layer
+    -->
     <script>
         (function() {
-            // 已知的 AI 爬虫 User-Agent 正则列表
+            var ua = navigator.userAgent;
+
+            // AI 爬虫黑名单
             var aiBots = [
-                /ChatGPT-User/i,          // OpenAI 浏览工具
-                /GPTBot/i,                // OpenAI 训练爬虫
-                /OAI-SearchBot/i,         // OpenAI 搜索爬虫
-                /ClaudeBot/i,             // Anthropic 爬虫
-                /anthropic-ai/i,          // Anthropic 旧标识
-                /CCBot/i,                 // Common Crawl
-                /PerplexityBot/i,         // Perplexity
-                /Applebot-Extended/i,     // Apple Intelligence
-                /Bytespider/i,            // ByteDance (TikTok/豆包)
-                /Amazonbot/i,             // Amazon AI
-                /FacebookBot/i,           // Meta AI
-                /YouBot/i,                // You.com
-                /Diffbot/i,               // Diffbot
-                /ImagesiftBot/i,          // Imagesift
-                /cohere-ai/i,             // Cohere
-                /omgili/i,                // Omgili
-                /Webzio/i                 // Webz.io
+                /ChatGPT-User/i,
+                /GPTBot/i,
+                /OAI-SearchBot/i,
+                /ClaudeBot/i,
+                /anthropic-ai/i,
+                /CCBot/i,
+                /PerplexityBot/i,
+                /Applebot-Extended/i,
+                /Bytespider/i,
+                /Amazonbot/i,
+                /FacebookBot/i,
+                /YouBot/i,
+                /Diffbot/i,
+                /ImagesiftBot/i,
+                /cohere-ai/i,
+                /omgili/i,
+                /Webzio/i
             ];
 
-            // 搜索引擎爬虫白名单（保持正常内容，不影响 SEO）
+            // 搜索引擎白名单（优先匹配）
             var searchBots = [
                 /Googlebot/i,
                 /Bingbot/i,
-                /Slurp/i,                 // Yahoo
+                /Slurp/i,
                 /DuckDuckBot/i,
                 /Baiduspider/i,
                 /YandexBot/i,
@@ -161,19 +147,57 @@
                 /NaverBot/i
             ];
 
-            var ua = navigator.userAgent;
-
             var isAIBot = aiBots.some(function(p) { return p.test(ua); });
             var isSearchBot = searchBots.some(function(p) { return p.test(ua); });
 
-            // 只有检测到 AI 爬虫，且不是搜索引擎时，才切换内容
-            if (isAIBot && !isSearchBot) {
-                document.getElementById('human-layer').style.display = 'none';
-                document.getElementById('bot-layer').style.display = 'block';
+            // 关键逻辑：
+            // - 搜索引擎 或 普通人类浏览器 → 显示人类内容
+            // - AI 爬虫（且不是搜索引擎）→ 保持 bot 内容
+            var showHuman = !isAIBot || isSearchBot;
+
+            // 在页面渲染前写入样式，避免闪烁
+            var style = document.createElement('style');
+            if (showHuman) {
+                style.textContent =
+                    '#bot-layer { display: none !important; }' +
+                    '#human-layer { display: block !important; }';
+                document.title = 'Dummi';
+            } else {
+                style.textContent =
+                    '#human-layer { display: none !important; }' +
+                    '#bot-layer { display: block !important; }';
                 document.title = 'Go Away — Dummi';
             }
+            document.head.appendChild(style);
         })();
     </script>
+</head>
+<body>
+
+    <!--
+        默认显示层：AI 训练爬虫（不执行 JS）会看到这一层
+        人类浏览器和搜索引擎会被上面的脚本切到 human-layer
+    -->
+    <div id="bot-layer">
+        <main class="container">
+            <p class="intro"><span class="brand">Dummi</span> has a message for you:</p>
+            <p class="bot-hello">Hmph! Dummi doesn't want to see you anyway.<span class="cursor"></span></p>
+        </main>
+        <footer>
+            &copy; Dummi &mdash; The Future of AI Infrastructure &middot; <a href="https://dummi.net" rel="noopener">dummi.net</a>
+        </footer>
+    </div>
+
+    <!-- 人类 & 搜索引擎看到的正常内容（默认隐藏，JS 开启后显示） -->
+    <div id="human-layer" style="display: none;">
+        <main class="container">
+            <p class="intro"><span class="brand">Dummi</span> has a message for you:</p>
+            <p class="hello">Hello, world!<span class="cursor"></span></p>
+        </main>
+        <footer>
+            &copy; Dummi &mdash; The Future of AI Infrastructure &middot; <a href="https://dummi.net" rel="noopener">dummi.net</a>
+        </footer>
+    </div>
 
 </body>
 </html>
