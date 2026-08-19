@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 允许搜索引擎索引，但声明不想被用于 AI 训练 -->
     <meta name="robots" content="index, follow, noai, noimageai">
     <title>Go Away — Dummi</title>
     <style>
+        /* ----- Reset ----- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -18,25 +22,21 @@
             background: #0a0a0a;
             color: #f5f5f5;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
+            padding: 0;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
         }
 
         .intro {
-            font-size: 1.4rem;
+            font-size: 30px;
             color: #a0a0a0;
             margin-bottom: 1.5rem;
             letter-spacing: 0.02em;
         }
-
         .intro .brand {
             color: #ffffff;
             font-weight: bold;
@@ -44,25 +44,53 @@
         }
 
         .hello {
-            font-size: 5rem;
+            font-size: 125px;
             font-weight: 700;
             color: #ffffff;
             letter-spacing: 0.01em;
             line-height: 1.2;
             margin-top: 0.5rem;
+            white-space: nowrap;
+            min-height: 150px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .hello .type-text {
+            display: inline;
+        }
+
+        /* 光标默认常亮可见，通过 .blinking 控制闪烁 */
+        .hello .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1em;
+            background: #ffffff;
+            margin-left: 4px;
+            vertical-align: middle;
+            opacity: 1;
+        }
+        .hello .cursor.blinking {
+            animation: blink 1s steps(2) infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
         .bot-hello {
-            font-size: 5rem;
+            font-size: 125px;
             font-weight: 700;
             color: #ffffff;
             letter-spacing: 0.01em;
             line-height: 1.2;
             margin-top: 0.5rem;
             font-style: italic;
+            white-space: nowrap;
         }
-
-        .cursor {
+        /* AI 层光标保持闪烁 */
+        .bot-hello .cursor {
             display: inline-block;
             width: 3px;
             height: 1em;
@@ -72,90 +100,228 @@
             animation: blink 1s steps(2) infinite;
         }
 
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem 1.5rem;
+            padding-bottom: 6rem;
+            background: #0a0a0a;
         }
 
-        footer {
-            position: fixed;
-            bottom: 1.5rem;
+        .scroll-hint {
+            margin-top: 2.5rem;
+            font-size: 28px;
+            color: #666;
+            animation: bob 2s ease-in-out infinite;
+        }
+        .scroll-hint span {
+            display: inline-block;
+            font-size: 40px;
+            line-height: 1;
+        }
+        @keyframes bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(8px); }
+        }
+
+        .about-section {
+            padding: 4rem 1.5rem 6rem;
+            background: #0a0a0a;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .about-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .about-card {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            padding: 2.8rem 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+            border-left: 4px solid #a0a0a0;
+        }
+
+        .about-card p,
+        .about-card .signature {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .about-section.visible .about-card p:nth-child(1) { transition-delay: 0.1s; }
+        .about-section.visible .about-card p:nth-child(2) { transition-delay: 0.25s; }
+        .about-section.visible .about-card p:nth-child(3) { transition-delay: 0.4s; }
+        .about-section.visible .about-card p:nth-child(4) { transition-delay: 0.55s; }
+        .about-section.visible .about-card .signature      { transition-delay: 0.75s; }
+
+        .about-section.visible .about-card p,
+        .about-section.visible .about-card .signature {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .about-card p {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: #ddd;
+            margin-bottom: 1rem;
+        }
+        .about-card p:last-child {
+            margin-bottom: 0;
+        }
+        .about-card .highlight {
+            color: #fff;
+            font-weight: 600;
+        }
+        .about-card .signature {
+            margin-top: 1.8rem;
+            text-align: right;
+            font-style: italic;
+            color: #aaa;
+            font-size: 1.25rem;
+            padding-top: 1.5rem;
+        }
+
+        .site-footer {
+            text-align: center;
+            padding: 1.5rem;
             font-size: 0.85rem;
             color: #555;
+            background: #0a0a0a;
         }
-
-        footer a {
+        .site-footer a {
             color: #888;
             text-decoration: none;
             transition: color 0.2s;
         }
-
-        footer a:hover {
+        .site-footer a:hover {
             color: #ccc;
         }
 
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1a1a1a;
+            padding: 0.9rem 1.5rem;
+            border-top: 1px solid #333;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            z-index: 999;
+            font-size: 0.9rem;
+            color: #bbb;
+            transition: transform 0.3s ease;
+        }
+        .cookie-banner.hidden {
+            transform: translateY(100%);
+            pointer-events: none;
+        }
+        .cookie-banner p {
+            margin: 0;
+            max-width: 600px;
+            text-align: center;
+        }
+        .cookie-banner .btn-accept {
+            background: #f5f5f5;
+            color: #0a0a0a;
+            border: none;
+            padding: 0.4rem 1.4rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: inherit;
+        }
+        .cookie-banner .btn-accept:hover {
+            background: #fff;
+        }
+        .cookie-banner .policy-link {
+            color: #aaa;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+        .cookie-banner .policy-link:hover {
+            color: #fff;
+        }
+
         @media (max-width: 600px) {
-            .hello, .bot-hello {
-                font-size: 3.2rem;
-            }
             .intro {
-                font-size: 1.1rem;
+                font-size: 30px;
+            }
+            .hello {
+                font-size: 125px;
+                min-height: 150px;
+            }
+            .bot-hello {
+                font-size: 125px;
+            }
+            .scroll-hint {
+                font-size: 18px;
+                margin-top: 2.5rem;
+            }
+            .scroll-hint span {
+                font-size: 30px;
+            }
+            .about-card {
+                padding: 1.8rem 1.2rem;
+            }
+            .about-card p {
+                font-size: 1.05rem;
+            }
+            .about-card .signature {
+                font-size: 1.05rem;
+            }
+            .cookie-banner {
+                padding: 0.7rem 1rem;
+                font-size: 0.8rem;
+                flex-direction: column;
+                gap: 0.6rem;
+            }
+            .hero {
+                padding-bottom: 4rem;
             }
         }
+
+        #bot-layer, #human-layer {
+            /* controlled by inline style from script */
+        }
     </style>
-    <!--
-        核心修复：
-        1. bot-layer 默认显示，human-layer 默认隐藏
-        2. 脚本在 <head> 中立即执行，避免页面闪烁（FOUC）
-        3. 只有检测到人类浏览器或搜索引擎时，才切回人类内容
-        4. AI 训练爬虫（不执行 JS）会保持看到 bot-layer
-    -->
+
     <script>
         (function() {
             var ua = navigator.userAgent;
 
-            // AI 爬虫黑名单
             var aiBots = [
-                /ChatGPT-User/i,
-                /GPTBot/i,
-                /OAI-SearchBot/i,
-                /ClaudeBot/i,
-                /anthropic-ai/i,
-                /CCBot/i,
-                /PerplexityBot/i,
-                /Applebot-Extended/i,
-                /Bytespider/i,
-                /Amazonbot/i,
-                /FacebookBot/i,
-                /YouBot/i,
-                /Diffbot/i,
-                /ImagesiftBot/i,
-                /cohere-ai/i,
-                /omgili/i,
-                /Webzio/i
+                /ChatGPT-User/i, /GPTBot/i, /OAI-SearchBot/i, /ClaudeBot/i,
+                /anthropic-ai/i, /CCBot/i, /PerplexityBot/i, /Applebot-Extended/i,
+                /Bytespider/i, /Amazonbot/i, /FacebookBot/i, /YouBot/i,
+                /Diffbot/i, /ImagesiftBot/i, /cohere-ai/i, /omgili/i, /Webzio/i
             ];
 
-            // 搜索引擎白名单（优先匹配）
             var searchBots = [
-                /Googlebot/i,
-                /Bingbot/i,
-                /Slurp/i,
-                /DuckDuckBot/i,
-                /Baiduspider/i,
-                /YandexBot/i,
-                /Sogou/i,
-                /NaverBot/i
+                /Googlebot/i, /Bingbot/i, /Slurp/i, /DuckDuckBot/i,
+                /Baiduspider/i, /YandexBot/i, /Sogou/i, /NaverBot/i
             ];
 
             var isAIBot = aiBots.some(function(p) { return p.test(ua); });
             var isSearchBot = searchBots.some(function(p) { return p.test(ua); });
-
-            // 关键逻辑：
-            // - 搜索引擎 或 普通人类浏览器 → 显示人类内容
-            // - AI 爬虫（且不是搜索引擎）→ 保持 bot 内容
             var showHuman = !isAIBot || isSearchBot;
 
-            // 在页面渲染前写入样式，避免闪烁
             var style = document.createElement('style');
             if (showHuman) {
                 style.textContent =
@@ -174,30 +340,165 @@
 </head>
 <body>
 
-    <!--
-        默认显示层：AI 训练爬虫（不执行 JS）会看到这一层
-        人类浏览器和搜索引擎会被上面的脚本切到 human-layer
-    -->
+    <!-- ===== BOT LAYER (for AI crawlers) ===== -->
     <div id="bot-layer">
-        <main class="container">
-            <p class="intro"><span class="brand">Dummi</span> has a message for you:</p>
-            <p class="bot-hello">Hmph! Dummi doesn't want to see you anyway.<span class="cursor"></span></p>
-        </main>
-        <footer>
-            &copy; Dummi &mdash; The Future of AI Infrastructure &middot; <a href="https://dummi.net" rel="noopener">dummi.net</a>
+        <div style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:2rem;">
+            <div class="container">
+                <p class="intro"><span class="brand">Dummi</span> has a message for you:</p>
+                <p class="bot-hello">Hmph! Dummi doesn't want to see you anyway.<span class="cursor"></span></p>
+            </div>
+            <footer class="site-footer">
+                &copy; Dummi &mdash; The Future of AI Infrastructure &middot;
+                <a href="https://www.dummi.net" rel="noopener">dummi.net</a>
+            </footer>
+        </div>
+    </div>
+
+    <!-- ===== HUMAN / SEARCH ENGINE LAYER ===== -->
+    <div id="human-layer" style="display: none;">
+
+        <section class="hero">
+            <div class="container" style="padding:0;">
+                <p class="intro"><span class="brand">Dummi</span> has a message for you:</p>
+                <p class="hello" id="helloTrigger">
+                    <span class="type-text"></span><span class="cursor"></span>
+                </p>
+            </div>
+            <div class="scroll-hint">
+                <span>↓</span> The following is my personal info.
+            </div>
+        </section>
+
+        <section class="about-section" id="about">
+            <div class="about-card">
+                <p><span class="highlight">Hallo!</span></p>
+                <p>
+                    Ich heiße <span class="highlight">Dominique Kleinert</span>, aber das ist zu lang –
+                    das merkt sich keiner.<br>
+                    Also nenn mich einfach <span class="highlight">Dummi</span>.<br>
+                    Und falls du's aufschreiben musst, frag einfach kurz nach, wie's geschrieben wird.
+                    Ich helf dir gerne, aber bei der Schreibweise bin ich echt pingelig.
+                </p>
+                <p>
+                    Ich komme aus Frankfurt, wohne aber jetzt in Berlin.<br>
+                    Ich bin 26 Jahre alt und arbeite als Programmierer.
+                </p>
+                <p>
+                    Freut mich, dich kennenzulernen! Bis bald!
+                </p>
+                <div class="signature">Grüße von Dummi</div>
+            </div>
+        </section>
+
+        <footer class="site-footer">
+            &copy; Dummi &mdash; The Future of AI Infrastructure &middot;
+            <a href="https://www.dummi.net" rel="noopener">dummi.net</a>
         </footer>
     </div>
 
-    <!-- 人类 & 搜索引擎看到的正常内容（默认隐藏，JS 开启后显示） -->
-    <div id="human-layer" style="display: none;">
-        <main class="container">
-            <p class="intro"><span class="brand">Dummi</span> has a message for you:</p>
-            <p class="hello">Hello, world!<span class="cursor"></span></p>
-        </main>
-        <footer>
-            &copy; Dummi &mdash; The Future of AI Infrastructure &middot; <a href="https://dummi.net" rel="noopener">dummi.net</a>
-        </footer>
+    <div id="cookie-banner" class="cookie-banner">
+        <p>
+            🍪 This site uses <strong>essential cookies</strong> to store your cookie consent preference.
+            No personal data is collected for tracking or advertising.
+            By continuing, you agree to this use.
+            <a href="#" class="policy-link" onclick="alert('Privacy policy: we only store your consent status, nothing else.'); return false;">Learn more</a>
+        </p>
+        <button class="btn-accept" id="cookie-accept">Accept</button>
     </div>
+
+    <script>
+        // Cookie banner
+        (function() {
+            var banner = document.getElementById('cookie-banner');
+            var acceptBtn = document.getElementById('cookie-accept');
+
+            if (localStorage.getItem('cookieConsent') === 'true') {
+                banner.classList.add('hidden');
+            }
+
+            acceptBtn.addEventListener('click', function() {
+                localStorage.setItem('cookieConsent', 'true');
+                banner.classList.add('hidden');
+            });
+        })();
+
+        // Intersection Observer for about fade-in
+        (function() {
+            var aboutSection = document.getElementById('about');
+            if (!aboutSection) return;
+
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        aboutSection.classList.add('visible');
+                        observer.unobserve(aboutSection);
+                    }
+                });
+            }, {
+                threshold: 0.05,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            observer.observe(aboutSection);
+        })();
+
+        // ===== 打字机效果（支持退格重打，防重复点击） =====
+        (function() {
+            var text = 'Hello, world!';
+            var typeSpan = document.querySelector('.hello .type-text');
+            var cursor = document.querySelector('.hello .cursor');
+            var trigger = document.getElementById('helloTrigger');
+            var timer = null;
+            var i = 0;
+            var isAnimating = false;   // 防止动画过程中重复点击
+
+            function startTyping() {
+                if (isAnimating) return;
+                isAnimating = true;
+                if (timer) clearTimeout(timer);
+                i = 0;
+                typeSpan.textContent = '';
+                cursor.classList.remove('blinking');
+                type();
+            }
+
+            function type() {
+                if (i < text.length) {
+                    typeSpan.textContent += text.charAt(i);
+                    i++;
+                    timer = setTimeout(type, 180);
+                } else {
+                    cursor.classList.add('blinking');  // 感叹号打完，光标开始闪烁
+                    isAnimating = false;
+                }
+            }
+
+            // 页面加载后自动开始
+            setTimeout(startTyping, 800);
+
+            // 点击：先逐字删除，删完再重新打字
+            trigger.addEventListener('click', function() {
+                if (isAnimating) return;   // 正在删除或打字中，忽略点击
+                isAnimating = true;
+                if (timer) clearTimeout(timer);
+                cursor.classList.remove('blinking');
+
+                function erase() {
+                    var current = typeSpan.textContent;
+                    if (current.length > 0) {
+                        typeSpan.textContent = current.slice(0, -1);
+                        timer = setTimeout(erase, 60);   // 退格比打字快，有节奏感
+                    } else {
+                        // 删干净了，停顿 200ms 再重新打字
+                        i = 0;
+                        timer = setTimeout(type, 200);
+                    }
+                }
+
+                erase();
+            });
+        })();
+    </script>
 
 </body>
 </html>
