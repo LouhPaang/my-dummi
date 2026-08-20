@@ -21,62 +21,63 @@
     <style>
         /* ===== 颜色变量系统 ===== */
         :root {
-            --bg: #0a0a0a;
-            --card-bg: #111;
-            --cookie-bg: #1a1a1a;
+            --bg: #d5d5d5;
+            --card-bg: #e0e0e0;
+            --cookie-bg: #c8c8c8;
             --text-white: #ffffff;
-            --text-body: #f5f5f5;
-            --text-muted: #a0a0a0;
-            --text-dim: #666;
-            --text-faint: #555;
-            --text-card: #ddd;
-            --text-signature: #aaa;
-            --text-footer-link: #888;
-            --text-footer: #555;
-            --text-cookie: #bbb;
-            --border: #333;
-            --border-cookie: #333;
-            --shadow: rgba(0,0,0,0.6);
-            --shadow-hover: rgba(0,0,0,0.8);
-            --card-glow: rgba(255,255,255,0.05);
-            --card-glow-hover: rgba(255,255,255,0.08);
-            --card-outline: rgba(255,255,255,0.03);
-            --card-outline-hover: rgba(255,255,255,0.06);
-            --gradient-line: rgba(255,255,255,0.15);
-            --quote-mark: rgba(255,255,255,0.04);
-            --link-hover: #ccc;
-            --scroll-hint-hover: #aaa;
-            --btn-hover: #fff;
+            --text-body: #000000;
+            --text-muted: #000000;
+            --text-dim: #000000;
+            --text-faint: #000000;
+            --text-card: #000000;
+            --text-signature: #000000;
+            --text-footer-link: #000000;
+            --text-footer: #000000;
+            --text-cookie: #000000;
+            --border: #999999;
+            --border-cookie: #999999;
+            --shadow: rgba(0,0,0,0.15);
+            --shadow-hover: rgba(0,0,0,0.25);
+            --card-glow: rgba(0,0,0,0.03);
+            --card-glow-hover: rgba(0,0,0,0.05);
+            --card-outline: rgba(0,0,0,0.08);
+            --card-outline-hover: rgba(0,0,0,0.12);
+            --gradient-line: rgba(0,0,0,0.15);
+            --quote-mark: rgba(0,0,0,0.04);
+            --link-hover: #333333;
+            --scroll-hint-hover: #333333;
+            --btn-hover: #ffffff;
             --stroke: #000000;
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg: #d5d5d5;
-                --card-bg: #e0e0e0;
-                --cookie-bg: #c8c8c8;
-                --text-body: #000000;
-                --text-muted: #000000;
-                --text-dim: #000000;
-                --text-faint: #000000;
-                --text-card: #000000;
-                --text-signature: #000000;
-                --text-footer-link: #000000;
-                --text-footer: #000000;
-                --text-cookie: #000000;
-                --border: #999999;
-                --border-cookie: #999999;
-                --shadow: rgba(0,0,0,0.15);
-                --shadow-hover: rgba(0,0,0,0.25);
-                --card-glow: rgba(0,0,0,0.03);
-                --card-glow-hover: rgba(0,0,0,0.05);
-                --card-outline: rgba(0,0,0,0.08);
-                --card-outline-hover: rgba(0,0,0,0.12);
-                --gradient-line: rgba(0,0,0,0.15);
-                --quote-mark: rgba(0,0,0,0.04);
-                --link-hover: #333333;
-                --scroll-hint-hover: #333333;
-                --btn-hover: #ffffff;
+                --bg: #0a0a0a;
+                --card-bg: #111;
+                --cookie-bg: #1a1a1a;
+                --text-white: #ffffff;
+                --text-body: #f5f5f5;
+                --text-muted: #a0a0a0;
+                --text-dim: #666;
+                --text-faint: #555;
+                --text-card: #ddd;
+                --text-signature: #aaa;
+                --text-footer-link: #888;
+                --text-footer: #555;
+                --text-cookie: #bbb;
+                --border: #333;
+                --border-cookie: #333;
+                --shadow: rgba(0,0,0,0.6);
+                --shadow-hover: rgba(0,0,0,0.8);
+                --card-glow: rgba(255,255,255,0.05);
+                --card-glow-hover: rgba(255,255,255,0.08);
+                --card-outline: rgba(255,255,255,0.03);
+                --card-outline-hover: rgba(255,255,255,0.06);
+                --gradient-line: rgba(255,255,255,0.15);
+                --quote-mark: rgba(255,255,255,0.04);
+                --link-hover: #ccc;
+                --scroll-hint-hover: #aaa;
+                --btn-hover: #fff;
                 --stroke: #000000;
             }
         }
@@ -346,6 +347,11 @@
         .about-card .highlight {
             color: var(--text-white);
             font-weight: 600;
+            text-shadow:
+                -1px -1px 0 var(--stroke),
+                 1px -1px 0 var(--stroke),
+                -1px  1px 0 var(--stroke),
+                 1px  1px 0 var(--stroke);
         }
 
         .about-card .signature {
@@ -658,7 +664,7 @@
             });
         })();
 
-        /* ===== 打字机效果（支持多阶段序列） ===== */
+        /* ===== 打字机效果（全声明式） ===== */
         (function() {
             var typeSpan = document.querySelector('.hello .type-text');
             var cursor = document.querySelector('.hello .cursor');
@@ -667,31 +673,36 @@
 
             var timer = null;
             var isAnimating = false;
-            var clickCount = 0;   // 0=页面加载, 1=第一次点击, 2=第二次点击, 3=第三次点击, ...
+            var clickCount = 0;
 
-            // 初始台词
-            var initialText = 'Na, alles gut?';
-
-            // 复杂序列（第一次点击）
-            var complexSequence = [
-                { action: 'type', text: 'Hmm.' },
-                { action: 'pause', duration: 1170 },
-                { action: 'erase' },
-                { action: 'pause', duration: 585 },
-                { action: 'type', text: 'Du guckst aber trübe.' }
+            // 所有序列均为纯数据
+            var initialSequence = [
+                { action: 'pause', duration: 800 },
+                { action: 'type',  text: 'Na, alles gut?' }
             ];
 
-            // 新序列（第二次点击）
+            var complexSequence = [
+                { action: 'type',  text: 'Hmm.' },
+                { action: 'pause', duration: 1170 },
+                { action: 'erase' },
+                { action: 'pause', duration: 585 },
+                { action: 'type',  text: 'Du guckst aber trübe.' }
+            ];
+
             var newSequence = [
-                { action: 'type', text: 'Moment!' },
+                { action: 'type',  text: 'Moment!' },
                 { action: 'pause', duration: 1170 },
                 { action: 'erase' },
                 { action: 'pause', duration: 585 },
-                { action: 'type', text: 'Lass mich mal überlegen.' },
+                { action: 'type',  text: 'Lass mich mal überlegen.' },
                 { action: 'pause', duration: 1170 },
                 { action: 'erase' },
                 { action: 'pause', duration: 585 },
-                { action: 'type', text: 'Wollen wir \'ne Runde drehen?' }
+                { action: 'type',  text: "Wollen wir 'ne Runde drehen?" }
+            ];
+
+            var fallbackSequence = [
+                { action: 'type', text: '......' }
             ];
 
             function clearTimer() {
@@ -699,55 +710,7 @@
                 timer = null;
             }
 
-            // 打字函数，支持回调链
-            function typeText(text, onDone) {
-                var i = 0;
-                cursor.classList.remove('blinking');
-
-                function step() {
-                    if (i < text.length) {
-                        typeSpan.textContent += text.charAt(i);
-                        i++;
-                        timer = setTimeout(step, 180);
-                    } else {
-                        if (typeof onDone === 'function') onDone();
-                        else {
-                            cursor.classList.add('blinking');
-                            isAnimating = false;
-                        }
-                    }
-                }
-
-                step();
-            }
-
-            // 退格函数，支持回调链
-            function eraseText(onDone) {
-                cursor.classList.remove('blinking');
-
-                function step() {
-                    var current = typeSpan.textContent;
-                    if (current.length > 0) {
-                        typeSpan.textContent = current.slice(0, -1);
-                        timer = setTimeout(step, 120);
-                    } else {
-                        if (typeof onDone === 'function') onDone();
-                        else {
-                            cursor.classList.add('blinking');
-                            isAnimating = false;
-                        }
-                    }
-                }
-
-                step();
-            }
-
-            // 停顿函数
-            function pause(duration, onDone) {
-                timer = setTimeout(onDone, duration);
-            }
-
-            // 顺序执行动画序列
+            // 统一解释器：声明数据 -> 执行
             function runSequence(sequence, index) {
                 if (index >= sequence.length) {
                     cursor.classList.add('blinking');
@@ -758,17 +721,34 @@
                 var step = sequence[index];
 
                 if (step.action === 'type') {
-                    typeText(step.text, function() {
+                    var i = 0;
+                    cursor.classList.remove('blinking');
+                    (function stepType() {
+                        if (i < step.text.length) {
+                            typeSpan.textContent += step.text.charAt(i);
+                            i++;
+                            timer = setTimeout(stepType, 180);
+                        } else {
+                            runSequence(sequence, index + 1);
+                        }
+                    })();
+                }
+                else if (step.action === 'erase') {
+                    cursor.classList.remove('blinking');
+                    (function stepErase() {
+                        var current = typeSpan.textContent;
+                        if (current.length > 0) {
+                            typeSpan.textContent = current.slice(0, -1);
+                            timer = setTimeout(stepErase, 120);
+                        } else {
+                            runSequence(sequence, index + 1);
+                        }
+                    })();
+                }
+                else if (step.action === 'pause') {
+                    timer = setTimeout(function() {
                         runSequence(sequence, index + 1);
-                    });
-                } else if (step.action === 'erase') {
-                    eraseText(function() {
-                        runSequence(sequence, index + 1);
-                    });
-                } else if (step.action === 'pause') {
-                    pause(step.duration, function() {
-                        runSequence(sequence, index + 1);
-                    });
+                    }, step.duration);
                 }
             }
 
@@ -778,31 +758,28 @@
                 clickCount++;
                 clearTimer();
                 cursor.classList.remove('blinking');
+                isAnimating = true;
 
-                // 先删除当前所有文字
-                eraseText(function() {
-                    // 根据点击次数决定后续动作
-                    if (clickCount === 1) {
-                        // 第一次点击：执行复杂序列
-                        pause(1170, function() {
-                            runSequence(complexSequence, 0);
-                        });
-                    } else if (clickCount === 2) {
-                        // 第二次点击：执行新序列
-                        pause(585, function() {
-                            runSequence(newSequence, 0);
-                        });
-                    } else {
-                        // 第三次及以后：显示 '......'
-                        typeText('......');
-                    }
-                });
+                // 先清空当前文字，再接后续序列
+                var sequence = [{ action: 'erase' }];
+
+                if (clickCount === 1) {
+                    sequence.push({ action: 'pause', duration: 1170 });
+                    sequence = sequence.concat(complexSequence);
+                } else if (clickCount === 2) {
+                    sequence.push({ action: 'pause', duration: 585 });
+                    sequence = sequence.concat(newSequence);
+                } else {
+                    sequence.push({ action: 'pause', duration: 585 });
+                    sequence = sequence.concat(fallbackSequence);
+                }
+
+                runSequence(sequence, 0);
             }
 
             // 页面加载后自动开始
-            setTimeout(function() {
-                typeText(initialText);
-            }, 800);
+            isAnimating = true;
+            runSequence(initialSequence, 0);
 
             trigger.addEventListener('click', handleClick);
         })();
