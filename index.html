@@ -498,23 +498,33 @@
 
     <!-- UA 分流脚本 -->
     <script>
-        (function() {
-            var ua = navigator.userAgent;
-            var aiBots = [
+        (() => {
+            const ua = navigator.userAgent;
+
+            const aiBots = [
                 /ChatGPT-User/i, /GPTBot/i, /OAI-SearchBot/i, /ClaudeBot/i,
                 /anthropic-ai/i, /CCBot/i, /PerplexityBot/i, /Applebot-Extended/i,
                 /Bytespider/i, /Amazonbot/i, /FacebookBot/i, /YouBot/i,
                 /Diffbot/i, /ImagesiftBot/i, /cohere-ai/i, /omgili/i, /Webzio/i
             ];
-            var searchBots = [
+
+            const searchBots = [
                 /Googlebot/i, /Bingbot/i, /Slurp/i, /DuckDuckBot/i,
                 /Baiduspider/i, /YandexBot/i, /Sogou/i, /NaverBot/i
             ];
-            var isAIBot = aiBots.some(function(p) { return p.test(ua); });
-            var isSearchBot = searchBots.some(function(p) { return p.test(ua); });
-            var showHuman = !isAIBot || isSearchBot;
 
-            var style = document.createElement('style');
+            const legacyBrowsers = [
+                /MSIE/i, /Trident/i,           // IE
+                /360SE/i, /360EE/i,             // 360 安全/极速
+                /QihooBrowser/i                 // 360 其他标识
+            ];
+
+            const isAIBot = aiBots.some(p => p.test(ua));
+            const isSearchBot = searchBots.some(p => p.test(ua));
+            const isLegacy = legacyBrowsers.some(p => p.test(ua));
+            const showHuman = (!isAIBot || isSearchBot) && !isLegacy;
+
+            const style = document.createElement('style');
             if (showHuman) {
                 style.textContent = '#bot-layer{display:none!important}#human-layer{display:block!important}';
                 document.title = 'Dummi';
@@ -664,24 +674,26 @@
             });
         })();
 
-        /* ===== 打字机效果（全声明式） ===== */
-        (function() {
-            var typeSpan = document.querySelector('.hello .type-text');
-            var cursor = document.querySelector('.hello .cursor');
-            var trigger = document.getElementById('helloTrigger');
+        /* ===== 打字机效果（async/await） ===== */
+        (() => {
+            const typeSpan = document.querySelector('.hello .type-text');
+            const cursor = document.querySelector('.hello .cursor');
+            const trigger = document.getElementById('helloTrigger');
             if (!typeSpan || !cursor || !trigger) return;
 
-            var timer = null;
-            var isAnimating = false;
-            var clickCount = 0;
+            let isAnimating = false;
+            let clickCount = 0;
+
+            const TYPE_SPEED = 180;
+            const ERASE_SPEED = 120;
 
             // 所有序列均为纯数据
-            var initialSequence = [
+            const initialSequence = [
                 { action: 'pause', duration: 800 },
                 { action: 'type',  text: 'Na, alles gut?' }
             ];
 
-            var complexSequence = [
+            const complexSequence = [
                 { action: 'type',  text: 'Hmm.' },
                 { action: 'pause', duration: 1170 },
                 { action: 'erase' },
@@ -689,7 +701,7 @@
                 { action: 'type',  text: 'Du guckst aber trübe.' }
             ];
 
-            var newSequence = [
+            const newSequence = [
                 { action: 'type',  text: 'Moment!' },
                 { action: 'pause', duration: 1170 },
                 { action: 'erase' },
@@ -701,85 +713,71 @@
                 { action: 'type',  text: "Wollen wir 'ne Runde drehen?" }
             ];
 
-            var fallbackSequence = [
+            const fallbackSequence = [
                 { action: 'type', text: '......' }
             ];
 
-            function clearTimer() {
-                if (timer) clearTimeout(timer);
-                timer = null;
-            }
+            const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-            // 统一解释器：声明数据 -> 执行
-            function runSequence(sequence, index) {
-                if (index >= sequence.length) {
-                    cursor.classList.add('blinking');
-                    isAnimating = false;
-                    return;
-                }
-
-                var step = sequence[index];
-
-                if (step.action === 'type') {
-                    var i = 0;
-                    cursor.classList.remove('blinking');
-                    (function stepType() {
-                        if (i < step.text.length) {
-                            typeSpan.textContent += step.text.charAt(i);
-                            i++;
-                            timer = setTimeout(stepType, 180);
-                        } else {
-                            runSequence(sequence, index + 1);
-                        }
-                    })();
-                }
-                else if (step.action === 'erase') {
-                    cursor.classList.remove('blinking');
-                    (function stepErase() {
-                        var current = typeSpan.textContent;
-                        if (current.length > 0) {
-                            typeSpan.textContent = current.slice(0, -1);
-                            timer = setTimeout(stepErase, 120);
-                        } else {
-                            runSequence(sequence, index + 1);
-                        }
-                    })();
-                }
-                else if (step.action === 'pause') {
-                    timer = setTimeout(function() {
-                        runSequence(sequence, index + 1);
-                    }, step.duration);
+            async function type(text) {
+                cursor.classList.remove('blinking');
+                for (const ch of text) {
+                    typeSpan.textContent += ch;
+                    await sleep(TYPE_SPEED);
                 }
             }
 
-            // 点击处理
-            function handleClick() {
+            async function erase() {
+                cursor.classList.remove('blinking');
+                while (typeSpan.textContent.length > 0) {
+                    typeSpan.textContent = typeSpan.textContent.slice(0, -1);
+                    await sleep(ERASE_SPEED);
+                }
+            }
+
+            async function pause(ms) {
+                await sleep(ms);
+            }
+
+            async function runSequence(sequence) {
+                for (const step of sequence) {
+                    if (step.action === 'type') await type(step.text);
+                    else if (step.action === 'erase') await erase();
+                    else if (step.action === 'pause') await pause(step.duration);
+                }
+            }
+
+            async function handleClick() {
                 if (isAnimating) return;
                 clickCount++;
-                clearTimer();
                 cursor.classList.remove('blinking');
                 isAnimating = true;
 
-                // 先清空当前文字，再接后续序列
-                var sequence = [{ action: 'erase' }];
+                const sequence = [{ action: 'erase' }];
 
                 if (clickCount === 1) {
                     sequence.push({ action: 'pause', duration: 1170 });
-                    sequence = sequence.concat(complexSequence);
+                    sequence.push(...complexSequence);
                 } else if (clickCount === 2) {
                     sequence.push({ action: 'pause', duration: 585 });
-                    sequence = sequence.concat(newSequence);
+                    sequence.push(...newSequence);
                 } else {
                     sequence.push({ action: 'pause', duration: 585 });
-                    sequence = sequence.concat(fallbackSequence);
+                    sequence.push(...fallbackSequence);
                 }
 
-                runSequence(sequence, 0);
+                await runSequence(sequence);
+                cursor.classList.add('blinking');
+                isAnimating = false;
             }
 
             // 页面加载后自动开始
-            isAnimating = true;
-            runSequence(initialSequence, 0);
+            (async () => {
+                isAnimating = true;
+                await runSequence(initialSequence);
+                cursor.classList.add('blinking');
+                isAnimating = false;
+            })();
 
             trigger.addEventListener('click', handleClick);
         })();
