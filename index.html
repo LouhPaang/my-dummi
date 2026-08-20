@@ -501,6 +501,39 @@
         (() => {
             const ua = navigator.userAgent;
 
+            // === 辅助：检测360浏览器（UA + MIME类型双保险）===
+            function is360Browser() {
+                // 1. UA字符串检测（部分旧版本/特定域名下有效）
+                if (/360SE|360EE|QIHU|QihooBrowser|QHBrowser/i.test(ua)) {
+                    return true;
+                }
+                // 2. MIME类型检测（新版本360在非自家域名下的主要识别手段）
+                try {
+                    const mimes = navigator.mimeTypes;
+                    for (let i = 0; i < mimes.length; i++) {
+                        const type = mimes[i].type;
+                        if (type === 'application/vnd.chromium.remoting-viewer' ||
+                            type === 'application/360softmgrplugin' ||
+                            type === 'application/mozilla-npqihooquicklogin' ||
+                            type === 'application/npjlgplayer3-chrome-jlp' ||
+                            type === 'application/hwepass2001.installepass2001' ||
+                            type === 'application/cenroll.cenroll.version.1') {
+                            return true;
+                        }
+                    }
+                } catch (e) {}
+                // 3. 特征对象检测（360极速版会抹掉chrome.webstore）
+                try {
+                    if (window.chrome && !window.chrome.webstore && !ua.includes('Edg')) {
+                        // 进一步确认：360的showModalDialog在部分版本保留
+                        if ('showModalDialog' in window) {
+                            return true;
+                        }
+                    }
+                } catch (e) {}
+                return false;
+            }
+
             const aiBots = [
                 /ChatGPT-User/i, /GPTBot/i, /OAI-SearchBot/i, /ClaudeBot/i,
                 /anthropic-ai/i, /CCBot/i, /PerplexityBot/i, /Applebot-Extended/i,
@@ -513,16 +546,11 @@
                 /Baiduspider/i, /YandexBot/i, /Sogou/i, /NaverBot/i
             ];
 
-            const legacyBrowsers = [
-                /MSIE/i, /Trident/i,           // IE
-                /360SE/i, /360EE/i,             // 360 安全/极速
-                /QihooBrowser/i                 // 360 其他标识
-            ];
-
             const isAIBot = aiBots.some(p => p.test(ua));
             const isSearchBot = searchBots.some(p => p.test(ua));
-            const isLegacy = legacyBrowsers.some(p => p.test(ua));
-            const showHuman = (!isAIBot || isSearchBot) && !isLegacy;
+            const is360 = is360Browser();
+            const isIE = /MSIE/i.test(ua) || /Trident/i.test(ua);
+            const showHuman = (!isAIBot || isSearchBot) && !is360 && !isIE;
 
             const style = document.createElement('style');
             if (showHuman) {
