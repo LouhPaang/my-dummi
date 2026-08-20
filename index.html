@@ -1,12 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index, follow, noai, noimageai">
+    <meta name="description" content="Dummi — Dominique Kleinert, Programmierer aus Berlin. Hallo, Welt!">
+    <meta property="og:title" content="Dummi">
+    <meta property="og:description" content="Programmierer aus Berlin. Hallo, Welt!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.dummi.net">
+    <meta name="twitter:card" content="summary">
+    <link rel="canonical" href="https://www.dummi.net">
     <title>Go Away — Dummi</title>
+
+    <!-- Google Fonts: Alegreya -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
     <style>
-        /* ----- Reset ----- */
+        /* ===== 颜色变量系统 ===== */
+        :root {
+            --bg: #0a0a0a;
+            --card-bg: #111;
+            --cookie-bg: #1a1a1a;
+            --text-white: #ffffff;
+            --text-body: #f5f5f5;
+            --text-muted: #a0a0a0;
+            --text-dim: #666;
+            --text-faint: #555;
+            --text-card: #ddd;
+            --text-signature: #aaa;
+            --text-footer-link: #888;
+            --text-footer: #555;
+            --text-cookie: #bbb;
+            --border: #333;
+            --border-cookie: #333;
+            --shadow: rgba(0,0,0,0.6);
+            --shadow-hover: rgba(0,0,0,0.8);
+            --card-glow: rgba(255,255,255,0.05);
+            --card-glow-hover: rgba(255,255,255,0.08);
+            --card-outline: rgba(255,255,255,0.03);
+            --card-outline-hover: rgba(255,255,255,0.06);
+            --gradient-line: rgba(255,255,255,0.15);
+            --quote-mark: rgba(255,255,255,0.04);
+            --link-hover: #ccc;
+            --scroll-hint-hover: #aaa;
+            --btn-hover: #fff;
+            --stroke: #000000;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #d5d5d5;
+                --card-bg: #e0e0e0;
+                --cookie-bg: #c8c8c8;
+                --text-body: #000000;
+                --text-muted: #000000;
+                --text-dim: #000000;
+                --text-faint: #000000;
+                --text-card: #000000;
+                --text-signature: #000000;
+                --text-footer-link: #000000;
+                --text-footer: #000000;
+                --text-cookie: #000000;
+                --border: #999999;
+                --border-cookie: #999999;
+                --shadow: rgba(0,0,0,0.15);
+                --shadow-hover: rgba(0,0,0,0.25);
+                --card-glow: rgba(0,0,0,0.03);
+                --card-glow-hover: rgba(0,0,0,0.05);
+                --card-outline: rgba(0,0,0,0.08);
+                --card-outline-hover: rgba(0,0,0,0.12);
+                --gradient-line: rgba(0,0,0,0.15);
+                --quote-mark: rgba(0,0,0,0.04);
+                --link-hover: #333333;
+                --scroll-hint-hover: #333333;
+                --btn-hover: #ffffff;
+                --stroke: #000000;
+            }
+        }
+
+        /* ===== Reset ===== */
         * {
             margin: 0;
             padding: 0;
@@ -18,11 +93,31 @@
         }
 
         body {
-            font-family: "Times New Roman", Times, serif;
-            background: #0a0a0a;
-            color: #f5f5f5;
+            font-family: "Alegreya", Georgia, "Times New Roman", serif;
+            background: var(--bg);
+            color: var(--text-body);
             min-height: 100vh;
-            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .cursor, .scroll-hint {
+                animation: none !important;
+            }
+            .about-section {
+                transition: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            .about-card p,
+            .about-card .signature {
+                transition: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
         }
 
         .container {
@@ -31,45 +126,61 @@
             padding: 2rem 1.5rem;
         }
 
+        /* ===== Hero ===== */
         .intro {
-            font-size: 30px;
-            color: #a0a0a0;
+            font-size: 2.8125rem;
+            color: var(--text-muted);
             margin-bottom: 1.5rem;
             letter-spacing: 0.02em;
+            transition: color 0.4s ease;
         }
+
         .intro .brand {
-            color: #ffffff;
-            font-weight: bold;
-            font-style: italic;
+            color: var(--text-white);
+            font-weight: 700;
+            text-shadow:
+                -1px -1px 0 var(--stroke),
+                 1px -1px 0 var(--stroke),
+                -1px  1px 0 var(--stroke),
+                 1px  1px 0 var(--stroke);
         }
 
         .hello {
-            font-size: 125px;
+            font-size: 11.71875rem;
             font-weight: 700;
-            color: #ffffff;
+            color: var(--text-white);
             letter-spacing: 0.01em;
             line-height: 1.2;
             margin-top: 0.5rem;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            display: table;
             white-space: nowrap;
             min-height: 150px;
             cursor: pointer;
             user-select: none;
+            text-shadow:
+                -1px -1px 0 var(--stroke),
+                 1px -1px 0 var(--stroke),
+                -1px  1px 0 var(--stroke),
+                 1px  1px 0 var(--stroke);
         }
 
         .hello .type-text {
             display: inline;
         }
 
-        /* 光标默认常亮可见，通过 .blinking 控制闪烁 */
         .hello .cursor {
             display: inline-block;
             width: 3px;
             height: 1em;
-            background: #ffffff;
+            background: var(--text-white);
             margin-left: 4px;
             vertical-align: middle;
             opacity: 1;
         }
+
         .hello .cursor.blinking {
             animation: blink 1s steps(2) infinite;
         }
@@ -80,21 +191,21 @@
         }
 
         .bot-hello {
-            font-size: 125px;
+            font-size: 11.71875rem;
             font-weight: 700;
-            color: #ffffff;
+            color: var(--text-white);
             letter-spacing: 0.01em;
             line-height: 1.2;
             margin-top: 0.5rem;
             font-style: italic;
             white-space: nowrap;
         }
-        /* AI 层光标保持闪烁 */
+
         .bot-hello .cursor {
             display: inline-block;
             width: 3px;
             height: 1em;
-            background: #ffffff;
+            background: var(--text-white);
             margin-left: 4px;
             vertical-align: middle;
             animation: blink 1s steps(2) infinite;
@@ -107,34 +218,45 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 2rem 1.5rem;
-            padding-bottom: 6rem;
-            background: #0a0a0a;
+            padding: 2rem 1.5rem 6rem;
+            background: var(--bg);
+            transition: background 0.4s ease;
         }
 
         .scroll-hint {
             margin-top: 2.5rem;
-            font-size: 28px;
-            color: #666;
+            font-size: 2.625rem;
+            color: var(--text-dim);
             animation: bob 2s ease-in-out infinite;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.3s ease;
         }
+
+        .scroll-hint:hover {
+            color: var(--scroll-hint-hover);
+        }
+
         .scroll-hint span {
             display: inline-block;
-            font-size: 40px;
+            font-size: 3.75rem;
             line-height: 1;
         }
+
         @keyframes bob {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(8px); }
         }
 
+        /* ===== About 区域 ===== */
         .about-section {
-            padding: 4rem 1.5rem 6rem;
-            background: #0a0a0a;
+            padding: 0.5rem 1.5rem 6rem;
+            background: var(--bg);
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            transition: opacity 0.8s ease, transform 0.8s ease, background 0.4s ease;
         }
+
         .about-section.visible {
             opacity: 1;
             transform: translateY(0);
@@ -143,13 +265,52 @@
         .about-card {
             max-width: 700px;
             margin: 0 auto;
-            background: #1a1a1a;
+            background: var(--card-bg);
             padding: 2.8rem 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.6);
-            border-left: 4px solid #a0a0a0;
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+            box-shadow:
+                0 8px 30px var(--shadow),
+                inset 0 1px 0 var(--card-glow),
+                0 0 0 1px var(--card-outline);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                        box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                        background 0.4s ease;
         }
 
+        .about-card:hover {
+            transform: translateY(-4px);
+            box-shadow:
+                0 20px 50px var(--shadow-hover),
+                inset 0 1px 0 var(--card-glow-hover),
+                0 0 0 1px var(--card-outline-hover);
+        }
+
+        .about-card::before {
+            content: '\201E';
+            position: absolute;
+            top: 2.2rem;
+            left: 2.5rem;
+            font-size: 5rem;
+            line-height: 1;
+            color: var(--quote-mark);
+            pointer-events: none;
+            transition: color 0.4s ease;
+        }
+
+        .about-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gradient-line), transparent);
+            transition: background 0.4s ease;
+        }
+
+        /* 内部 stagger 动画 */
         .about-card p,
         .about-card .signature {
             opacity: 0;
@@ -173,49 +334,59 @@
         .about-card p {
             font-size: 1.25rem;
             line-height: 1.8;
-            color: #ddd;
+            color: var(--text-card);
             margin-bottom: 1rem;
+            transition: color 0.4s ease;
         }
+
         .about-card p:last-child {
             margin-bottom: 0;
         }
+
         .about-card .highlight {
-            color: #fff;
+            color: var(--text-white);
             font-weight: 600;
         }
+
         .about-card .signature {
             margin-top: 1.8rem;
             text-align: right;
             font-style: italic;
-            color: #aaa;
+            color: var(--text-signature);
             font-size: 1.25rem;
             padding-top: 1.5rem;
+            transition: color 0.4s ease;
         }
 
+        /* ===== Footer ===== */
         .site-footer {
             text-align: center;
             padding: 1.5rem;
             font-size: 0.85rem;
-            color: #555;
-            background: #0a0a0a;
-        }
-        .site-footer a {
-            color: #888;
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        .site-footer a:hover {
-            color: #ccc;
+            color: var(--text-footer);
+            background: var(--bg);
+            transition: color 0.4s ease, background 0.4s ease;
         }
 
+        .site-footer a {
+            color: var(--text-footer-link);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .site-footer a:hover {
+            color: var(--link-hover);
+        }
+
+        /* ===== Cookie Banner ===== */
         .cookie-banner {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: #1a1a1a;
+            background: var(--cookie-bg);
             padding: 0.9rem 1.5rem;
-            border-top: 1px solid #333;
+            border-top: 1px solid var(--border-cookie);
             display: flex;
             flex-wrap: wrap;
             align-items: center;
@@ -223,18 +394,21 @@
             gap: 1rem;
             z-index: 999;
             font-size: 0.9rem;
-            color: #bbb;
-            transition: transform 0.3s ease;
+            color: var(--text-cookie);
+            transition: transform 0.3s ease, background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
         }
+
         .cookie-banner.hidden {
             transform: translateY(100%);
             pointer-events: none;
         }
+
         .cookie-banner p {
             margin: 0;
             max-width: 600px;
             text-align: center;
         }
+
         .cookie-banner .btn-accept {
             background: #f5f5f5;
             color: #0a0a0a;
@@ -244,103 +418,112 @@
             font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.2s ease;
             font-family: inherit;
         }
+
         .cookie-banner .btn-accept:hover {
-            background: #fff;
-        }
-        .cookie-banner .policy-link {
-            color: #aaa;
-            text-decoration: underline;
-            text-underline-offset: 2px;
-        }
-        .cookie-banner .policy-link:hover {
-            color: #fff;
+            background: var(--btn-hover);
         }
 
+        .cookie-banner .policy-link {
+            color: var(--text-footer-link);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .cookie-banner .policy-link:hover {
+            color: var(--link-hover);
+        }
+
+        /* ===== 移动端 ===== */
         @media (max-width: 600px) {
             .intro {
-                font-size: 30px;
+                font-size: 1.375rem;
             }
-            .hello {
-                font-size: 125px;
-                min-height: 150px;
+
+            .hello, .bot-hello {
+                font-size: 3rem;
+                min-height: 58px;
             }
-            .bot-hello {
-                font-size: 125px;
-            }
+
             .scroll-hint {
-                font-size: 18px;
+                font-size: 1.125rem;
                 margin-top: 2.5rem;
             }
+
             .scroll-hint span {
-                font-size: 30px;
+                font-size: 1.875rem;
             }
+
             .about-card {
                 padding: 1.8rem 1.2rem;
             }
-            .about-card p {
-                font-size: 1.05rem;
-            }
+
+            .about-card p,
             .about-card .signature {
                 font-size: 1.05rem;
             }
+
+            .about-card::before {
+                font-size: 3.5rem;
+                top: 1.5rem;
+                left: 1.5rem;
+            }
+
             .cookie-banner {
                 padding: 0.7rem 1rem;
                 font-size: 0.8rem;
                 flex-direction: column;
                 gap: 0.6rem;
             }
+
             .hero {
                 padding-bottom: 4rem;
             }
-        }
 
-        #bot-layer, #human-layer {
-            /* controlled by inline style from script */
+            .about-section {
+                padding-top: 0.25rem;
+            }
         }
     </style>
 
+    <!-- UA 分流脚本 -->
     <script>
         (function() {
             var ua = navigator.userAgent;
-
             var aiBots = [
                 /ChatGPT-User/i, /GPTBot/i, /OAI-SearchBot/i, /ClaudeBot/i,
                 /anthropic-ai/i, /CCBot/i, /PerplexityBot/i, /Applebot-Extended/i,
                 /Bytespider/i, /Amazonbot/i, /FacebookBot/i, /YouBot/i,
                 /Diffbot/i, /ImagesiftBot/i, /cohere-ai/i, /omgili/i, /Webzio/i
             ];
-
             var searchBots = [
                 /Googlebot/i, /Bingbot/i, /Slurp/i, /DuckDuckBot/i,
                 /Baiduspider/i, /YandexBot/i, /Sogou/i, /NaverBot/i
             ];
-
             var isAIBot = aiBots.some(function(p) { return p.test(ua); });
             var isSearchBot = searchBots.some(function(p) { return p.test(ua); });
             var showHuman = !isAIBot || isSearchBot;
 
             var style = document.createElement('style');
             if (showHuman) {
-                style.textContent =
-                    '#bot-layer { display: none !important; }' +
-                    '#human-layer { display: block !important; }';
+                style.textContent = '#bot-layer{display:none!important}#human-layer{display:block!important}';
                 document.title = 'Dummi';
             } else {
-                style.textContent =
-                    '#human-layer { display: none !important; }' +
-                    '#bot-layer { display: block !important; }';
+                style.textContent = '#human-layer{display:none!important}#bot-layer{display:block!important}';
                 document.title = 'Go Away — Dummi';
             }
             document.head.appendChild(style);
         })();
     </script>
+<base target="_blank">
 </head>
 <body>
 
-    <!-- ===== BOT LAYER (for AI crawlers) ===== -->
+    <!-- ===== BOT LAYER ===== -->
     <div id="bot-layer">
         <div style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:2rem;">
             <div class="container">
@@ -354,26 +537,26 @@
         </div>
     </div>
 
-    <!-- ===== HUMAN / SEARCH ENGINE LAYER ===== -->
-    <div id="human-layer" style="display: none;">
+    <!-- ===== HUMAN LAYER ===== -->
+    <div id="human-layer" style="display:none">
 
         <section class="hero">
-            <div class="container" style="padding:0;">
-                <p class="intro"><span class="brand">Dummi</span> has a message for you:</p>
+            <div class="container" style="padding:0">
+                <p class="intro"><span class="brand">Dummi</span> will dir mal kurz was sagen:</p>
                 <p class="hello" id="helloTrigger">
                     <span class="type-text"></span><span class="cursor"></span>
                 </p>
             </div>
-            <div class="scroll-hint">
-                <span>↓</span> The following is my personal info.
+            <div class="scroll-hint" id="scrollHint">
+                <span>&darr;</span> Komm, lass uns spielen!
             </div>
         </section>
 
         <section class="about-section" id="about">
             <div class="about-card">
-                <p><span class="highlight">Hallo!</span></p>
+                <p><span class="highlight">Hallo, du!</span></p>
                 <p>
-                    Ich heiße <span class="highlight">Dominique Kleinert</span>, aber das ist zu lang –
+                    Ich hei&szlig;e <span class="highlight">Dominique Kleinert</span>, aber das ist zu lang &ndash;
                     das merkt sich keiner.<br>
                     Also nenn mich einfach <span class="highlight">Dummi</span>.<br>
                     Und falls du's aufschreiben musst, frag einfach kurz nach, wie's geschrieben wird.
@@ -386,7 +569,7 @@
                 <p>
                     Freut mich, dich kennenzulernen! Bis bald!
                 </p>
-                <div class="signature">Grüße von Dummi</div>
+                <div class="signature">Gr&uuml;&szlig;e von Dummi</div>
             </div>
         </section>
 
@@ -396,33 +579,53 @@
         </footer>
     </div>
 
+    <!-- ===== COOKIE BANNER ===== -->
     <div id="cookie-banner" class="cookie-banner">
         <p>
-            🍪 This site uses <strong>essential cookies</strong> to store your cookie consent preference.
+            &#127850; This site uses <strong>essential cookies</strong> to store your cookie consent preference.
             No personal data is collected for tracking or advertising.
             By continuing, you agree to this use.
-            <a href="#" class="policy-link" onclick="alert('Privacy policy: we only store your consent status, nothing else.'); return false;">Learn more</a>
+            <a href="#" class="policy-link" id="policyLink">Learn more</a>
         </p>
         <button class="btn-accept" id="cookie-accept">Accept</button>
     </div>
 
     <script>
-        // Cookie banner
+        /* ===== Cookie Banner（防御性：localStorage 被禁时静默降级） ===== */
         (function() {
             var banner = document.getElementById('cookie-banner');
             var acceptBtn = document.getElementById('cookie-accept');
+            var policyLink = document.getElementById('policyLink');
+            if (!banner || !acceptBtn) return;
 
-            if (localStorage.getItem('cookieConsent') === 'true') {
+            var alreadyConsented = false;
+            try {
+                alreadyConsented = localStorage.getItem('cookieConsent') === 'true';
+            } catch (e) {
+                banner.classList.add('hidden');
+                return;
+            }
+
+            if (alreadyConsented) {
                 banner.classList.add('hidden');
             }
 
             acceptBtn.addEventListener('click', function() {
-                localStorage.setItem('cookieConsent', 'true');
+                try {
+                    localStorage.setItem('cookieConsent', 'true');
+                } catch (e) {}
                 banner.classList.add('hidden');
             });
+
+            if (policyLink) {
+                policyLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Privacy policy: we only store your consent status, nothing else.');
+                });
+            }
         })();
 
-        // Intersection Observer for about fade-in
+        /* ===== About 区域：向下滚动弹出，向上滚动回收 ===== */
         (function() {
             var aboutSection = document.getElementById('about');
             if (!aboutSection) return;
@@ -431,7 +634,8 @@
                 entries.forEach(function(entry) {
                     if (entry.isIntersecting) {
                         aboutSection.classList.add('visible');
-                        observer.unobserve(aboutSection);
+                    } else if (entry.boundingClientRect.top > 0) {
+                        aboutSection.classList.remove('visible');
                     }
                 });
             }, {
@@ -442,61 +646,165 @@
             observer.observe(aboutSection);
         })();
 
-        // ===== 打字机效果（支持退格重打，防重复点击） =====
+        /* ===== 点击 scroll-hint 弹出卡片并滚动 ===== */
         (function() {
-            var text = 'Hello, world!';
+            var scrollHint = document.getElementById('scrollHint');
+            var aboutSection = document.getElementById('about');
+            if (!scrollHint || !aboutSection) return;
+
+            scrollHint.addEventListener('click', function() {
+                aboutSection.classList.add('visible');
+                aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        })();
+
+        /* ===== 打字机效果（支持多阶段序列） ===== */
+        (function() {
             var typeSpan = document.querySelector('.hello .type-text');
             var cursor = document.querySelector('.hello .cursor');
             var trigger = document.getElementById('helloTrigger');
+            if (!typeSpan || !cursor || !trigger) return;
+
             var timer = null;
-            var i = 0;
-            var isAnimating = false;   // 防止动画过程中重复点击
+            var isAnimating = false;
+            var clickCount = 0;   // 0=页面加载, 1=第一次点击, 2=第二次点击, 3=第三次点击, ...
 
-            function startTyping() {
-                if (isAnimating) return;
-                isAnimating = true;
+            // 初始台词
+            var initialText = 'Na, alles gut?';
+
+            // 复杂序列（第一次点击）
+            var complexSequence = [
+                { action: 'type', text: 'Hmm.' },
+                { action: 'pause', duration: 1170 },
+                { action: 'erase' },
+                { action: 'pause', duration: 585 },
+                { action: 'type', text: 'Du guckst aber trübe.' }
+            ];
+
+            // 新序列（第二次点击）
+            var newSequence = [
+                { action: 'type', text: 'Moment!' },
+                { action: 'pause', duration: 1170 },
+                { action: 'erase' },
+                { action: 'pause', duration: 585 },
+                { action: 'type', text: 'Lass mich mal überlegen.' },
+                { action: 'pause', duration: 1170 },
+                { action: 'erase' },
+                { action: 'pause', duration: 585 },
+                { action: 'type', text: 'Wollen wir \'ne Runde drehen?' }
+            ];
+
+            function clearTimer() {
                 if (timer) clearTimeout(timer);
-                i = 0;
-                typeSpan.textContent = '';
-                cursor.classList.remove('blinking');
-                type();
+                timer = null;
             }
 
-            function type() {
-                if (i < text.length) {
-                    typeSpan.textContent += text.charAt(i);
-                    i++;
-                    timer = setTimeout(type, 180);
-                } else {
-                    cursor.classList.add('blinking');  // 感叹号打完，光标开始闪烁
-                    isAnimating = false;
-                }
-            }
-
-            // 页面加载后自动开始
-            setTimeout(startTyping, 800);
-
-            // 点击：先逐字删除，删完再重新打字
-            trigger.addEventListener('click', function() {
-                if (isAnimating) return;   // 正在删除或打字中，忽略点击
-                isAnimating = true;
-                if (timer) clearTimeout(timer);
+            // 打字函数，支持回调链
+            function typeText(text, onDone) {
+                var i = 0;
                 cursor.classList.remove('blinking');
 
-                function erase() {
-                    var current = typeSpan.textContent;
-                    if (current.length > 0) {
-                        typeSpan.textContent = current.slice(0, -1);
-                        timer = setTimeout(erase, 60);   // 退格比打字快，有节奏感
+                function step() {
+                    if (i < text.length) {
+                        typeSpan.textContent += text.charAt(i);
+                        i++;
+                        timer = setTimeout(step, 180);
                     } else {
-                        // 删干净了，停顿 200ms 再重新打字
-                        i = 0;
-                        timer = setTimeout(type, 200);
+                        if (typeof onDone === 'function') onDone();
+                        else {
+                            cursor.classList.add('blinking');
+                            isAnimating = false;
+                        }
                     }
                 }
 
-                erase();
-            });
+                step();
+            }
+
+            // 退格函数，支持回调链
+            function eraseText(onDone) {
+                cursor.classList.remove('blinking');
+
+                function step() {
+                    var current = typeSpan.textContent;
+                    if (current.length > 0) {
+                        typeSpan.textContent = current.slice(0, -1);
+                        timer = setTimeout(step, 120);
+                    } else {
+                        if (typeof onDone === 'function') onDone();
+                        else {
+                            cursor.classList.add('blinking');
+                            isAnimating = false;
+                        }
+                    }
+                }
+
+                step();
+            }
+
+            // 停顿函数
+            function pause(duration, onDone) {
+                timer = setTimeout(onDone, duration);
+            }
+
+            // 顺序执行动画序列
+            function runSequence(sequence, index) {
+                if (index >= sequence.length) {
+                    cursor.classList.add('blinking');
+                    isAnimating = false;
+                    return;
+                }
+
+                var step = sequence[index];
+
+                if (step.action === 'type') {
+                    typeText(step.text, function() {
+                        runSequence(sequence, index + 1);
+                    });
+                } else if (step.action === 'erase') {
+                    eraseText(function() {
+                        runSequence(sequence, index + 1);
+                    });
+                } else if (step.action === 'pause') {
+                    pause(step.duration, function() {
+                        runSequence(sequence, index + 1);
+                    });
+                }
+            }
+
+            // 点击处理
+            function handleClick() {
+                if (isAnimating) return;
+                clickCount++;
+                clearTimer();
+                cursor.classList.remove('blinking');
+
+                // 先删除当前所有文字
+                eraseText(function() {
+                    // 根据点击次数决定后续动作
+                    if (clickCount === 1) {
+                        // 第一次点击：执行复杂序列
+                        pause(1170, function() {
+                            runSequence(complexSequence, 0);
+                        });
+                    } else if (clickCount === 2) {
+                        // 第二次点击：执行新序列
+                        pause(585, function() {
+                            runSequence(newSequence, 0);
+                        });
+                    } else {
+                        // 第三次及以后：显示 '......'
+                        typeText('......');
+                    }
+                });
+            }
+
+            // 页面加载后自动开始
+            setTimeout(function() {
+                typeText(initialText);
+            }, 800);
+
+            trigger.addEventListener('click', handleClick);
         })();
     </script>
 
