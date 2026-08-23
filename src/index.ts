@@ -36,6 +36,21 @@ const BLOCKED_BROWSER_PATTERNS = [
   /HuaweiBrowser/i
 ];
 
+// 无头浏览器 / 自动化工具 / 命令行爬虫
+const AUTOMATION_PATTERNS = [
+  /HeadlessChrome/i, /Headless/i,
+  /PhantomJS/i, /Selenium/i, /Puppeteer/i, /Playwright/i,
+  /Crawl/i, /Scrape/i, /Spider/i, /Bot\//i,
+  /python-requests/i, /urllib/i, /curl/i, /wget/i,
+  /httpie/i, /axios/i, /node-fetch/i, /got\(/i,
+  /httpx/i, /aiohttp/i, /scrapy/i, /mechanize/i,
+  /Go-http-client/i, /Java\//i, /libwww/i,
+  /facebookexternalhit/i, /whatsapp/i, /telegrambot/i
+];
+
+// 合法浏览器标识（UA 里必须有至少一个，否则视为未知爬虫）
+const BROWSER_SIGNATURES = /Chrome|Chromium|Safari|Firefox|Edg|Edge|OPR|Opera|Brave|Vivaldi|DuckDuckGo|Ddg|Arc|SamsungBrowser|Mozilla/i;
+
 /* ========== 检测函数 ========== */
 
 function isAIBot(ua: string): boolean {
@@ -50,37 +65,93 @@ function isBlockedBrowser(ua: string): boolean {
   return BLOCKED_BROWSER_PATTERNS.some(p => p.test(ua));
 }
 
+function isAutomation(ua: string): boolean {
+  return AUTOMATION_PATTERNS.some(p => p.test(ua));
+}
+
+function hasBrowserSignature(ua: string): boolean {
+  return BROWSER_SIGNATURES.test(ua);
+}
+
 /**
- * 请求头指纹检测
- * 裸爬虫通常缺少标准浏览器的请求头特征
+ * 严苛的请求头指纹检测
+ * 任何一项不通过即视为爬虫
  */
 function hasBotFingerprint(request: Request): boolean {
   const h = request.headers;
-  
-  // 正常浏览器必有 Accept-Language；裸爬虫（curl/wget）通常没有
-  const hasAcceptLang = h.has('Accept-Language');
-  
-  // Sec-Fetch-* 是现代浏览器（Chrome 76+/Edge 79+/Firefox 90+/Safari 16+）的标准头
-  // 旧版浏览器没有这些头，但也不会被误判为爬虫，因为下面要求"同时缺少"
-  const hasSecFetch = h.has('Sec-Fetch-Dest') || h.has('Sec-Fetch-Mode');
-  
-  // 同时缺少语言头和 Sec-Fetch → 极大概率是自动化工具
-  if (!hasAcceptLang && !hasSecFetch) return true;
-  
-  // Accept 头异常：只接受 JSON 或图片，不要 HTML
+  const ua = h.get('User-Agent') || '';
+
+  // 0. 请求方法：只允许 GET / HEAD
+  if (request.method !== 'GET' && request.method !== 'HEAD') return true;
+
+  // 1. UA 基础检查
+  if (!ua || ua.length < 20) return true;
+
+  // 2. 无头 / 自动化工具
+  if (isAutomation(ua)) return true;
+
+  // 3. UA 必须包含合法浏览器标识（搜索引擎除外）
+  if (!hasBrowserSignature(ua) && !isSearchBot(ua)) return true;
+
+  // 4. 关键 Header 必须存在
+  if (!h.has('Accept')) return true;
+  if (!h.has('Accept-Language')) return true;
+  if (!h.has('Accept-Encoding')) return true;
+
+  // 5. Accept 头必须包含 text/html 或 */*
   const accept = h.get('Accept') || '';
-  if (accept && !accept.includes('text/html') && !accept.includes('*/*')) {
-    if (/application\/json|image\/|text\/plain/.test(accept)) return true;
+  if (!accept.includes('text/html') && !accept.includes('*/*')) return true;
+
+  // 6. Sec-Fetch 检查（现代浏览器）
+  // Chrome 76+, Edge 79+, Firefox 90+, Safari 16.4+ 都会带
+  const secFetchDest = h.get('Sec-Fetch-Dest');
+  const secFetchMode = h.get('Sec-Fetch-Mode');
+  const hasSecFetch = secFetchDest !== null || secFetchMode !== null;
+
+  if (hasSecFetch) {
+    // 如果带了 Sec-Fetch，对于主页面请求：
+    // Dest 必须是 document
+    if (secFetchDest && secFetchDest !== 'document') return true;
+    // Mode 必须是 navigate
+    if (secFetchMode && secFetchMode !== 'navigate') return true;
   }
-  
-  // Cookie 头为空但请求了根路径（首次访问就带空 Cookie 很奇怪）
-  // 这个比较激进，暂时注释掉，需要时再开
-  // if (h.has('Cookie') && !h.get('Cookie')) return true;
-  
+
+  // 7. Cloudflare 特征（如果可用）
+  const cf = (request as any).cf;
+  if (cf) {
+    // Bot Management 分数（需订阅，但有就利用）
+    if (cf.botManagement?.score !== undefined && cf.botManagement.score < 30) return true;
+
+    // 已知数据中心 ASN（大概率是服务器/爬虫，非家用宽带）
+    // 来自数据中心 + 不是搜索引擎 = 可疑
+    const dataCenterASNs = [
+      16509,   // Amazon AWS
+      15169,   // Google Cloud
+      8075,    // Microsoft Azure
+      14061,   // DigitalOcean
+      63949,   // Linode
+      16276,   // OVH
+      132203,  // Tencent
+      45090,   // Alibaba
+      37963,   // Alibaba (Hangzhou)
+      14618,   // Amazon
+      20473,   // Vultr
+      24940,   // Hetzner
+      9009,    // M247
+      60068,   // CDN77
+      54113,   // Fastly
+      13335,   // Cloudflare (如果是回源请求)
+    ];
+    if (cf.asn && dataCenterASNs.includes(cf.asn)) {
+      // 来自数据中心，且不是搜索引擎 → 极大概率是爬虫
+      if (!isSearchBot(ua)) return true;
+    }
+  }
+
   return false;
 }
 
-/* ========== Bot 页面（和客户端完全一致） ========== */
+/* ========== Bot 页面 ========== */
 
 function getBotHTML(): string {
   return `<!DOCTYPE html>
@@ -129,27 +200,27 @@ function botResponse(): Response {
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const ua = request.headers.get('User-Agent') || '';
-    
+
     // 1. 搜索引擎爬虫 → 直接放行（SEO 必须）
     if (isSearchBot(ua)) {
       return env.ASSETS.fetch(request);
     }
-    
+
     // 2. AI 爬虫 → 拦截
     if (isAIBot(ua)) {
       return botResponse();
     }
-    
+
     // 3. 黑名单浏览器（UA 能识别的） → 拦截
     if (isBlockedBrowser(ua)) {
       return botResponse();
     }
-    
-    // 4. 请求头指纹检测 → 拦截裸爬虫
+
+    // 4. 严苛的请求头指纹检测 → 拦截裸爬虫 / 自动化工具 / 伪造 UA
     if (hasBotFingerprint(request)) {
       return botResponse();
     }
-    
+
     // 5. 正常请求 → 下发静态 HTML
     // 客户端 JS 还会做第二层检测（360 的 mimeTypes、external 对象等）
     return env.ASSETS.fetch(request);
