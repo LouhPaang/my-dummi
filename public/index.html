@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" ...>
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
@@ -368,6 +367,61 @@
             transition: color 0.4s ease;
         }
 
+        .about-card .contact {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .about-card .contact-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-card);
+            margin-bottom: 0.8rem;
+            letter-spacing: 0.01em;
+        }
+
+        .about-card .contact-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .about-card .contact-list li {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--text-muted);
+        }
+
+        .about-card .contact-list li span {
+            font-weight: 600;
+            color: var(--text-card);
+            display: inline-block;
+            min-width: 4.5rem;
+        }
+
+        .about-card .contact-list li a {
+            color: var(--text-footer-link);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            word-break: break-all;
+        }
+
+        .about-card .contact-list li a:hover {
+            color: var(--link-hover);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        @media (max-width: 600px) {
+            .about-card .contact-title {
+                font-size: 1rem;
+            }
+            .about-card .contact-list li {
+                font-size: 0.95rem;
+            }
+        }
+
         /* ===== Footer ===== */
         .site-footer {
             text-align: center;
@@ -388,55 +442,68 @@
             color: var(--link-hover);
         }
 
-        /* ===== Cookie Banner ===== */
-        .cookie-banner {
+        /* ===== Cookie Modal ===== */
+        .cookie-overlay {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--cookie-bg);
-            padding: 0.9rem 1.5rem;
-            border-top: 1px solid var(--border-cookie);
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            z-index: 999;
-            font-size: 0.9rem;
-            color: var(--text-cookie);
-            transition: transform 0.3s ease, background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 998;
+            opacity: 1;
+            transition: opacity 0.3s ease;
         }
 
-        .cookie-banner.hidden {
-            transform: translateY(100%);
+        .cookie-overlay.hidden {
+            opacity: 0;
             pointer-events: none;
         }
 
-        .cookie-banner p {
-            margin: 0;
-            max-width: 600px;
+        .cookie-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--card-bg);
+            border: 1px solid var(--border-cookie);
+            border-radius: 16px;
+            padding: 2rem 2.5rem;
+            max-width: 480px;
+            width: calc(100% - 2rem);
+            z-index: 999;
+            box-shadow: 0 20px 60px var(--shadow-hover);
             text-align: center;
+            opacity: 1;
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
-        .cookie-banner .btn-accept {
-            background: #f5f5f5;
-            color: #0a0a0a;
-            border: none;
-            padding: 0.4rem 1.4rem;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s ease;
-            font-family: inherit;
+        .cookie-modal.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, -50%) scale(0.95);
         }
 
-        .cookie-banner .btn-accept:hover {
-            background: var(--btn-hover);
+        .cookie-modal .cookie-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
         }
 
-        .cookie-banner .policy-link {
+        .cookie-modal h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-card);
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.01em;
+        }
+
+        .cookie-modal p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .cookie-modal .policy-link {
             color: var(--text-footer-link);
             text-decoration: underline;
             text-underline-offset: 2px;
@@ -444,8 +511,30 @@
             transition: color 0.2s ease;
         }
 
-        .cookie-banner .policy-link:hover {
+        .cookie-modal .policy-link:hover {
             color: var(--link-hover);
+        }
+
+        .cookie-modal .btn-accept {
+            background: var(--text-body);
+            color: var(--bg);
+            border: none;
+            padding: 0.6rem 2rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.15s ease;
+            font-family: inherit;
+        }
+
+        .cookie-modal .btn-accept:hover {
+            background: var(--link-hover);
+            transform: translateY(-1px);
+        }
+
+        .cookie-modal .btn-accept:active {
+            transform: translateY(0);
         }
 
         /* ===== 移动端 ===== */
@@ -483,11 +572,15 @@
                 left: 1.5rem;
             }
 
-            .cookie-banner {
-                padding: 0.7rem 1rem;
-                font-size: 0.8rem;
-                flex-direction: column;
-                gap: 0.6rem;
+            .cookie-modal {
+                padding: 1.5rem 1.2rem;
+                max-width: calc(100% - 2rem);
+            }
+            .cookie-modal h3 {
+                font-size: 1.2rem;
+            }
+            .cookie-modal p {
+                font-size: 0.95rem;
             }
 
             .hero {
@@ -500,12 +593,10 @@
         }
     </style>
 
-    <!-- UA 分流脚本 -->
-    <!-- UA 分流脚本 -->
+    <!-- UA 分流脚本（默认隐藏人类层，检测通过后再显示） -->
     <script>
         (() => {
             const ua = navigator.userAgent;
-            const uaLower = ua.toLowerCase();
 
             // === 1. AI 爬虫检测 ===
             const aiBots = [
@@ -513,7 +604,9 @@
                 /anthropic-ai/i, /CCBot/i, /PerplexityBot/i, /Applebot-Extended/i,
                 /Bytespider/i, /Amazonbot/i, /FacebookBot/i, /YouBot/i,
                 /Diffbot/i, /ImagesiftBot/i, /cohere-ai/i, /omgili/i, /Webzio/i,
-                /AI2Bot/i, /Ai2Bot-Dolma/i, /DataForSeoBot/i
+                /AI2Bot/i, /Ai2Bot-Dolma/i, /DataForSeoBot/i,
+                // 小红书搜索
+                /Xiaohongshu/i, /RedBook/i, /小红书/i
             ];
             const searchBots = [
                 /Googlebot/i, /Bingbot/i, /Slurp/i, /DuckDuckBot/i,
@@ -524,10 +617,12 @@
 
             // === 2. IE 检测 ===
             function isIE() {
-                return !!window.ActiveXObject || "ActiveXObject" in window || /MSIE|Trident/i.test(ua);
+                // 必须同时满足：存在 ActiveXObject 且 UA 含 MSIE/Trident
+                // Edge 没有 ActiveXObject，不会被误杀
+                return ("ActiveXObject" in window || !!window.ActiveXObject) && /MSIE|Trident/i.test(ua);
             }
 
-            // === 3. 360 浏览器检测（多层） ===
+            // === 3. 360 浏览器检测 ===
             function is360Browser() {
                 if (/360SE|360EE|QIHU|QihooBrowser|QHBrowser|360chrome|360sou|360browser/i.test(ua)) {
                     return true;
@@ -572,7 +667,7 @@
                 return false;
             }
 
-            // === 4. QQ 浏览器检测 ===
+            // === 4. QQ 浏览器 ===
             function isQQBrowser() {
                 if (/QQBrowser|QQ/i.test(ua)) return true;
                 try {
@@ -584,7 +679,7 @@
                 return false;
             }
 
-            // === 5. 搜狗浏览器检测 ===
+            // === 5. 搜狗浏览器 ===
             function isSogouBrowser() {
                 if (/SE\s*2\.X|MetaSr|Sogou/i.test(ua)) return true;
                 try {
@@ -593,12 +688,12 @@
                 return false;
             }
 
-            // === 6. 搜狐浏览器检测 ===
+            // === 6. 搜狐浏览器 ===
             function isSohuBrowser() {
                 return /SohuNewsBrowser|SohuBrowser/i.test(ua);
             }
 
-            // === 7. 夸克浏览器检测 ===
+            // === 7. 夸克浏览器 ===
             function isQuarkBrowser() {
                 if (/Quark/i.test(ua)) return true;
                 try {
@@ -607,7 +702,7 @@
                 return false;
             }
 
-            // === 8. 悟空浏览器检测 ===
+            // === 8. 悟空浏览器 ===
             function isWukongBrowser() {
                 if (/WukongBrowser|悟空浏览器/i.test(ua)) return true;
                 try {
@@ -616,7 +711,7 @@
                 return false;
             }
 
-            // === 9. 豆包 AI 浏览器检测 ===
+            // === 9. 豆包 AI 浏览器 ===
             function isDoubaoBrowser() {
                 if (/Doubao|DoubaoBrowser|豆包/i.test(ua)) return true;
                 try {
@@ -625,7 +720,7 @@
                 return false;
             }
 
-            // === 10. UC 浏览器检测 ===
+            // === 10. UC 浏览器 ===
             function isUCBrowser() {
                 if (/UCBrowser|UC\b/i.test(ua)) return true;
                 try {
@@ -634,7 +729,7 @@
                 return false;
             }
 
-            // === 11. 猎豹浏览器检测 ===
+            // === 11. 猎豹浏览器 ===
             function isLiebaoBrowser() {
                 if (/LBBROWSER|LieBao/i.test(ua)) return true;
                 try {
@@ -645,12 +740,12 @@
                 return false;
             }
 
-            // === 12. 傲游浏览器检测 ===
+            // === 12. 傲游浏览器 ===
             function isMaxthonBrowser() {
                 return /Maxthon/i.test(ua);
             }
 
-            // === 13. 2345 浏览器检测 ===
+            // === 13. 2345 浏览器 ===
             function is2345Browser() {
                 if (/2345Browser|2345Explorer/i.test(ua)) return true;
                 try {
@@ -663,28 +758,65 @@
                 return false;
             }
 
+
+            // === 14. 360 企业安全浏览器检测 ===
+            function is360EntBrowser() {
+                if (/360ENT|360Enterprise|360SafeBrowser/i.test(ua)) return true;
+                try {
+                    if (window.external && typeof window.external.twGetRunPath === 'function') {
+                        const path = window.external.twGetRunPath().toLowerCase();
+                        if (path.indexOf('360ent') > -1 || path.indexOf('360enterprise') > -1) return true;
+                    }
+                    if (window.external && typeof window.external.GetRunPath === 'function') {
+                        const path = window.external.GetRunPath().toLowerCase();
+                        if (path.indexOf('360ent') > -1 || path.indexOf('360enterprise') > -1) return true;
+                    }
+                } catch (e) {}
+                return false;
+            }
+
+            // === 15. 支付宝 / 淘宝内置浏览器检测 ===
+            function isAlipayTaobaoBrowser() {
+                if (/AlipayClient|AliApp|TBIOS|WindVane/i.test(ua)) return true;
+                if (/\bTaobao\b/i.test(ua)) return true;
+                try {
+                    if (window.AlipayJSBridge || window.TB || window.TaoBao || window.WindVane) return true;
+                } catch (e) {}
+                return false;
+            }
+
+            // === 16. 华为浏览器检测 ===
+            function isHuaweiBrowser() {
+                if (/HuaweiBrowser/i.test(ua)) return true;
+                try {
+                    if (window.huawei || window.Huawei || window.HWJSBridge) return true;
+                } catch (e) {}
+                return false;
+            }
             // === 综合判断 ===
-            const isBlockedBrowser = isIE() || is360Browser() || isQQBrowser() ||
+            const isBlockedBrowser = isIE() || is360Browser() || is360EntBrowser() || isQQBrowser() ||
                                     isSogouBrowser() || isSohuBrowser() || isQuarkBrowser() ||
                                     isWukongBrowser() || isDoubaoBrowser() ||
                                     isUCBrowser() || isLiebaoBrowser() ||
-                                    isMaxthonBrowser() || is2345Browser();
+                                    isMaxthonBrowser() || is2345Browser() ||
+                                    isAlipayTaobaoBrowser() || isHuaweiBrowser();
 
             const showHuman = (!isAIBot || isSearchBot) && !isBlockedBrowser;
 
+            // 动态注入样式：showHuman 为 true 时显示人类层，否则显示 bot 层
             const style = document.createElement('style');
             if (showHuman) {
                 style.textContent = '#bot-layer{display:none!important}#human-layer{display:block!important}';
                 document.title = 'Dummi';
             } else {
-                style.textContent = '#human-layer{display:none!important}#bot-layer{display:block!important}';
+                // 人类层默认就是 display:none，这里只确保 bot 层可见
+                style.textContent = '#bot-layer{display:block!important}#human-layer{display:none!important}';
                 document.title = 'Go Away — Dummi';
             }
             document.head.appendChild(style);
         })();
     </script>
-<base target="_blank">
-<base target="_blank">
+    <base target="_blank">
 <base target="_blank">
 </head>
 <body>
@@ -699,7 +831,7 @@
         <div style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:2rem;">
             <div class="container">
                 <p class="bot-hello">Hmpf! Dummi will dich sowieso nicht sehen.<span class="cursor"></span></p>
-                <p style="margin-top:2rem;font-size:1.25rem;color:var(--text-muted);max-width:620px;line-height:1.7;letter-spacing:0.01em;">
+                <p class="bot-hello">
                     Um Probleme mit Web-Crawlern zu verhindern, nutzen Sie bitte Chrome, Edge, Safari oder Firefox für den Zugriff auf diese Website.
                 </p>
             </div>
@@ -711,6 +843,7 @@
     </div>
 
     <!-- ===== HUMAN LAYER ===== -->
+    <!-- 默认隐藏，JS 检测通过后才会显示 -->
     <div id="human-layer" style="display:none">
 
         <section class="hero">
@@ -743,6 +876,15 @@
                     Freut mich, dich kennenzulernen! Bis bald!
                 </p>
                 <div class="signature">Gr&uuml;&szlig;e von Dummi</div>
+                <div class="contact">
+                    <p class="contact-title">Und so erreichst du mich:</p>
+                    <ul class="contact-list">
+                        <li><span>Mail:</span> <a href="mailto:dominiquekleinert@gmail.com">dominiquekleinert@gmail.com</a></li>
+                        <li><span>GitHub:</span> <a href="https://github.com/DominiqueKleinert" rel="noopener">github.com/DominiqueKleinert</a></li>
+                        <li><span>ORCID:</span> <a href="https://orcid.org/0009-0009-3127-5000" rel="noopener">0009-0009-3127-5000</a></li>
+                        <li><span>Twitter:</span> <a href="https://x.com/Dummi20000101" rel="noopener">@Dummi20000101</a></li>
+                    </ul>
+                </div>
             </div>
         </section>
 
@@ -752,48 +894,55 @@
         </footer>
     </div>
 
-    <!-- ===== COOKIE BANNER ===== -->
-    <div id="cookie-banner" class="cookie-banner">
+    <!-- ===== COOKIE MODAL ===== -->
+    <div id="cookie-overlay" class="cookie-overlay"></div>
+    <div id="cookie-modal" class="cookie-modal">
+        <span class="cookie-icon">&#127850;</span>
+        <h3>Cookie-Einstellungen</h3>
         <p>
-            &#127850; This site uses <strong>essential cookies</strong> to store your cookie consent preference.
-            No personal data is collected for tracking or advertising.
-            By continuing, you agree to this use.
-            <a href="#" class="policy-link" id="policyLink">Learn more</a>
+            Diese Website verwendet ausschlie&szlig;lich <strong>technisch notwendige Cookies</strong>,
+            um Ihre Zustimmung zu speichern. Es werden keine personenbezogenen Daten
+            zu Tracking- oder Werbezwecken erhoben.
+            <a href="#" class="policy-link" id="policyLink">Mehr erfahren</a>
         </p>
-        <button class="btn-accept" id="cookie-accept">Accept</button>
+        <button class="btn-accept" id="cookie-accept">Verstanden</button>
     </div>
 
     <script>
-        /* ===== Cookie Banner（防御性：localStorage 被禁时静默降级） ===== */
+        /* ===== Cookie Modal（防御性：localStorage 被禁时静默降级） ===== */
         (function() {
-            var banner = document.getElementById('cookie-banner');
+            var overlay = document.getElementById('cookie-overlay');
+            var modal = document.getElementById('cookie-modal');
             var acceptBtn = document.getElementById('cookie-accept');
             var policyLink = document.getElementById('policyLink');
-            if (!banner || !acceptBtn) return;
+            if (!modal || !acceptBtn) return;
 
             var alreadyConsented = false;
             try {
                 alreadyConsented = localStorage.getItem('cookieConsent') === 'true';
             } catch (e) {
-                banner.classList.add('hidden');
+                overlay.classList.add('hidden');
+                modal.classList.add('hidden');
                 return;
             }
 
             if (alreadyConsented) {
-                banner.classList.add('hidden');
+                overlay.classList.add('hidden');
+                modal.classList.add('hidden');
             }
 
             acceptBtn.addEventListener('click', function() {
                 try {
                     localStorage.setItem('cookieConsent', 'true');
                 } catch (e) {}
-                banner.classList.add('hidden');
+                overlay.classList.add('hidden');
+                modal.classList.add('hidden');
             });
 
             if (policyLink) {
                 policyLink.addEventListener('click', function(e) {
                     e.preventDefault();
-                    alert('Privacy policy: we only store your consent status, nothing else.');
+                    alert('Datenschutzerklärung: Wir speichern nur Ihren Zustimmungsstatus, sonst nichts.');
                 });
             }
         })();
