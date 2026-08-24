@@ -15,77 +15,93 @@
     <meta name="twitter:card" content="summary">
     <link rel="canonical" href="https://www.dummi.net">
     <title>Go Away — Dummi</title>
-
-    <!-- Google Fonts: Alegreya -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-
     <style>
-        /* ===== 颜色变量系统 ===== */
         :root {
-            --bg: #d5d5d5;
-            --card-bg: #e0e0e0;
-            --cookie-bg: #c8c8c8;
+            --bg: #faf9f7;
+            --bg-elevated: #ffffff;
+            --card-bg: #ffffff;
+            --cookie-bg: #ffffff;
             --text-white: #ffffff;
-            --text-body: #000000;
-            --text-muted: #000000;
-            --text-dim: #000000;
-            --text-faint: #000000;
-            --text-card: #000000;
-            --text-signature: #000000;
-            --text-footer-link: #000000;
-            --text-footer: #000000;
-            --text-cookie: #000000;
-            --border: #999999;
-            --border-cookie: #999999;
-            --shadow: rgba(0,0,0,0.15);
-            --shadow-hover: rgba(0,0,0,0.25);
-            --card-glow: rgba(0,0,0,0.03);
-            --card-glow-hover: rgba(0,0,0,0.05);
-            --card-outline: rgba(0,0,0,0.08);
-            --card-outline-hover: rgba(0,0,0,0.12);
-            --gradient-line: rgba(0,0,0,0.15);
-            --quote-mark: rgba(0,0,0,0.04);
-            --link-hover: #333333;
-            --scroll-hint-hover: #333333;
-            --btn-hover: #ffffff;
-            --stroke: #000000;
+            --text-body: #1a1a1a;
+            --text-heading: #111111;
+            --text-muted: #5c5c5c;
+            --text-dim: #737373;
+            --text-faint: #a3a3a3;
+            --text-card: #262626;
+            --text-signature: #525252;
+            --text-footer-link: #737373;
+            --text-footer: #a3a3a3;
+            --text-cookie: #525252;
+            --accent: #d97706;
+            --accent-light: #fff7ed;
+            --accent-dark: #b45309;
+            --accent-text: #92400e;
+            --border: #e5e5e5;
+            --border-cookie: #e5e5e5;
+            --shadow: rgba(0, 0, 0, 0.06);
+            --shadow-hover: rgba(0, 0, 0, 0.12);
+            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.05);
+            --shadow-card-hover: 0 12px 40px rgba(0, 0, 0, 0.1);
+            --card-glow: rgba(255, 255, 255, 0.8);
+            --card-outline: rgba(0, 0, 0, 0.04);
+            --card-outline-hover: rgba(0, 0, 0, 0.08);
+            --gradient-line: rgba(0, 0, 0, 0.08);
+            --quote-mark: rgba(0, 0, 0, 0.04);
+            --link-hover: var(--accent);
+            --scroll-hint-hover: var(--accent);
+            --btn-hover: var(--accent-dark);
+            --stroke: #1a1a1a;
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --transition-fast: 0.15s ease;
+            --transition-base: 0.3s ease;
+            --transition-slow: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
                 --bg: #0a0a0a;
-                --card-bg: #111;
+                --bg-elevated: #111111;
+                --card-bg: #111111;
                 --cookie-bg: #1a1a1a;
                 --text-white: #ffffff;
                 --text-body: #f5f5f5;
+                --text-heading: #ffffff;
                 --text-muted: #a0a0a0;
-                --text-dim: #666;
-                --text-faint: #555;
-                --text-card: #ddd;
-                --text-signature: #aaa;
-                --text-footer-link: #888;
-                --text-footer: #555;
-                --text-cookie: #bbb;
-                --border: #333;
-                --border-cookie: #333;
-                --shadow: rgba(0,0,0,0.6);
-                --shadow-hover: rgba(0,0,0,0.8);
-                --card-glow: rgba(255,255,255,0.05);
-                --card-glow-hover: rgba(255,255,255,0.08);
-                --card-outline: rgba(255,255,255,0.03);
-                --card-outline-hover: rgba(255,255,255,0.06);
-                --gradient-line: rgba(255,255,255,0.15);
-                --quote-mark: rgba(255,255,255,0.04);
-                --link-hover: #ccc;
-                --scroll-hint-hover: #aaa;
-                --btn-hover: #fff;
+                --text-dim: #737373;
+                --text-faint: #525252;
+                --text-card: #e5e5e5;
+                --text-signature: #a3a3a3;
+                --text-footer-link: #a3a3a3;
+                --text-footer: #525252;
+                --text-cookie: #d4d4d4;
+                --accent: #f59e0b;
+                --accent-light: rgba(245, 158, 11, 0.12);
+                --accent-dark: #fbbf24;
+                --accent-text: #fbbf24;
+                --border: #262626;
+                --border-cookie: #333333;
+                --shadow: rgba(0, 0, 0, 0.4);
+                --shadow-hover: rgba(0, 0, 0, 0.6);
+                --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3);
+                --shadow-card-hover: 0 12px 40px rgba(0, 0, 0, 0.5);
+                --card-glow: rgba(255, 255, 255, 0.03);
+                --card-outline: rgba(255, 255, 255, 0.04);
+                --card-outline-hover: rgba(255, 255, 255, 0.08);
+                --gradient-line: rgba(255, 255, 255, 0.1);
+                --quote-mark: rgba(255, 255, 255, 0.04);
+                --link-hover: var(--accent);
+                --scroll-hint-hover: var(--accent);
+                --btn-hover: var(--accent-dark);
                 --stroke: #000000;
             }
         }
 
-        /* ===== Reset ===== */
         * {
             margin: 0;
             padding: 0;
@@ -104,20 +120,19 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             transition: background 0.4s ease, color 0.4s ease;
+            caret-color: transparent;
         }
 
         @media (prefers-reduced-motion: reduce) {
-            html { scroll-behavior: auto; }
-            .cursor, .scroll-hint {
+            html {
+                scroll-behavior: auto;
+            }
+
+            .cursor, .scroll-hint, .scroll-progress {
                 animation: none !important;
             }
-            .about-section {
-                transition: none !important;
-                opacity: 1 !important;
-                transform: none !important;
-            }
-            .about-card p,
-            .about-card .signature {
+
+            .reveal {
                 transition: none !important;
                 opacity: 1 !important;
                 transform: none !important;
@@ -125,94 +140,167 @@
         }
 
         .container {
-            max-width: 820px;
             margin: 0 auto;
-            padding: 2rem 1.5rem;
+            padding: 0 2.25rem;
         }
 
-        /* ===== Hero ===== */
-        .intro {
-            font-size: 2.8125rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-            letter-spacing: 0.02em;
-            transition: color 0.4s ease;
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--accent);
+            z-index: 1001;
+            transition: width 0.1s linear;
         }
 
-        .intro .brand {
-            color: var(--text-white);
+        .site-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+            transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+        }
+
+        .site-nav.scrolled {
+            background: rgba(250, 249, 247, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 0.75rem 0;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .site-nav.scrolled {
+                background: rgba(10, 10, 10, 0.85);
+                box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
+            }
+        }
+
+        .site-nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-logo {
+            font-size: 1.25rem;
             font-weight: 700;
-            text-shadow:
-                -1px -1px 0 var(--stroke),
-                 1px -1px 0 var(--stroke),
-                -1px  1px 0 var(--stroke),
-                 1px  1px 0 var(--stroke);
-        }
-
-        .hello {
-            font-size: 11.71875rem;
-            font-weight: 700;
-            color: var(--text-white);
-            letter-spacing: 0.01em;
-            line-height: 1.2;
-            margin-top: 0.5rem;
-            position: relative;
-            left: 50%;
-            transform: translateX(-50%);
-            display: table;
+            color: var(--text-heading);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            transition: color 0.2s ease;
             white-space: nowrap;
-            min-height: 150px;
-            cursor: pointer;
-            user-select: none;
-            text-shadow:
-                -1px -1px 0 var(--stroke),
-                 1px -1px 0 var(--stroke),
-                -1px  1px 0 var(--stroke),
-                 1px  1px 0 var(--stroke);
+            flex-shrink: 0;
         }
 
-        .hello .type-text {
-            display: inline;
+        .nav-logo:hover {
+            color: var(--accent);
         }
 
-        .hello .cursor {
-            display: inline-block;
-            width: 3px;
-            height: 1em;
-            background: var(--text-white);
-            margin-left: 4px;
-            vertical-align: middle;
+        .nav-links {
+            position: relative;
+            display: flex;
+            gap: 1.75rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 1.25rem;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.25s ease;
+        }
+
+        .nav-links a:hover, .nav-links a:focus-visible {
+            color: var(--text-heading);
+        }
+
+        .nav-links a:hover::after, .nav-links a:focus-visible::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--accent);
+        }
+
+        .nav-indicator {
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+            pointer-events: none;
+            opacity: 0;
+            width: 0;
+        }
+
+        .nav-indicator.visible {
             opacity: 1;
         }
 
-        .hello .cursor.blinking {
-            animation: blink 1s steps(2) infinite;
+        .nav-indicator.exit-left {
+            animation: navExitLeft 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+        .nav-indicator.exit-right {
+            animation: navExitRight 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .bot-hello {
-            font-size: 11.71875rem;
-            font-weight: 700;
-            color: var(--text-white);
-            letter-spacing: 0.01em;
-            line-height: 1.2;
-            margin-top: 0.5rem;
-            font-style: italic;
-            white-space: nowrap;
+        .nav-indicator.enter-left {
+            animation: navEnterLeft 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .bot-hello .cursor {
-            display: inline-block;
-            width: 3px;
-            height: 1em;
-            background: var(--text-white);
-            margin-left: 4px;
-            vertical-align: middle;
-            animation: blink 1s steps(2) infinite;
+        .nav-indicator.enter-right {
+            animation: navEnterRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes navExitLeft {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(-30px); opacity: 0; }
+        }
+
+        @keyframes navExitRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(30px); opacity: 0; }
+        }
+
+        @keyframes navEnterLeft {
+            from { transform: translateX(-30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes navEnterRight {
+            from { transform: translateX(30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @media (max-width: 640px) {
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+            }
         }
 
         .hero {
@@ -222,19 +310,105 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 2rem 1.5rem 6rem;
+            padding: 7rem 1.5rem 6rem;
+            position: relative;
+            overflow: hidden;
             background: var(--bg);
-            transition: background 0.4s ease;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml, %3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            margin-top: 5rem;
+        }
+
+        .intro {
+            font-size: 2.8125rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            letter-spacing: 0.01em;
+            transition: color 0.4s ease;
+        }
+
+        .intro .brand {
+            color: var(--text-heading);
+            font-weight: 700;
+        }
+
+        .hello {
+            font-size: 11.71875rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            letter-spacing: -0.02em;
+            line-height: 1.05;
+            margin-top: 0.5rem;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            display: table;
+            white-space: nowrap;
+            min-height: 150px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .hello .type-text {
+            display: inline;
+        }
+
+        .hello .cursor {
+            display: inline-block;
+            width: 4px;
+            height: 0.9em;
+            background: var(--accent);
+            margin-left: 6px;
+            vertical-align: baseline;
+            opacity: 1;
+            border-radius: 2px;
+        }
+
+        .hello .cursor.blinking {
+            animation: blink 1s steps(2) infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .hero-tagline {
+            font-size: 1.875rem;
+            color: var(--text-dim);
+            margin-top: 4.25rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .scroll-hint {
-            margin-top: 2.5rem;
+            margin-top: 3rem;
             font-size: 2.625rem;
-            color: var(--text-dim);
+            color: var(--text-faint);
             animation: bob 2s ease-in-out infinite;
             cursor: pointer;
             user-select: none;
             transition: color 0.3s ease;
+            position: relative;
+            z-index: 1;
         }
 
         .scroll-hint:hover {
@@ -242,53 +416,215 @@
         }
 
         .scroll-hint span {
-            display: inline-block;
+            display: block;
             font-size: 3.75rem;
             line-height: 1;
+            margin-top: 0.25rem;
         }
 
         @keyframes bob {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(8px); }
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(8px);
+            }
         }
 
-        /* ===== About 区域 ===== */
-        .about-section {
-            padding: 0.5rem 1.5rem 6rem;
-            background: var(--bg);
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            color: var(--text-heading);
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .section-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .reveal {
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease, background 0.4s ease;
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .about-section.visible {
+        .reveal.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
+        .skills-section {
+            background: var(--bg);
+        }
+
+        .skills-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.75rem;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .skill-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.55rem 1.1rem;
+            border-radius: 999px;
+            background: var(--accent-light);
+            color: var(--accent-text);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: transform var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+            cursor: default;
+        }
+
+        .skill-tag:hover {
+            transform: translateY(-3px);
+            background: var(--accent);
+            color: #ffffff;
+        }
+
+        .skill-tag::before {
+            content: '#';
+            opacity: 0.6;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            max-width: 1380px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            border: 1px solid var(--card-outline);
+            box-shadow: var(--shadow-card);
+            transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-card-hover);
+            border-color: var(--card-outline-hover);
+        }
+
+        .project-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            background: var(--accent-light);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .project-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 1.25rem;
+            flex-grow: 1;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .project-tag {
+            font-size: 0.8rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 999px;
+            background: var(--bg);
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: gap 0.2s ease;
+        }
+
+        .project-link:hover {
+            gap: 0.6rem;
+        }
+
+        .project-link::after {
+            content: '→';
+        }
+
+        .about-section {
+            background: var(--bg);
+        }
+
         .about-card {
-            max-width: 700px;
+            max-width: 760px;
             margin: 0 auto;
             background: var(--card-bg);
-            padding: 2.8rem 2.5rem;
-            border-radius: 16px;
+            padding: 3rem 3.5rem;
+            border-radius: var(--radius-xl);
             position: relative;
             overflow: hidden;
-            box-shadow:
-                0 8px 30px var(--shadow),
-                inset 0 1px 0 var(--card-glow),
-                0 0 0 1px var(--card-outline);
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                        box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                        background 0.4s ease;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--card-outline);
+            transition: transform var(--transition-base), box-shadow var(--transition-base);
         }
 
         .about-card:hover {
             transform: translateY(-4px);
-            box-shadow:
-                0 20px 50px var(--shadow-hover),
-                inset 0 1px 0 var(--card-glow-hover),
-                0 0 0 1px var(--card-outline-hover);
+            box-shadow: var(--shadow-card-hover);
         }
 
         .about-card::before {
@@ -296,7 +632,7 @@
             position: absolute;
             top: 2.2rem;
             left: 2.5rem;
-            font-size: 5rem;
+            font-size: 6rem;
             line-height: 1;
             color: var(--quote-mark);
             pointer-events: none;
@@ -314,33 +650,56 @@
             transition: background 0.4s ease;
         }
 
-        /* 内部 stagger 动画 */
-        .about-card p,
-        .about-card .signature {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        .about-header {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
         }
 
-        .about-section.visible .about-card p:nth-child(1) { transition-delay: 0.1s; }
-        .about-section.visible .about-card p:nth-child(2) { transition-delay: 0.25s; }
-        .about-section.visible .about-card p:nth-child(3) { transition-delay: 0.4s; }
-        .about-section.visible .about-card p:nth-child(4) { transition-delay: 0.55s; }
-        .about-section.visible .about-card .signature      { transition-delay: 0.75s; }
+        .about-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            box-shadow: 0 4px 16px rgba(217, 119, 6, 0.3);
+        }
 
-        .about-section.visible .about-card p,
-        .about-section.visible .about-card .signature {
-            opacity: 1;
-            transform: translateY(0);
+        .about-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .about-greeting {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-heading);
+        }
+
+        .about-role {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-top: 0.15rem;
         }
 
         .about-card p {
-            font-size: 1.25rem;
-            line-height: 1.8;
+            font-size: 1.15rem;
+            line-height: 1.85;
             color: var(--text-card);
-            margin-bottom: 1rem;
-            transition: color 0.4s ease;
+            margin-bottom: 1.1rem;
+            position: relative;
+            z-index: 1;
         }
 
         .about-card p:last-child {
@@ -348,13 +707,8 @@
         }
 
         .about-card .highlight {
-            color: var(--text-white);
-            font-weight: 600;
-            text-shadow:
-                -1px -1px 0 var(--stroke),
-                 1px -1px 0 var(--stroke),
-                -1px  1px 0 var(--stroke),
-                 1px  1px 0 var(--stroke);
+            color: var(--accent);
+            font-weight: 700;
         }
 
         .about-card .signature {
@@ -364,19 +718,22 @@
             color: var(--text-signature);
             font-size: 1.25rem;
             padding-top: 1.5rem;
-            transition: color 0.4s ease;
+            position: relative;
+            z-index: 1;
         }
 
         .about-card .contact {
             margin-top: 2.5rem;
             padding-top: 1.5rem;
             border-top: 1px solid var(--border);
+            position: relative;
+            z-index: 1;
         }
 
         .about-card .contact-title {
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: var(--text-card);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-heading);
             margin-bottom: 0.8rem;
             letter-spacing: 0.01em;
         }
@@ -385,50 +742,108 @@
             list-style: none;
             padding: 0;
             margin: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 0.5rem;
         }
 
         .about-card .contact-list li {
-            font-size: 1.05rem;
-            line-height: 1.9;
+            font-size: 1rem;
+            line-height: 1.8;
             color: var(--text-muted);
         }
 
         .about-card .contact-list li span {
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-card);
             display: inline-block;
             min-width: 4.5rem;
         }
 
         .about-card .contact-list li a {
-            color: var(--text-footer-link);
+            color: var(--accent);
             text-decoration: none;
             transition: color 0.2s ease;
             word-break: break-all;
         }
 
         .about-card .contact-list li a:hover {
-            color: var(--link-hover);
+            color: var(--accent-dark);
             text-decoration: underline;
-            text-underline-offset: 2px;
+            text-underline-offset: 3px;
         }
 
-        @media (max-width: 600px) {
-            .about-card .contact-title {
-                font-size: 1rem;
-            }
-            .about-card .contact-list li {
-                font-size: 0.95rem;
+        .cta-section {
+            text-align: center;
+            padding: 5rem 0;
+        }
+
+        .cta-card {
+            background: linear-gradient(135deg, var(--accent-light) 0%, var(--bg-elevated) 100%);
+            border: 1px solid var(--card-outline);
+            border-radius: var(--radius-xl);
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+            max-width: 1380px;
+            margin: 0 auto;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .cta-card {
+                background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, var(--bg-elevated) 100%);
             }
         }
 
-        /* ===== Footer ===== */
+        .cta-card h2 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 0.75rem;
+        }
+
+        .cta-card p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 1.75rem;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent);
+            color: #ffffff;
+            padding: 1rem 2rem;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 700;
+            box-shadow: 0 4px 16px rgba(217, 119, 6, 0.35);
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            background: var(--accent-dark);
+            box-shadow: 0 8px 24px rgba(217, 119, 6, 0.45);
+        }
+
+        .cta-button:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 3px;
+        }
+
         .site-footer {
             text-align: center;
-            padding: 1.5rem;
-            font-size: 0.85rem;
+            padding: 2.5rem 1.5rem;
+            font-size: 0.9rem;
             color: var(--text-footer);
             background: var(--bg);
+            border-top: 1px solid var(--border);
             transition: color 0.4s ease, background 0.4s ease;
         }
 
@@ -442,12 +857,11 @@
             color: var(--link-hover);
         }
 
-        /* ===== Cookie Modal ===== */
         .cookie-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(6px);
             z-index: 998;
             opacity: 1;
             transition: opacity 0.3s ease;
@@ -465,12 +879,12 @@
             transform: translate(-50%, -50%);
             background: var(--card-bg);
             border: 1px solid var(--border-cookie);
-            border-radius: 16px;
-            padding: 2rem 2.5rem;
+            border-radius: var(--radius-lg);
+            padding: 2.25rem 2.5rem;
             max-width: 480px;
             width: calc(100% - 2rem);
             z-index: 999;
-            box-shadow: 0 20px 60px var(--shadow-hover);
+            box-shadow: 0 24px 70px var(--shadow-hover);
             text-align: center;
             opacity: 1;
             transition: opacity 0.3s ease, transform 0.3s ease;
@@ -479,7 +893,7 @@
         .cookie-modal.hidden {
             opacity: 0;
             pointer-events: none;
-            transform: translate(-50%, -50%) scale(0.95);
+            transform: translate(-50%, -50%) scale(0.96);
         }
 
         .cookie-modal .cookie-icon {
@@ -491,7 +905,7 @@
         .cookie-modal h3 {
             font-size: 1.4rem;
             font-weight: 700;
-            color: var(--text-card);
+            color: var(--text-heading);
             margin-bottom: 0.75rem;
             letter-spacing: 0.01em;
         }
@@ -504,7 +918,7 @@
         }
 
         .cookie-modal .policy-link {
-            color: var(--text-footer-link);
+            color: var(--accent);
             text-decoration: underline;
             text-underline-offset: 2px;
             cursor: pointer;
@@ -512,24 +926,24 @@
         }
 
         .cookie-modal .policy-link:hover {
-            color: var(--link-hover);
+            color: var(--accent-dark);
         }
 
         .cookie-modal .btn-accept {
-            background: var(--text-body);
-            color: var(--bg);
+            background: var(--accent);
+            color: #ffffff;
             border: none;
-            padding: 0.6rem 2rem;
-            border-radius: 30px;
+            padding: 0.75rem 2.25rem;
+            border-radius: 999px;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: background 0.2s ease, transform 0.15s ease;
             font-family: inherit;
         }
 
         .cookie-modal .btn-accept:hover {
-            background: var(--link-hover);
+            background: var(--accent-dark);
             transform: translateY(-1px);
         }
 
@@ -537,48 +951,160 @@
             transform: translateY(0);
         }
 
-        /* ===== 移动端 ===== */
-        @media (max-width: 600px) {
+        .cookie-modal .btn-accept:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 3px;
+        }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .bot-hello {
+            font-size: 11.71875rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-top: 0.5rem;
+            font-style: italic;
+            white-space: nowrap;
+        }
+
+        .bot-hello .cursor {
+            display: inline-block;
+            width: 4px;
+            height: 0.9em;
+            background: var(--accent);
+            margin-left: 6px;
+            vertical-align: baseline;
+            animation: blink 1s steps(2) infinite;
+            border-radius: 2px;
+        }
+
+        .bot-subtext {
+            font-size: 11.71875rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 1.5rem auto 0;
+            line-height: 1.7;
+        }
+
+        .nav-indicator {
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+            pointer-events: none;
+            opacity: 0;
+            width: 0;
+        }
+
+        .nav-indicator.visible {
+            opacity: 1;
+        }
+
+        .nav-indicator.exit-left {
+            animation: navExitLeft 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .nav-indicator.exit-right {
+            animation: navExitRight 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .nav-indicator.enter-left {
+            animation: navEnterLeft 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .nav-indicator.enter-right {
+            animation: navEnterRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes navExitLeft {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(-30px); opacity: 0; }
+        }
+
+        @keyframes navExitRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(30px); opacity: 0; }
+        }
+
+        @keyframes navEnterLeft {
+            from { transform: translateX(-30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes navEnterRight {
+            from { transform: translateX(30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @media (max-width: 640px) {
             .intro {
-                font-size: 1.375rem;
+                font-size: 1.35rem;
             }
 
-            .hello, .bot-hello {
-                font-size: 3rem;
-                min-height: 58px;
+            .hello {
+                min-height: 80px;
+            }
+
+            .hero-tagline {
+                font-size: 1.05rem;
+                margin-top: 1.5rem; /* 移动端适当缩小，保持比例 */
             }
 
             .scroll-hint {
-                font-size: 1.125rem;
-                margin-top: 2.5rem;
+                font-size: 0.95rem;
             }
 
-            .scroll-hint span {
-                font-size: 1.875rem;
+            .section {
+                padding: 3.5rem 0;
             }
 
             .about-card {
-                padding: 1.8rem 1.2rem;
+                padding: 2rem 1.5rem;
             }
 
-            .about-card p,
-            .about-card .signature {
+            .about-card p, .about-card .signature {
                 font-size: 1.05rem;
             }
 
             .about-card::before {
-                font-size: 3.5rem;
+                font-size: 4rem;
                 top: 1.5rem;
                 left: 1.5rem;
             }
 
+            .about-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .about-card .contact-list {
+                grid-template-columns: 1fr;
+            }
+
+            .project-card {
+                padding: 1.5rem;
+            }
+
+            .cta-card {
+                padding: 2.5rem 1.5rem;
+            }
+
             .cookie-modal {
-                padding: 1.5rem 1.2rem;
+                padding: 1.75rem 1.25rem;
                 max-width: calc(100% - 2rem);
             }
+
             .cookie-modal h3 {
                 font-size: 1.2rem;
             }
+
             .cookie-modal p {
                 font-size: 0.95rem;
             }
@@ -586,88 +1112,233 @@
             .hero {
                 padding-bottom: 4rem;
             }
-
-            .about-section {
-                padding-top: 0.25rem;
-            }
         }
     </style>
 
     <!-- UA 分流脚本（默认隐藏人类层，检测通过后再显示） -->
     <script>
-        (() => {
+        (async () => {
             const ua = navigator.userAgent;
+            function getCanvasFingerprint() {
+                try {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = 280;
+                    canvas.height = 60;
+                    ctx.textBaseline = 'alphabetic';
+                    ctx.font = '16px "Alegreya", serif';
+                    ctx.fillStyle = '#f60';
+                    ctx.fillRect(8, 8, 264, 44);
+                    ctx.fillStyle = '#069';
+                    ctx.fillText('Dummi! 你好世界 🎨 ÄÖÜ', 12, 38);
+                    ctx.strokeStyle = 'rgba(0,255,128,0.7)';
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(280, 60);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.arc(140, 30, 15, 0, Math.PI * 2);
+                    ctx.stroke();
+                    const data = canvas.toDataURL();
+                    let hash = 0;
+                    for (let i = 0;
+                    i < data.length;
+                    i++) {
+                        hash = ((hash << 5) - hash) + data.charCodeAt(i);
+                        hash |= 0;
+                    }
+                    return hash.toString(16);
+                }
+                catch (e) {
+                    return null;
+                }
+            }
 
-            // === 1. AI 爬虫检测 ===
-            const aiBots = [
-                /ChatGPT-User/i, /GPTBot/i, /OAI-SearchBot/i, /ClaudeBot/i,
-                /anthropic-ai/i, /CCBot/i, /PerplexityBot/i, /Applebot-Extended/i,
-                /Bytespider/i, /Amazonbot/i, /FacebookBot/i, /YouBot/i,
-                /Diffbot/i, /ImagesiftBot/i, /cohere-ai/i, /omgili/i, /Webzio/i,
-                /AI2Bot/i, /Ai2Bot-Dolma/i, /DataForSeoBot/i,
-                // 小红书搜索
-                /Xiaohongshu/i, /RedBook/i, /小红书/i
-            ];
-            const searchBots = [
-                /Googlebot/i, /Bingbot/i, /Slurp/i, /DuckDuckBot/i,
-                /Baiduspider/i, /YandexBot/i, /Sogou.*spider/i, /NaverBot/i
-            ];
+            function getWebGLFingerprint() {
+                try {
+                    const canvas = document.createElement('canvas');
+                    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                    if (!gl) return {
+                        vendor: 'none', renderer: 'none', params: 'none'
+                    }
+                    ;
+                    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                    const vendor = debugInfo ? gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) : 'unknown';
+                    const renderer = debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : 'unknown';
+                    const params = [gl.getParameter(gl.VERSION), gl.getParameter(gl.SHADING_LANGUAGE_VERSION), gl.getParameter(gl.VENDOR), gl.getParameter(gl.RENDERER), gl.getParameter(gl.MAX_TEXTURE_SIZE), gl.getParameter(gl.MAX_VIEWPORT_DIMS)].join('|');
+                    return {
+                        vendor, renderer, params
+                    }
+                    ;
+                }
+                catch (e) {
+                    return {
+                        vendor: 'error', renderer: 'error', params: 'error'
+                    }
+                    ;
+                }
+            }
+
+            function getFontFingerprint() {
+                const probe = 'mmmmmmmmmmlli';
+                const fonts = ['Arial','Times New Roman','Courier New','Georgia','Verdana','Helvetica','Tahoma','Trebuchet MS','Palatino','Garamond','Comic Sans MS','Impact','Arial Black','Bookman Old Style','Candara','Consolas','Constantia','Corbel','Calibri','Franklin Gothic Medium','Futura','Geneva','Gill Sans','Lucida Grande','Optima','Segoe UI','Skia','Didot','Baskerville','Big Caslon','Hoefler Text','Times'];
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                ctx.font = '72px monospace';
+                const baseWidth = ctx.measureText(probe).width;
+                const detected = [];
+                fonts.forEach(f => {
+                    ctx.font = '72px "' + f + '", monospace';
+                    if (ctx.measureText(probe).width !== baseWidth) detected.push(f);
+                }
+                );
+                return {
+                    count: detected.length, list: detected.join(','), hash: detected.length + ':' + detected.slice(0,5).join(',')
+                }
+                ;
+            }
+
+            async function getAudioFingerprint() {
+                return new Promise((resolve) => {
+                    try {
+                        const AC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+                        if (!AC) {
+                            resolve(null);
+                            return;
+                        }
+
+                        const ctx = new AC(1, 44100, 44100);
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        const compressor = ctx.createDynamicsCompressor();
+                        osc.type = 'triangle';
+                        osc.frequency.value = 10000;
+                        gain.gain.value = 0.1;
+                        osc.connect(compressor);
+                        compressor.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(0);
+                        ctx.startRendering();
+                        ctx.oncomplete = (e) => {
+                            const buf = e.renderedBuffer.getChannelData(0);
+                            let sum = 0, max = 0;
+                            for (let i = 4500;
+                            i < 4600;
+                            i++) {
+                                const v = Math.abs(buf[i]);
+                                sum += v;
+                                if (v > max) max = v;
+                            }
+                            osc.disconnect();
+                            resolve( {
+                                sum: sum.toFixed(6), max: max.toFixed(6), hash: (sum * 1000000 | 0).toString(16)
+                            }
+                            );
+                        }
+                        ;
+                    }
+                    catch (e) {
+                        resolve(null);
+                    }
+                }
+                );
+            }
+
+            async function computeFingerprint() {
+                const canvas = getCanvasFingerprint();
+                const webgl = getWebGLFingerprint();
+                const font = getFontFingerprint();
+                const audio = await getAudioFingerprint();
+                const fingerprint = {
+                    canvas, webglVendor: webgl.vendor, webglRenderer: webgl.renderer,
+                            webglHash: webgl.params.split('').reduce((a,b)=>((a<<5)-a)+b.charCodeAt(0),0).toString(16),
+                            fontCount: font.count, fontHash: font.hash, audioHash: audio ? audio.hash : 'none',
+                            screen: screen.width + 'x' + screen.height + 'x' + screen.colorDepth,
+                            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                            languages: navigator.languages.join(','), platform: navigator.platform,
+                            cores: navigator.hardwareConcurrency || 'unknown', memory: navigator.deviceMemory || 'unknown',
+                            touch: 'ontouchstart' in window ? 'yes' : 'no', ua: ua
+                }
+                ;
+                const raw = JSON.stringify(fingerprint);
+                let hash = 0;
+                for (let i = 0;
+                i < raw.length;
+                i++) {
+                    hash = ((hash << 5) - hash) + raw.charCodeAt(i);
+                    hash |= 0;
+                }
+                fingerprint.composite = hash.toString(16);
+                return fingerprint;
+            }
+
+            function isSuspiciousFingerprint(fp) {
+                if (fp.webglRenderer && /SwiftShader|llvmpipe|Software/i.test(fp.webglRenderer)) return true;
+                if (fp.webglVendor === 'none' || fp.webglVendor === 'unknown') {
+                    if (/Chrome|Firefox|Edg/i.test(ua)) return true;
+                }
+                if (fp.fontCount < 6) return true;
+                if (fp.audioHash === 'none') {
+                    if (/Chrome/i.test(ua) && !/Edg/i.test(ua)) return true;
+                }
+                if (!fp.canvas || fp.canvas === '0') return true;
+                const knownHeadlessRes = ['800x600x24','1024x768x24','1280x720x24','1280x1024x24','1366x768x24'];
+                if (knownHeadlessRes.includes(fp.screen)) return true;
+                if (fp.cores === 1 && fp.memory === 0.5) return true;
+                return false;
+            }
+
+            const aiBots = [/ChatGPT-User/i,/GPTBot/i,/OAI-SearchBot/i,/ClaudeBot/i,/anthropic-ai/i,/CCBot/i,/PerplexityBot/i,/Applebot-Extended/i,/Bytespider/i,/Amazonbot/i,/FacebookBot/i,/YouBot/i,/Diffbot/i,/ImagesiftBot/i,/cohere-ai/i,/omgili/i,/Webzio/i,/AI2Bot/i,/Ai2Bot-Dolma/i,/DataForSeoBot/i,/Xiaohongshu/i,/RedBook/i,/小红书/i];
+            const searchBots = [/Googlebot/i,/Bingbot/i,/Slurp/i,/DuckDuckBot/i,/Baiduspider/i,/YandexBot/i,/Sogou.*spider/i,/NaverBot/i];
             const isAIBot = aiBots.some(p => p.test(ua));
             const isSearchBot = searchBots.some(p => p.test(ua));
-
-            // === 2. IE 检测 ===
             function isIE() {
-                // 必须同时满足：存在 ActiveXObject 且 UA 含 MSIE/Trident
-                // Edge 没有 ActiveXObject，不会被误杀
                 return ("ActiveXObject" in window || !!window.ActiveXObject) && /MSIE|Trident/i.test(ua);
             }
 
-            // === 3. 360 浏览器检测 ===
             function is360Browser() {
-                if (/360SE|360EE|QIHU|QihooBrowser|QHBrowser|360chrome|360sou|360browser/i.test(ua)) {
-                    return true;
-                }
+                if (/360SE|360EE|QIHU|QihooBrowser|QHBrowser|360chrome|360sou|360browser/i.test(ua)) return true;
                 try {
                     const mimes = navigator.mimeTypes;
-                    for (let i = 0; i < mimes.length; i++) {
+                    for (let i = 0;
+                    i < mimes.length;
+                    i++) {
                         const t = mimes[i].type;
-                        if (t === 'application/vnd.chromium.remoting-viewer' ||
-                            t === 'application/360softmgrplugin' ||
-                            t === 'application/mozilla-npqihooquicklogin' ||
-                            t === 'application/npjlgplayer3-chrome-jlp' ||
-                            t === 'application/hwepass2001.installepass2001' ||
-                            t === 'application/cenroll.cenroll.version.1') {
-                            return true;
-                        }
+                        if (t==='application/vnd.chromium.remoting-viewer'||t==='application/360softmgrplugin'||t==='application/mozilla-npqihooquicklogin'||t==='application/npjlgplayer3-chrome-jlp'||t==='application/hwepass2001.installepass2001'||t==='application/cenroll.cenroll.version.1') return true;
                     }
-                } catch (e) {}
+                }
+                catch (e) {
+                }
                 try {
                     if (window.external && typeof window.external.twGetRunPath === 'function') {
                         const path = window.external.twGetRunPath().toLowerCase();
-                        if (path.indexOf('360se') > -1 || path.indexOf('360chrome') > -1) {
-                            return true;
-                        }
+                        if (path.indexOf('360se') > -1 || path.indexOf('360chrome') > -1) return true;
                     }
-                } catch (e) {}
+                }
+                catch (e) {
+                }
                 try {
                     if (window.chrome && !window.chrome.webstore && !ua.includes('Edg') && !ua.includes('OPR')) {
                         if ('showModalDialog' in window) return true;
                     }
-                } catch (e) {}
+                }
+                catch (e) {
+                }
                 try {
                     const plugins = navigator.plugins;
-                    for (let i = 0; i < plugins.length; i++) {
+                    for (let i = 0;
+                    i < plugins.length;
+                    i++) {
                         const name = plugins[i].name || '';
                         const filename = plugins[i].filename || '';
-                        if (/360|qihoo/i.test(name) || /360|qihoo/i.test(filename)) {
-                            return true;
-                        }
+                        if (/360|qihoo/i.test(name) || /360|qihoo/i.test(filename)) return true;
                     }
-                } catch (e) {}
+                }
+                catch (e) {
+                }
                 return false;
             }
 
-            // === 4. QQ 浏览器 ===
             function isQQBrowser() {
                 if (/QQBrowser|QQ/i.test(ua)) return true;
                 try {
@@ -675,77 +1346,80 @@
                         const path = window.external.twGetRunPath().toLowerCase();
                         if (path.indexOf('qqbrowser') > -1) return true;
                     }
-                } catch (e) {}
+                }
+                catch (e) {
+                }
                 return false;
             }
 
-            // === 5. 搜狗浏览器 ===
             function isSogouBrowser() {
                 if (/SE\s*2\.X|MetaSr|Sogou/i.test(ua)) return true;
                 try {
                     if (window.external && 'seVersion' in window.external) return true;
-                } catch (e) {}
+                }
+                catch (e) {
+                }
                 return false;
             }
 
-            // === 6. 搜狐浏览器 ===
             function isSohuBrowser() {
                 return /SohuNewsBrowser|SohuBrowser/i.test(ua);
             }
 
-            // === 7. 夸克浏览器 ===
             function isQuarkBrowser() {
                 if (/Quark/i.test(ua)) return true;
                 try {
                     if (window.QuarkUtils || window.quark) return true;
-                } catch (e) {}
+                }
+                catch (e) {
+                }
                 return false;
             }
 
-            // === 8. 悟空浏览器 ===
             function isWukongBrowser() {
                 if (/WukongBrowser|悟空浏览器/i.test(ua)) return true;
                 try {
                     if (window.wukong || window.WKBrowser) return true;
-                } catch (e) {}
+                }
+                catch (e) {
+                }
                 return false;
             }
 
-            // === 9. 豆包 AI 浏览器 ===
             function isDoubaoBrowser() {
                 if (/Doubao|DoubaoBrowser|豆包/i.test(ua)) return true;
                 try {
                     if (window.doubao || window.DoubaoAI || window.__DOUBAO__) return true;
-                } catch (e) {}
+                }
+                catch (e) {
+                }
                 return false;
             }
 
-            // === 10. UC 浏览器 ===
             function isUCBrowser() {
-                if (/UCBrowser|UC\b/i.test(ua)) return true;
+                if (/UCBrowser|UC/i.test(ua)) return true;
                 try {
                     if (window.ucweb || window.UCSDK) return true;
-                } catch (e) {}
+                }
+                catch (e) {
+                }
                 return false;
             }
 
-            // === 11. 猎豹浏览器 ===
             function isLiebaoBrowser() {
                 if (/LBBROWSER|LieBao/i.test(ua)) return true;
                 try {
-                    if (window.external && typeof window.external.LiebaoGetVersion === 'function') {
-                        return true;
-                    }
-                } catch (e) {}
+                    if (window.external && typeof window.external.LiebaoGetVersion === 'function') return true;
+                }
+                catch (e) {
+                }
                 return false;
             }
 
-            // === 12. 傲游浏览器 ===
             function isMaxthonBrowser() {
                 return /Maxthon/i.test(ua);
             }
 
-            // === 13. 2345 浏览器 ===
             function is2345Browser() {
                 if (/2345Browser|2345Explorer/i.test(ua)) return true;
                 try {
@@ -754,12 +1428,12 @@
                         const path = window.external.twGetRunPath().toLowerCase();
                         if (path.indexOf('2345') > -1) return true;
                     }
-                } catch (e) {}
+                }
+                catch (e) {
+                }
                 return false;
             }
 
-
-            // === 14. 360 企业安全浏览器检测 ===
             function is360EntBrowser() {
                 if (/360ENT|360Enterprise|360SafeBrowser/i.test(ua)) return true;
                 try {
@@ -771,260 +1445,568 @@
                         const path = window.external.GetRunPath().toLowerCase();
                         if (path.indexOf('360ent') > -1 || path.indexOf('360enterprise') > -1) return true;
                     }
-                } catch (e) {}
+                }
+                catch (e) {
+                }
                 return false;
             }
 
-            // === 15. 支付宝 / 淘宝内置浏览器检测 ===
             function isAlipayTaobaoBrowser() {
                 if (/AlipayClient|AliApp|TBIOS|WindVane/i.test(ua)) return true;
-                if (/\bTaobao\b/i.test(ua)) return true;
+                if (/Taobao/i.test(ua)) return true;
                 try {
                     if (window.AlipayJSBridge || window.TB || window.TaoBao || window.WindVane) return true;
-                } catch (e) {}
+                }
+                catch (e) {
+                }
                 return false;
             }
 
-            // === 16. 华为浏览器检测 ===
             function isHuaweiBrowser() {
                 if (/HuaweiBrowser/i.test(ua)) return true;
                 try {
                     if (window.huawei || window.Huawei || window.HWJSBridge) return true;
-                } catch (e) {}
+                }
+                catch (e) {
+                }
                 return false;
             }
-            // === 综合判断 ===
-            const isBlockedBrowser = isIE() || is360Browser() || is360EntBrowser() || isQQBrowser() ||
-                                    isSogouBrowser() || isSohuBrowser() || isQuarkBrowser() ||
-                                    isWukongBrowser() || isDoubaoBrowser() ||
-                                    isUCBrowser() || isLiebaoBrowser() ||
-                                    isMaxthonBrowser() || is2345Browser() ||
-                                    isAlipayTaobaoBrowser() || isHuaweiBrowser();
 
-            const showHuman = (!isAIBot || isSearchBot) && !isBlockedBrowser;
+            const isBlockedBrowser = isIE() || is360Browser() || is360EntBrowser() || isQQBrowser() || isSogouBrowser() || isSohuBrowser() || isQuarkBrowser() || isWukongBrowser() || isDoubaoBrowser() || isUCBrowser() || isLiebaoBrowser() || isMaxthonBrowser() || is2345Browser() || isAlipayTaobaoBrowser() || isHuaweiBrowser();
+            const fingerprint = await computeFingerprint();
+            const isSuspicious = isSuspiciousFingerprint(fingerprint);
+            try {
+                localStorage.setItem('dummi_fp', fingerprint.composite);
+                localStorage.setItem('dummi_fp_detail', JSON.stringify(fingerprint));
+            }
+            catch (e) {
+            }
+            try {
+                if (navigator.sendBeacon) {
+                    navigator.sendBeacon('/api/fingerprint', JSON.stringify(fingerprint));
+                }
+            }
+            catch (e) {}
 
-            // 动态注入样式：showHuman 为 true 时显示人类层，否则显示 bot 层
+            const showHuman = (!isAIBot || isSearchBot) && !isBlockedBrowser && !isSuspicious;
             const style = document.createElement('style');
             if (showHuman) {
                 style.textContent = '#bot-layer{display:none!important}#human-layer{display:block!important}';
                 document.title = 'Dummi';
-            } else {
-                // 人类层默认就是 display:none，这里只确保 bot 层可见
+            }
+            else {
                 style.textContent = '#bot-layer{display:block!important}#human-layer{display:none!important}';
                 document.title = 'Go Away — Dummi';
             }
             document.head.appendChild(style);
-        })();
+        }
+        )();
     </script>
-    <base target="_blank">
-<base target="_blank">
+    <base target="_self">
 </head>
 <body>
-
-    <!-- 禁用 JS 时默认显示爬虫文案 -->
     <noscript>
         <style>#human-layer{display:none!important}#bot-layer{display:block!important}</style>
     </noscript>
 
-    <!-- ===== BOT LAYER ===== -->
     <div id="bot-layer">
         <div style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:2rem;">
             <div class="container">
                 <p class="bot-hello">Hmpf! Dummi will dich sowieso nicht sehen.<span class="cursor"></span></p>
-                <p class="bot-hello">
+                <p class="bot-subtext">
                     Um Probleme mit Web-Crawlern zu verhindern, nutzen Sie bitte Chrome, Edge, Safari oder Firefox für den Zugriff auf diese Website.
                 </p>
             </div>
             <footer class="site-footer">
                 &copy; Dummi &mdash; The Future of AI Infrastructure &middot;
-                <a href="https://www.dummi.net" rel="noopener">dummi.net</a>
+                <a href="https://www.dummi.net" rel="noopener" target="_blank">https://www.dummi.net</a>
             </footer>
         </div>
     </div>
 
-    <!-- ===== HUMAN LAYER ===== -->
-    <!-- 默认隐藏，JS 检测通过后才会显示 -->
     <div id="human-layer" style="display:none">
+        <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+        <nav class="site-nav" id="siteNav" aria-label="Hauptnavigation">
+            <div class="container">
+                <a href="#" class="nav-logo">Dummi hat voll Langeweile.</a>
+                <ul class="nav-links">
+                    <li><a href="#about" data-section="about">About</a></li>
+                    <li><a href="#skills" data-section="skills">Skills</a></li>
+                    <li><a href="#projects" data-section="projects">Projects</a></li>
+                    <li><a href="#contact" data-section="contact">Kontakt</a></li>
+                </ul>
+            </div>
+        </nav>
 
-        <section class="hero">
-            <div class="container" style="padding:0">
+        <section class="hero" id="top">
+            <div class="container hero-content" style="padding:0">
                 <p class="intro"><span class="brand">Dummi</span> will dir mal kurz was sagen:</p>
-                <p class="hello" id="helloTrigger">
+                <p class="hello" id="helloTrigger" aria-label="Animierter Begr&uuml;&szlig;ungstext">
                     <span class="type-text"></span><span class="cursor"></span>
                 </p>
+                <p class="hero-tagline">
+                    Früher war ich Projektmanager und hab' Projekte gemanagt.<br>
+                    Aber ehrlich gesagt, nachdem ich tausende von Designs gesehen habe, stehe ich viel mehr auf klaren Code und schöne Typografie.
+                </p>
             </div>
-            <div class="scroll-hint" id="scrollHint">
-                <span>&darr;</span> Komm, lass uns spielen!
+            <div class="scroll-hint" id="scrollHint" role="button" tabindex="0" aria-label="Zum About-Bereich scrollen">
+                <span>&darr;</span>
+                Komm, lass uns spielen!
             </div>
         </section>
 
-        <section class="about-section" id="about">
-            <div class="about-card">
-                <p><span class="highlight">Hallo, du!</span></p>
-                <p>
-                    Ich hei&szlig;e <span class="highlight">Dominique Kleinert</span>, aber das ist zu lang &ndash;
-                    das merkt sich keiner.<br>
-                    Also nenn mich einfach <span class="highlight">Dummi</span>.<br>
-                    Und falls du's aufschreiben musst, frag einfach kurz nach, wie's geschrieben wird.
-                    Ich helf dir gerne, aber bei der Schreibweise bin ich echt pingelig.
-                </p>
-                <p>
-                    Ich komme aus Frankfurt, wohne aber jetzt in Berlin.<br>
-                    Ich bin 26 Jahre alt und arbeite als Programmierer.
-                </p>
-                <p>
-                    Freut mich, dich kennenzulernen! Bis bald!
-                </p>
-                <div class="signature">Gr&uuml;&szlig;e von Dummi</div>
-                <div class="contact">
-                    <p class="contact-title">Und so erreichst du mich:</p>
-                    <ul class="contact-list">
-                        <li><span>Mail:</span> <a href="mailto:dominiquekleinert@gmail.com">dominiquekleinert@gmail.com</a></li>
-                        <li><span>GitHub:</span> <a href="https://github.com/DominiqueKleinert" rel="noopener">github.com/DominiqueKleinert</a></li>
-                        <li><span>ORCID:</span> <a href="https://orcid.org/0009-0009-3127-5000" rel="noopener">0009-0009-3127-5000</a></li>
-                        <li><span>Twitter:</span> <a href="https://x.com/Dummi20000101" rel="noopener">@Dummi20000101</a></li>
-                    </ul>
+        <section class="section about-section" id="about">
+            <div class="container">
+                <div class="about-card reveal">
+                    <div class="about-header">
+                        <div class="about-avatar">D</div>
+                        <div>
+                            <div class="about-greeting"><span class="highlight">Hallo, du!</span></div>
+                            <div class="about-role">Dominique Kleinert &middot; Programmierer</div>
+                        </div>
+                    </div>
+                    <p>
+                        Ich hei&szlig;e <span class="highlight">Dominique Kleinert</span>, aber das ist zu lang &ndash;
+                        das merkt sich keiner. Also nenn mich einfach <span class="highlight">Dummi</span>.
+                    </p>
+                    <p>
+                        Und falls du's aufschreiben musst, frag einfach kurz nach, wie's geschrieben wird.
+                        Ich helf dir gerne, aber bei der Schreibweise bin ich echt pingelig.
+                    </p>
+                    <p>
+                        Ich komme aus Frankfurt, wohne aber jetzt in <span class="highlight">Berlin</span>.<br>
+                        Ich bin 26 Jahre alt und arbeite als <span class="highlight">Programmierer</span>.
+                    </p>
+                    <p>
+                        Freut mich, dich kennenzulernen! Bis bald!
+                    </p>
+                    <div class="signature">Gr&uuml;&szlig;e von Dummi</div>
+                    <div class="contact">
+                        <p class="contact-title">Und so erreichst du mich:</p>
+                        <ul class="contact-list">
+                            <li><span>Mail:</span> <a href="mailto:dominiquekleinert@gmail.com" rel="noopener" target="_blank">dominiquekleinert@gmail.com</a></li>
+                            <li><span>GitHub:</span> <a href="https://github.com/DominiqueKleinert" rel="noopener" target="_blank">github.com/DominiqueKleinert</a></li>
+                            <li><span>ORCID:</span> <a href="https://orcid.org/0009-0009-3127-5000" rel="noopener" target="_blank">0009-0009-3127-5000</a></li>
+                            <li><span>Twitter:</span> <a href="https://x.com/Dummi20000101" rel="noopener" target="_blank">@Dummi20000101</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section skills-section" id="skills">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="section-label">Tech Stack</div>
+                    <h2 class="section-title">Womit ich arbeite</h2>
+                    <p class="section-subtitle">Ein Auswahl aus Tools, Sprachen und Frameworks, die ich t&auml;glich nutze.</p>
+                </div>
+                <div class="skills-cloud reveal">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">TypeScript</span>
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">React</span>
+                    <span class="skill-tag">HTML &amp; CSS</span>
+                    <span class="skill-tag">Git</span>
+                    <span class="skill-tag">SQL</span>
+                    <span class="skill-tag">Docker</span>
+                    <span class="skill-tag">Linux</span>
+                    <span class="skill-tag">REST APIs</span>
+                    <span class="skill-tag">Shell</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section projects-section" id="projects">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="section-label">Ausgew&auml;hlte Arbeiten</div>
+                    <h2 class="section-title">Projekte</h2>
+                    <p class="section-subtitle">Ein paar Dinge, an denen ich gearbeitet habe. Mehr findest du auf GitHub.</p>
+                </div>
+                <div class="projects-grid">
+                    <article class="project-card reveal">
+                        <div class="project-icon">&#9889;</div>
+                        <h3>Dummi.net</h3>
+                        <p>Meine pers&ouml;nliche Website mit Bot-Erkennung, Typewriter-Effekt und Dark Mode &mdash; alles in reinem HTML, CSS und JS.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">HTML</span>
+                            <span class="project-tag">CSS</span>
+                            <span class="project-tag">JavaScript</span>
+                        </div>
+                        <a href="https://github.com/DominiqueKleinert" class="project-link" rel="noopener" target="_blank">Auf GitHub ansehen</a>
+                    </article>
+                    <article class="project-card reveal" style="transition-delay: 0.1s;">
+                        <div class="project-icon">&#128295;</div>
+                        <h3>Tooling &amp; Scripts</h3>
+                        <p>Kleine Hilfsprogramme, Automatisierungen und Experimente f&uuml;r den t&auml;glichen Workflow.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">Shell</span>
+                            <span class="project-tag">Automation</span>
+                        </div>
+                        <a href="https://github.com/DominiqueKleinert" class="project-link" rel="noopener" target="_blank">Auf GitHub ansehen</a>
+                    </article>
+                    <article class="project-card reveal" style="transition-delay: 0.2s;">
+                        <div class="project-icon">&#128187;</div>
+                        <h3>Web Experiments</h3>
+                        <p>Spielereien mit Frontend-Technologien, Animationen und unkonventionellen UI-Ideen.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">React</span>
+                            <span class="project-tag">TypeScript</span>
+                            <span class="project-tag">UI</span>
+                        </div>
+                        <a href="https://github.com/DominiqueKleinert" class="project-link" rel="noopener" target="_blank">Auf GitHub ansehen</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section cta-section" id="contact">
+            <div class="container">
+                <div class="cta-card reveal">
+                    <h2>Lass uns quatschen!</h2>
+                    <p>Ob Job, Projekt oder einfach nur Hallo sagen &mdash; ich freue mich &uuml;ber jede Nachricht.</p>
+                    <a href="mailto:dominiquekleinert@gmail.com" class="cta-button" rel="noopener" target="_blank">E-Mail schreiben</a>
                 </div>
             </div>
         </section>
 
         <footer class="site-footer">
-            &copy; Dummi &mdash; The Future of AI Infrastructure &middot;
-            <a href="https://www.dummi.net" rel="noopener">dummi.net</a>
+            <div class="container">
+                &copy; Dummi &mdash; The Future of AI Infrastructure &middot;
+                <a href="https://www.dummi.net" rel="noopener" target="_blank">https://www.dummi.net</a>
+            </div>
         </footer>
     </div>
 
-    <!-- ===== COOKIE MODAL ===== -->
-    <div id="cookie-overlay" class="cookie-overlay"></div>
-    <div id="cookie-modal" class="cookie-modal">
-        <span class="cookie-icon">&#127850;</span>
-        <h3>Cookie-Einstellungen</h3>
+    <div id="cookie-overlay" class="cookie-overlay hidden"></div>
+    <div id="cookie-modal" class="cookie-modal hidden" role="dialog" aria-modal="true" aria-labelledby="cookieTitle">
+        <span class="cookie-icon" aria-hidden="true">&#127850;</span>
+        <h3 id="cookieTitle">Cookie-Einstellungen</h3>
         <p>
             Diese Website verwendet ausschlie&szlig;lich <strong>technisch notwendige Cookies</strong>,
             um Ihre Zustimmung zu speichern. Es werden keine personenbezogenen Daten
             zu Tracking- oder Werbezwecken erhoben.
-            <a href="#" class="policy-link" id="policyLink">Mehr erfahren</a>
+            <a href="#" class="policy-link" id="policyLink" rel="noopener" target="_blank">Mehr erfahren</a>
         </p>
         <button class="btn-accept" id="cookie-accept">Verstanden</button>
     </div>
 
     <script>
-        /* ===== Cookie Modal（防御性：localStorage 被禁时静默降级） ===== */
-        (function() {
+        /* ===== Cookie Modal ===== */
+                (function() {
             var overlay = document.getElementById('cookie-overlay');
             var modal = document.getElementById('cookie-modal');
             var acceptBtn = document.getElementById('cookie-accept');
             var policyLink = document.getElementById('policyLink');
             if (!modal || !acceptBtn) return;
-
             var alreadyConsented = false;
             try {
                 alreadyConsented = localStorage.getItem('cookieConsent') === 'true';
-            } catch (e) {
+            }
+            catch (e) {
                 overlay.classList.add('hidden');
                 modal.classList.add('hidden');
                 return;
             }
-
             if (alreadyConsented) {
                 overlay.classList.add('hidden');
                 modal.classList.add('hidden');
             }
-
             acceptBtn.addEventListener('click', function() {
                 try {
                     localStorage.setItem('cookieConsent', 'true');
-                } catch (e) {}
+                }
+                catch (e) {
+                }
                 overlay.classList.add('hidden');
                 modal.classList.add('hidden');
-            });
-
+            }
+            );
             if (policyLink) {
                 policyLink.addEventListener('click', function(e) {
                     e.preventDefault();
                     alert('Datenschutzerklärung: Wir speichern nur Ihren Zustimmungsstatus, sonst nichts.');
-                });
+                }
+                );
             }
-        })();
-
-        /* ===== About 区域：向下滚动弹出，向上滚动回收 ===== */
+        }
+        )();
+        /* ===== Scroll Progress ===== */
+                (function() {
+            var progress = document.getElementById('scrollProgress');
+            if (!progress) return;
+            function updateProgress() {
+                var scrollTop = window.scrollY || document.documentElement.scrollTop;
+                var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                var percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                progress.style.width = percent + '%';
+            }
+            window.addEventListener('scroll', updateProgress, {
+                passive: true
+            }
+            );
+            updateProgress();
+        }
+        )();
+        /* ===== Navigation scroll state ===== */
+                (function() {
+            var nav = document.getElementById('siteNav');
+            if (!nav) return;
+            function updateNav() {
+                if (window.scrollY > 50) {
+                    nav.classList.add('scrolled');
+                }
+                else {
+                    nav.classList.remove('scrolled');
+                }
+            }
+            window.addEventListener('scroll', updateNav, {
+                passive: true
+            }
+            );
+            updateNav();
+        }
+        )();
+        /* ===== Active nav link + sliding indicator ===== */
         (function() {
-            var aboutSection = document.getElementById('about');
-            if (!aboutSection) return;
+            var sections = document.querySelectorAll('section[id]');
+            var navLinks = document.querySelectorAll('.nav-links a[data-section]');
+            var navList = document.querySelector('.nav-links');
+            if (!sections.length || !navLinks.length || !navList) return;
 
+            var indicator = document.createElement('li');
+            indicator.className = 'nav-indicator';
+            navList.appendChild(indicator);
+
+            var currentIndex = -1;
+            var isAnimating = false;
+            var ignoreScroll = false;
+
+            function getLinkIndex(link) {
+                return Array.prototype.indexOf.call(navLinks, link);
+            }
+
+            function getLinkRect(link) {
+                var navRect = navList.getBoundingClientRect();
+                var rect = link.getBoundingClientRect();
+                return {
+                    left: rect.left - navRect.left,
+                    width: rect.width
+                };
+            }
+
+            function setActiveClass(link) {
+                navLinks.forEach(function(l) { l.classList.remove('active'); });
+                if (link) link.classList.add('active');
+            }
+
+            function moveIndicator(link, animate) {
+                var newIndex = getLinkIndex(link);
+                var pos = getLinkRect(link);
+
+                if (currentIndex === -1 || !animate || currentIndex === newIndex) {
+                    indicator.style.animation = 'none';
+                    indicator.style.transition = 'none';
+                    indicator.style.left = pos.left + 'px';
+                    indicator.style.width = pos.width + 'px';
+                    indicator.classList.add('visible');
+                    indicator.offsetHeight;
+                    indicator.style.transition = '';
+                    indicator.style.animation = '';
+                    currentIndex = newIndex;
+                    return;
+                }
+
+                if (isAnimating || currentIndex === newIndex) return;
+                isAnimating = true;
+
+                var direction = newIndex > currentIndex ? 'right' : 'left';
+
+                // Phase 1: old indicator slides out
+                indicator.classList.remove('enter-left', 'enter-right');
+                indicator.classList.add(direction === 'right' ? 'exit-left' : 'exit-right');
+
+                setTimeout(function() {
+                    // Phase 2: reposition and slide in from opposite side
+                    indicator.classList.remove('exit-left', 'exit-right');
+                    indicator.style.left = pos.left + 'px';
+                    indicator.style.width = pos.width + 'px';
+                    indicator.classList.add(direction === 'right' ? 'enter-right' : 'enter-left');
+
+                    setTimeout(function() {
+                        indicator.classList.remove('enter-left', 'enter-right');
+                        isAnimating = false;
+                    }, 350);
+                }, 250);
+
+                currentIndex = newIndex;
+            }
+
+            // Click: directional slide animation
+            navLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    ignoreScroll = true;
+                    setActiveClass(link);
+                    moveIndicator(link, true);
+                    setTimeout(function() { ignoreScroll = false; }, 800);
+                });
+            });
+
+            // Scroll: direct positioning, no directional animation
             var observer = new IntersectionObserver(function(entries) {
+                if (ignoreScroll) return;
                 entries.forEach(function(entry) {
                     if (entry.isIntersecting) {
-                        aboutSection.classList.add('visible');
-                    } else if (entry.boundingClientRect.top > 0) {
-                        aboutSection.classList.remove('visible');
+                        var link = document.querySelector('.nav-links a[data-section="' + entry.target.id + '"]');
+                        if (link) {
+                            setActiveClass(link);
+                            moveIndicator(link, false);
+                        }
                     }
                 });
             }, {
-                threshold: 0.05,
-                rootMargin: '0px 0px -50px 0px'
+                threshold: 0.3, rootMargin: '-80px 0px -40% 0px'
             });
 
-            observer.observe(aboutSection);
-        })();
+            sections.forEach(function(section) {
+                observer.observe(section);
+            });
 
-        /* ===== 点击 scroll-hint 弹出卡片并滚动 ===== */
-        (function() {
+            // Init: find current active or default to first
+            var activeLink = document.querySelector('.nav-links a.active');
+            if (!activeLink) {
+                activeLink = navLinks[0];
+                if (activeLink) activeLink.classList.add('active');
+            }
+            if (activeLink) {
+                moveIndicator(activeLink, false);
+            }
+
+            // Resize: reposition without animation
+            window.addEventListener('resize', function() {
+                var link = document.querySelector('.nav-links a.active');
+                if (link) {
+                    var pos = getLinkRect(link);
+                    indicator.style.transition = 'none';
+                    indicator.style.left = pos.left + 'px';
+                    indicator.style.width = pos.width + 'px';
+                    indicator.offsetHeight;
+                    indicator.style.transition = '';
+                }
+            });
+        })();
+        /* ===== Reveal animations ===== */
+                (function() {
+            var reveals = document.querySelectorAll('.reveal');
+            if (!reveals.length) return;
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                }
+                );
+            }
+            , {
+                threshold: 0.1, rootMargin: '0px 0px -50px 0px'
+            }
+            );
+            reveals.forEach(function(el) {
+                observer.observe(el);
+            }
+            );
+        }
+        )();
+        /* ===== Scroll hint ===== */
+                (function() {
             var scrollHint = document.getElementById('scrollHint');
             var aboutSection = document.getElementById('about');
             if (!scrollHint || !aboutSection) return;
-
-            scrollHint.addEventListener('click', function() {
-                aboutSection.classList.add('visible');
-                aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        })();
-
-        /* ===== 打字机效果（async/await） ===== */
-        (() => {
+            function scrollToAbout() {
+                aboutSection.scrollIntoView( {
+                    behavior: 'smooth', block: 'start'
+                }
+                );
+            }
+            scrollHint.addEventListener('click', scrollToAbout);
+            scrollHint.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    scrollToAbout();
+                }
+            }
+            );
+        }
+        )();
+        /* ===== Typewriter ===== */
+                (() => {
             const typeSpan = document.querySelector('.hello .type-text');
             const cursor = document.querySelector('.hello .cursor');
             const trigger = document.getElementById('helloTrigger');
             if (!typeSpan || !cursor || !trigger) return;
-
             let isAnimating = false;
             let clickCount = 0;
-
             const TYPE_SPEED = 180;
             const ERASE_SPEED = 120;
-
-            // 所有序列均为纯数据
-            const initialSequence = [
-                { action: 'pause', duration: 800 },
-                { action: 'type',  text: 'Na, alles gut?' }
+            const initialSequence = [ {
+                action: 'pause', duration: 800
+            }
+            , {
+                action: 'type',  text: 'Na, alles gut?'
+            }
             ];
-
-            const complexSequence = [
-                { action: 'type',  text: 'Hmm.' },
-                { action: 'pause', duration: 1170 },
-                { action: 'erase' },
-                { action: 'pause', duration: 585 },
-                { action: 'type',  text: 'Du guckst aber trübe.' }
+            const complexSequence = [ {
+                action: 'type',  text: 'Hmm.'
+            }
+            , {
+                action: 'pause', duration: 1170
+            }
+            , {
+                action: 'erase'
+            }
+            , {
+                action: 'pause', duration: 585
+            }
+            , {
+                action: 'type',  text: 'Du guckst aber trübe.'
+            }
             ];
-
-            const newSequence = [
-                { action: 'type',  text: 'Moment!' },
-                { action: 'pause', duration: 1170 },
-                { action: 'erase' },
-                { action: 'pause', duration: 585 },
-                { action: 'type',  text: 'Lass mich mal überlegen.' },
-                { action: 'pause', duration: 1170 },
-                { action: 'erase' },
-                { action: 'pause', duration: 585 },
-                { action: 'type',  text: "Wollen wir 'ne Runde drehen?" }
+            const newSequence = [ {
+                action: 'type',  text: 'Moment!'
+            }
+            , {
+                action: 'pause', duration: 1170
+            }
+            , {
+                action: 'erase'
+            }
+            , {
+                action: 'pause', duration: 585
+            }
+            , {
+                action: 'type',  text: 'Lass mich mal überlegen.'
+            }
+            , {
+                action: 'pause', duration: 1170
+            }
+            , {
+                action: 'erase'
+            }
+            , {
+                action: 'pause', duration: 585
+            }
+            , {
+                action: 'type',  text: "Wollen wir 'ne Runde drehen?"
+            }
             ];
-
-            const fallbackSequence = [
-                { action: 'type', text: '......' }
+            const fallbackSequence = [ {
+                action: 'type', text: '......'
+            }
             ];
-
             const sleep = ms => new Promise(r => setTimeout(r, ms));
-
             async function type(text) {
                 cursor.classList.remove('blinking');
                 for (const ch of text) {
@@ -1058,36 +2040,45 @@
                 clickCount++;
                 cursor.classList.remove('blinking');
                 isAnimating = true;
-
-                const sequence = [{ action: 'erase' }];
-
+                const sequence = [ {
+                    action: 'erase'
+                }
+                ];
                 if (clickCount === 1) {
-                    sequence.push({ action: 'pause', duration: 1170 });
+                    sequence.push( {
+                        action: 'pause', duration: 1170
+                    }
+                    );
                     sequence.push(...complexSequence);
-                } else if (clickCount === 2) {
-                    sequence.push({ action: 'pause', duration: 585 });
+                }
+                else if (clickCount === 2) {
+                    sequence.push( {
+                        action: 'pause', duration: 585
+                    }
+                    );
                     sequence.push(...newSequence);
-                } else {
-                    sequence.push({ action: 'pause', duration: 585 });
+                }
+                else {
+                    sequence.push( {
+                        action: 'pause', duration: 585
+                    }
+                    );
                     sequence.push(...fallbackSequence);
                 }
-
                 await runSequence(sequence);
                 cursor.classList.add('blinking');
                 isAnimating = false;
             }
-
-            // 页面加载后自动开始
             (async () => {
                 isAnimating = true;
                 await runSequence(initialSequence);
                 cursor.classList.add('blinking');
                 isAnimating = false;
-            })();
-
+            }
+            )();
             trigger.addEventListener('click', handleClick);
-        })();
+        }
+        )();
     </script>
-
 </body>
 </html>
