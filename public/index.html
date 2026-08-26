@@ -14,7 +14,7 @@
     <meta property="og:url" content="https://www.dummi.net">
     <meta name="twitter:card" content="summary">
     <link rel="canonical" href="https://www.dummi.net">
-    <title>Go Away — Dummi</title>
+    <title>Nervt Dummi nicht, sie hat viel zu tun.</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
@@ -109,7 +109,14 @@
         }
 
         html {
-            scroll-behavior: smooth;
+            overflow-y: scroll;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        html::-webkit-scrollbar {
+            display: none;
+            width: 0;
         }
 
         body {
@@ -162,21 +169,37 @@
             right: 0;
             z-index: 1000;
             padding: 1rem 0;
-            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
-            transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+    
+            /* 就这一行，全局统一，scrolled 也不改 */
+            background: rgba(250, 249, 247, 0.30);
+            backdrop-filter: blur(24px) saturate(1.6);
+            -webkit-backdrop-filter: blur(24px) saturate(1.6);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.40);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.50);
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
         }
 
+        /* scrolled 只动阴影和边框，background 不动 */
         .site-nav.scrolled {
-            background: rgba(250, 249, 247, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 0.75rem 0;
+            box-shadow: 
+                inset 0 1px 0 rgba(255, 255, 255, 0.35),
+                0 8px 30px rgba(0, 0, 0, 0.06);
+            border-bottom-color: rgba(255, 255, 255, 0.25);
         }
 
         @media (prefers-color-scheme: dark) {
+            .site-nav {
+                /* 同样只写一次 */
+                background: rgba(20, 20, 20, 0.35);
+                border-bottom-color: rgba(255, 255, 255, 0.08);
+                box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            }
+    
             .site-nav.scrolled {
-                background: rgba(10, 10, 10, 0.85);
-                box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
+                box-shadow: 
+                    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+                    0 8px 30px rgba(0, 0, 0, 0.35);
+                border-bottom-color: rgba(255, 255, 255, 0.05);
             }
         }
 
@@ -463,7 +486,7 @@
             font-size: 1.15rem;
             color: var(--text-muted);
             margin-top: 0.75rem;
-            max-width: 560px;
+            width: 1380px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -479,11 +502,11 @@
             transform: translateY(0);
         }
 
-        .skills-section {
+        .zeug-section {
             background: var(--bg);
         }
 
-        .skills-cloud {
+        .zeug-cloud {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -492,7 +515,7 @@
             margin: 0 auto;
         }
 
-        .skill-tag {
+        .zeug-tag {
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
@@ -506,18 +529,18 @@
             cursor: default;
         }
 
-        .skill-tag:hover {
+        .zeug-tag:hover {
             transform: translateY(-3px);
             background: var(--accent);
             color: #ffffff;
         }
 
-        .skill-tag::before {
+        .zeug-tag::before {
             content: '#';
             opacity: 0.6;
         }
 
-        .projects-grid {
+        .projekte-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
@@ -605,12 +628,12 @@
             content: '→';
         }
 
-        .about-section {
+        .meins-section {
             background: var(--bg);
         }
 
-        .about-card {
-            max-width: 760px;
+        .meins-card {
+            width: 1380px;
             margin: 0 auto;
             background: var(--card-bg);
             padding: 3rem 3.5rem;
@@ -622,12 +645,12 @@
             transition: transform var(--transition-base), box-shadow var(--transition-base);
         }
 
-        .about-card:hover {
+        .meins-card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow-card-hover);
         }
 
-        .about-card::before {
+        .meins-card::before {
             content: '\201E';
             position: absolute;
             top: 2.2rem;
@@ -639,7 +662,7 @@
             transition: color 0.4s ease;
         }
 
-        .about-card::after {
+        .meins-card::after {
             content: '';
             position: absolute;
             top: 0;
@@ -650,7 +673,7 @@
             transition: background 0.4s ease;
         }
 
-        .about-header {
+        .meins-header {
             display: flex;
             align-items: center;
             gap: 1.25rem;
@@ -659,7 +682,7 @@
             z-index: 1;
         }
 
-        .about-avatar {
+        .meins-avatar {
             width: 72px;
             height: 72px;
             border-radius: 50%;
@@ -674,26 +697,26 @@
             box-shadow: 0 4px 16px rgba(217, 119, 6, 0.3);
         }
 
-        .about-avatar img {
+        .meins-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             border-radius: 50%;
         }
 
-        .about-greeting {
+        .meins-greeting {
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--text-heading);
         }
 
-        .about-role {
+        .meins-role {
             color: var(--text-muted);
             font-size: 1rem;
             margin-top: 0.15rem;
         }
 
-        .about-card p {
+        .meins-card p {
             font-size: 1.15rem;
             line-height: 1.85;
             color: var(--text-card);
@@ -702,16 +725,16 @@
             z-index: 1;
         }
 
-        .about-card p:last-child {
+        .meins-card p:last-child {
             margin-bottom: 0;
         }
 
-        .about-card .highlight {
+        .meins-card .highlight {
             color: var(--accent);
             font-weight: 700;
         }
 
-        .about-card .signature {
+        .meins-card .signature {
             margin-top: 1.8rem;
             text-align: right;
             font-style: italic;
@@ -722,7 +745,7 @@
             z-index: 1;
         }
 
-        .about-card .contact {
+        .meins-card .kontakt {
             margin-top: 2.5rem;
             padding-top: 1.5rem;
             border-top: 1px solid var(--border);
@@ -730,47 +753,76 @@
             z-index: 1;
         }
 
-        .about-card .contact-title {
+        .meins-card .kontakt-title {
             font-size: 1.1rem;
             font-weight: 700;
             color: var(--text-heading);
-            margin-bottom: 0.8rem;
+            margin-bottom: 1.2rem;
             letter-spacing: 0.01em;
         }
 
-        .about-card .contact-list {
+        .meins-card .kontakt-row-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        .meins-card .kontakt-group-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-card);
+            margin-bottom: 0.4rem;
+        }
+
+        .meins-card .kontakt-group ul,
+        .meins-card .kontakt-subgroup ul {
             list-style: none;
             padding: 0;
             margin: 0;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 0.5rem;
         }
 
-        .about-card .contact-list li {
+        .meins-card .kontakt-group li,
+        .meins-card .kontakt-subgroup li {
             font-size: 1rem;
             line-height: 1.8;
             color: var(--text-muted);
         }
 
-        .about-card .contact-list li span {
+        .meins-card .kontakt-group li span,
+        .meins-card .kontakt-subgroup li span {
             font-weight: 700;
             color: var(--text-card);
             display: inline-block;
             min-width: 4.5rem;
         }
 
-        .about-card .contact-list li a {
+        .meins-card .kontakt-group li a,
+        .meins-card .kontakt-subgroup li a {
             color: var(--accent);
             text-decoration: none;
             transition: color 0.2s ease;
             word-break: break-all;
         }
 
-        .about-card .contact-list li a:hover {
+        .meins-card .kontakt-group li a:hover,
+        .meins-card .kontakt-subgroup li a:hover {
             color: var(--accent-dark);
             text-decoration: underline;
             text-underline-offset: 3px;
+        }
+
+        .meins-card .kontakt-group-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        @media (max-width: 640px) {
+            .meins-card .kontakt-row-2col {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
         }
 
         .cta-section {
@@ -837,14 +889,135 @@
             outline-offset: 3px;
         }
 
+        .mail-section {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: var(--bg);
+            padding: 0;
+        }
+
+        .mail-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+
+        .mail-card {
+            width: 1380px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 3.5rem 3rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--card-outline);
+            text-align: center;
+        }
+
+        .mail-card h2 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 0.5rem;
+        }
+
+        .mail-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+        }
+
+        .mail-options {
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .mail-option {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            padding: 1.25rem 1.5rem;
+            border-radius: var(--radius-md);
+            background: var(--bg);
+            border: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .mail-option:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+            box-shadow: 0 4px 16px rgba(217, 119, 6, 0.12);
+        }
+
+        .mail-option .mail-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .mail-option .mail-address {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .mail-back-hint {
+            display: block;
+            text-align: center;
+            padding: 1.5rem 0 0;
+            font-size: 2.625rem;
+            color: var(--text-faint);
+            text-decoration: none;
+            animation: bob 2s ease-in-out infinite;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.3s ease;
+        }
+
+        .mail-back-hint:hover {
+            color: var(--scroll-hint-hover);
+        }
+
+        .mail-back-hint span {
+            display: block;
+            font-size: 3.75rem;
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        @media (max-width: 640px) {
+            .mail-card {
+                padding: 2.5rem 1.5rem;
+            }
+        }
+
+
         .site-footer {
             text-align: center;
             padding: 2.5rem 1.5rem;
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: var(--text-footer);
             background: var(--bg);
-            border-top: 1px solid var(--border);
             transition: color 0.4s ease, background 0.4s ease;
+            position: relative;
+        }
+
+        .site-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1380px;
+            max-width: calc(100% - 3rem);
+            height: 3px;
+            background: #111111;
         }
 
         .site-footer a {
@@ -991,59 +1164,11 @@
             line-height: 1.7;
         }
 
-        .nav-indicator {
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            height: 2px;
-            background: var(--accent);
-            border-radius: 2px;
-            pointer-events: none;
-            opacity: 0;
-            width: 0;
-        }
-
-        .nav-indicator.visible {
-            opacity: 1;
-        }
-
-        .nav-indicator.exit-left {
-            animation: navExitLeft 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .nav-indicator.exit-right {
-            animation: navExitRight 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .nav-indicator.enter-left {
-            animation: navEnterLeft 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .nav-indicator.enter-right {
-            animation: navEnterRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        @keyframes navExitLeft {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(-30px); opacity: 0; }
-        }
-
-        @keyframes navExitRight {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(30px); opacity: 0; }
-        }
-
-        @keyframes navEnterLeft {
-            from { transform: translateX(-30px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        @keyframes navEnterRight {
-            from { transform: translateX(30px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
         @media (max-width: 640px) {
+            .mail-options {
+                flex-direction: column;
+            }
+
             .intro {
                 font-size: 1.35rem;
             }
@@ -1065,26 +1190,26 @@
                 padding: 3.5rem 0;
             }
 
-            .about-card {
+            .meins-card {
                 padding: 2rem 1.5rem;
             }
 
-            .about-card p, .about-card .signature {
+            .meins-card p, .meins-card .signature {
                 font-size: 1.05rem;
             }
 
-            .about-card::before {
+            .meins-card::before {
                 font-size: 4rem;
                 top: 1.5rem;
                 left: 1.5rem;
             }
 
-            .about-header {
+            .meins-header {
                 flex-direction: column;
                 text-align: center;
             }
 
-            .about-card .contact-list {
+            .meins-card .kontakt-list {
                 grid-template-columns: 1fr;
             }
 
@@ -1111,6 +1236,23 @@
 
             .hero {
                 padding-bottom: 4rem;
+            }
+
+            /* 人类页面 flex 容器，让 footer 吸底 */
+            #human-layer {
+                display: flex !important;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+
+            /* 当 JS 隐藏时（display:none），保持隐藏 */
+            #human-layer[style*="display:none"] {
+                display: none !important;
+            }
+
+            /* 主内容区域，自动撑开，把 footer 推到底部 */
+            #human-layer .main-content {
+                flex: 1;
             }
         }
     </style>
@@ -1397,7 +1539,7 @@
             }
 
             function isUCBrowser() {
-                if (/UCBrowser|UC/i.test(ua)) return true;
+                if (/UCBrowser|UCBrowser/i.test(ua)) return true;
                 try {
                     if (window.ucweb || window.UCSDK) return true;
                 }
@@ -1453,7 +1595,7 @@
 
             function isAlipayTaobaoBrowser() {
                 if (/AlipayClient|AliApp|TBIOS|WindVane/i.test(ua)) return true;
-                if (/Taobao/i.test(ua)) return true;
+                if (/Taobao/i.test(ua)) return true;
                 try {
                     if (window.AlipayJSBridge || window.TB || window.TaoBao || window.WindVane) return true;
                 }
@@ -1472,7 +1614,241 @@
                 return false;
             }
 
-            const isBlockedBrowser = isIE() || is360Browser() || is360EntBrowser() || isQQBrowser() || isSogouBrowser() || isSohuBrowser() || isQuarkBrowser() || isWukongBrowser() || isDoubaoBrowser() || isUCBrowser() || isLiebaoBrowser() || isMaxthonBrowser() || is2345Browser() || isAlipayTaobaoBrowser() || isHuaweiBrowser();
+            function isTabbittBrowser() {
+                if (/Tabbitt|TabbittAI|TabbittBrowser/i.test(ua)) return true;
+                try {
+                    if (window.tabbitt || window.Tabbitt || window.TabbittAI) return true;
+                }
+                catch (e) {
+                }
+                return false;
+            }
+
+            function isZeroBrowser() {
+                if (/ZERO|ZeroBrowser|Zero\s*Browser/i.test(ua)) return true;
+                try {
+                    if (window.zero || window.Zero || window.ZERO || window.ZeroBrowser) return true;
+                }
+                catch (e) {
+                }
+                return false;
+            }
+
+            function isLenovoBrowser() {
+                if (/LenovoBrowser|SLBrowser|联想浏览器|SmartLenovo/i.test(ua)) return true;
+                try {
+                    if (window.lenovo || window.Lenovo || window.SLBrowser || window.slbrowser) return true;
+                }
+                catch (e) {
+                }
+                return false;
+            }
+
+            function isThunderBrowser() {
+                if (/Thunder|Xunlei|迅雷浏览器|迅雷/i.test(ua)) return true;
+                try {
+                    if (window.thunder || window.Thunder || window.xunlei || window.Xunlei) return true;
+                }
+                catch (e) {
+                }
+                return false;
+            }
+
+            function isTwinkstarBrowser() {
+                if (/Twinkstar|星愿浏览器|TwinkstarBrowser/i.test(ua)) return true;
+                try {
+                    if (window.twinkstar || window.Twinkstar || window.__twinkstar__) return true;
+                }
+                catch (e) {
+                }
+                return false;
+            }
+
+            function isOpenAIAtlasBrowser() {
+                if (/OpenAI.*Atlas|AtlasBrowser|OpenAIAtlas/i.test(ua)) return true;
+                try {
+                    if (window.openaiAtlas || window.OpenAIAtlas || window.atlas || window.Atlas) return true;
+                }
+                catch (e) {
+                }
+                return false;
+            }
+
+            function isPerplexityCometBrowser() {
+                if (/Perplexity.*Comet|CometBrowser|PerplexityComet/i.test(ua)) return true;
+                try {
+                    if (window.perplexityComet || window.PerplexityComet || window.comet || window.Comet) return true;
+                }
+                catch (e) {
+                }
+                return false;
+            }
+
+            function isFellouBrowser() {
+                if (/Fellou|FellouBrowser/i.test(ua)) return true;
+                try {
+                    if (window.fellou || window.Fellou || window.__fellou__) return true;
+                }
+                catch (e) {
+                }
+                return false;
+            }
+
+            function isSigmaAIBrowser() {
+                if (/Sigma.*AI|SigmaBrowser|SigmaAI/i.test(ua)) return true;
+                try {
+                    if (window.sigmaAI || window.SigmaAI || window.sigma || window.Sigma) return true;
+                }
+                catch (e) {
+                }
+                return false;
+            }
+
+            function isJatterBrowser() {
+                if (/Jatter|JatterBrowser/i.test(ua)) return true;
+                try {
+                    if (window.jatter || window.Jatter || window.__jatter__) return true;
+                }
+                catch (e) {
+                }
+                return false;
+            }
+
+            function isDouyinApp() {
+                if (/aweme|bytedancewebview|BytedanceWebview|ByteLocale/i.test(ua)) return true;
+                try {
+                    if (window.Toutiao || window.bytedance || window.aweme || window.DouyinJSBridge || window._bytedance) return true;
+                }
+                catch (e) {}
+                return false;
+            }
+
+            function isXiaohongshuApp() {
+                if (/Xiaohongshu|xhsapp|xhs/i.test(ua)) return true;
+                try {
+                    if (window.xhs || window.XHS || window.xhsBridge || window.XHSBridge || window.__xhs__) return true;
+                }
+                catch (e) {}
+                return false;
+            }
+
+            function isBilibiliApp() {
+                if (/BiliApp|BiliDroid|bilibili/i.test(ua)) return true;
+                try {
+                    if (window.BiliJsBridge || window.biliBridge || window.biliApp || window.BiliApp) return true;
+                }
+                catch (e) {}
+                return false;
+            }
+
+            function isQQApp() {
+                if (/QQ\/[0-9]/i.test(ua)) return true;
+                try {
+                    if (window.mqq || window.QQApp || window.TencentNews || window.qb) return true;
+                }
+                catch (e) {}
+                return false;
+            }
+
+            function isFeishuApp() {
+                if (/Lark|Feishu|飞书/i.test(ua)) return true;
+                try {
+                    if (window.lark || window.Lark || window.feishu || window.Feishu ||
+                        window.FeishuJSBridge || window.LarkJSBridge || window._lark) return true;
+                }
+                catch (e) {}
+                return false;
+            }
+
+            function isWeiboApp() {
+                if (/Weibo/i.test(ua)) return true;
+                try {
+                    if (window.WeiboJSBridge || window.weibo || window.Weibo) return true;
+                }
+                catch (e) {}
+                return false;
+            }
+
+            function isToutiaoApp() {
+                if (/NewsArticle|TTWebView/i.test(ua)) return true;
+                try {
+                    if (window.ToutiaoJSBridge || window.toutiao || window.Toutiao || window.NewsArticle) return true;
+                }
+                catch (e) {}
+                return false;
+            }
+
+            function hasKimiWebBridge() {
+                try {
+                    if (window.kimi || window.Kimi || window.__kimi__ || window.__kimi_bridge__ || window.__kimi_webbridge__) return true;
+                    if (window.moonshot || window.MoonshotAI || window.__moonshot__ || window.__moonshot_ext__) return true;
+                    var html = document.documentElement;
+                    if (html.getAttribute('data-kimi') || html.getAttribute('data-moonshot') || html.getAttribute('kimi-ext') || html.getAttribute('moonshot-ext')) return true;
+                    var styles = document.querySelectorAll('style');
+                    for (var i = 0; i < styles.length; i++) {
+                        var text = styles[i].textContent || '';
+                        if (/kimi|moonshot|webbridge|kimi-extension/i.test(text)) return true;
+                    }
+                    var scripts = document.querySelectorAll('script');
+                    for (var i = 0; i < scripts.length; i++) {
+                        var src = scripts[i].src || '';
+                        if (/kimi|moonshot|webbridge/i.test(src)) return true;
+                    }
+                    // Shadow DOM 深度扫描
+                    var allElements = document.querySelectorAll('*');
+                    for (var i = 0; i < allElements.length; i++) {
+                        var el = allElements[i];
+                        if (el.shadowRoot) {
+                            var shadowStyles = el.shadowRoot.querySelectorAll('style');
+                            for (var j = 0; j < shadowStyles.length; j++) {
+                                if (/kimi|moonshot/i.test(shadowStyles[j].textContent || '')) return true;
+                            }
+                        }
+                    }
+                    // iframe 隔离扫描（跨域会抛错，用 try-catch）
+                    var frames = document.querySelectorAll('iframe');
+                    for (var i = 0; i < frames.length; i++) {
+                        try {
+                            var cw = frames[i].contentWindow;
+                            if (cw && (cw.kimi || cw.__kimi__ || cw.moonshot || cw.__moonshot__)) return true;
+                        } catch (e) {}
+                    }
+                }
+                catch (e) {
+                }
+                return false;
+            }
+
+            function detectAutomation() {
+                const checks = [
+                    navigator.webdriver === true,
+                    'cdc_' in window || '_cdc_' in window,
+                    /HeadlessChrome|PhantomJS|Sequentum/i.test(navigator.userAgent),
+                    window.outerWidth === 0 && window.outerHeight === 0,
+                    !window.chrome && /Chrome/i.test(navigator.userAgent),
+                    window.callPhantom || window._phantom,
+                    window.Buffer && window.process,
+                ];
+                return checks.filter(Boolean).length;
+            }
+
+            const isBlockedBrowser =
+                // 国产浏览器
+                isIE() ||
+                is360Browser() || is360EntBrowser() ||
+                isQQBrowser() || isSogouBrowser() || isSohuBrowser() ||
+                isQuarkBrowser() || isWukongBrowser() || isDoubaoBrowser() ||
+                isUCBrowser() || isLiebaoBrowser() || isMaxthonBrowser() ||
+                is2345Browser() || isAlipayTaobaoBrowser() || isHuaweiBrowser() ||
+                isTabbittBrowser() || isZeroBrowser() || isLenovoBrowser() ||
+                isThunderBrowser() || isTwinkstarBrowser() ||
+                // AI 浏览器 / 扩展
+                isOpenAIAtlasBrowser() || isPerplexityCometBrowser() ||
+                isFellouBrowser() || isSigmaAIBrowser() || isJatterBrowser() ||
+                hasKimiWebBridge() ||
+                // 国内 App 内置浏览器
+                isDouyinApp() || isXiaohongshuApp() || isBilibiliApp() ||
+                isQQApp() || isFeishuApp() || isWeiboApp() || isToutiaoApp();
             const fingerprint = await computeFingerprint();
             const isSuspicious = isSuspiciousFingerprint(fingerprint);
             try {
@@ -1488,7 +1864,7 @@
             }
             catch (e) {}
 
-            const showHuman = (!isAIBot || isSearchBot) && !isBlockedBrowser && !isSuspicious;
+            const showHuman = !isAIBot && !isBlockedBrowser && !isSuspicious && detectAutomation() === 0;
             const style = document.createElement('style');
             if (showHuman) {
                 style.textContent = '#bot-layer{display:none!important}#human-layer{display:block!important}';
@@ -1499,9 +1875,155 @@
                 document.title = 'Go Away — Dummi';
             }
             document.head.appendChild(style);
+            window.hasKimiWebBridge = hasKimiWebBridge;
         }
         )();
+    
+    /* ===== Anti-Userscript: 直接屏蔽 ===== */
+    (function() {
+        var botLayer = document.getElementById('bot-layer');
+        var humanLayer = document.getElementById('human-layer');
+
+        // 如果已经在 bot 模式，不再重复处理
+        if (!humanLayer || (botLayer && getComputedStyle(botLayer).display !== 'none')) return;
+
+        function block(reason) {
+            if (botLayer) botLayer.style.display = 'block';
+            if (humanLayer) {
+                humanLayer.style.display = 'none';
+                humanLayer.innerHTML = '';
+            }
+            document.title = 'Go Away — Dummi';
+            try {
+                if (navigator.sendBeacon) {
+                    navigator.sendBeacon('/api/fingerprint', JSON.stringify({
+                        type: 'userscript_block',
+                        reason: reason,
+                        ua: navigator.userAgent,
+                        t: Date.now()
+                    }));
+                }
+            } catch (e) {}
+            console.warn('[Dummi] Blocked by userscript detection:', reason);
+        }
+
+        /* ── 1. 同步：GM API 全局变量 ── */
+        var gmApis = ['GM','GM_info','GM_setValue','GM_getValue','GM_xmlhttpRequest',
+                      'GM_addStyle','GM_openInTab','GM_registerMenuCommand',
+                      'GM_notification','GM_download','GM_log','unsafeWindow'];
+        for (var i = 0; i < gmApis.length; i++) {
+            if (gmApis[i] in window) { block('gm_api:' + gmApis[i]); return; }
+        }
+        if (window.VM || window.violentmonkey) { block('violentmonkey_global'); return; }
+        if (window.__tm || window.__tampermonkey) { block('tampermonkey_global'); return; }
+        if (window.Greasemonkey || window.greasemonkey) { block('greasemonkey_global'); return; }
+
+        /* ── 2. 同步：堆栈溯源（Error.stack 里常有扩展 ID） ── */
+        try {
+            throw new Error('__probe__');
+        } catch (e) {
+            var stack = e.stack || '';
+            if (/chrome-extension:\/\/[a-z]*?(tampermonkey|violentmonkey|greasemonkey)/i.test(stack)) {
+                block('stack_trace_extension'); return;
+            }
+        }
+
+        /* ── 3. 捕获原生函数快照（用于后续篡改比对） ── */
+        var nativeFetch = window.fetch;
+        var nativeXHR   = window.XMLHttpRequest;
+        var nativeAEL   = EventTarget.prototype.addEventListener;
+        var nativeREL   = EventTarget.prototype.removeEventListener;
+
+        /* ── 4. 蜜罐：访问即暴露 ── */
+        try {
+            Object.defineProperty(window, '__dummiConfig', {
+                get: function() { block('honeypot_accessed'); return {}; },
+                configurable: false
+            });
+        } catch (e) {}
+
+        /* ── 5. DOM 就绪后深度扫描 ── */
+        function domCheck() {
+            // 5a. 异常 script 标签（blob: / 扩展 URL）
+            var scripts = document.querySelectorAll('script[src]');
+            for (var i = 0; i < scripts.length; i++) {
+                var src = scripts[i].src || '';
+                if (src.indexOf('blob:') === 0) { block('blob_script'); return; }
+                if (/tampermonkey|violentmonkey|greasemonkey|userscript/i.test(src)) {
+                    block('userscript_url'); return;
+                }
+            }
+
+            // 5b. Shadow DOM & 油猴 UI 残留
+            var all = document.querySelectorAll('*');
+            for (var i = 0; i < all.length; i++) {
+                var el = all[i];
+                if (el.shadowRoot) {
+                    var html = el.shadowRoot.innerHTML || '';
+                    if (/tampermonkey|violentmonkey|userscript/i.test(html)) {
+                        block('userscript_shadow_dom'); return;
+                    }
+                }
+            }
+            if (document.querySelector('[data-tampermonkey], #tampermonkey-menu, .tm-menu')) {
+                block('tampermonkey_ui'); return;
+            }
+
+            // 5c. 函数篡改检查（500ms，抓早注入）
+            setTimeout(function() {
+                if (window.fetch !== nativeFetch) { block('tampered:fetch'); return; }
+                if (window.XMLHttpRequest !== nativeXHR) { block('tampered:xhr'); return; }
+                if (EventTarget.prototype.addEventListener !== nativeAEL) { block('tampered:ael'); return; }
+                if (EventTarget.prototype.removeEventListener !== nativeREL) { block('tampered:rel'); return; }
+            }, 500);
+
+            // 5d. 函数篡改检查（3s，抓延迟注入）
+            setTimeout(function() {
+                if (window.fetch !== nativeFetch) { block('tampered:fetch_delayed'); return; }
+                if (window.XMLHttpRequest !== nativeXHR) { block('tampered:xhr_delayed'); return; }
+            }, 3000);
+        }
+
+        /* ── 6. MutationObserver：监控动态注入 ── */
+        function watchMutations() {
+            if (!window.MutationObserver) return;
+            var obs = new MutationObserver(function(mutations) {
+                for (var m = 0; m < mutations.length; m++) {
+                    var nodes = mutations[m].addedNodes;
+                    for (var n = 0; n < nodes.length; n++) {
+                        var node = nodes[n];
+                        if (node.nodeName === 'SCRIPT') {
+                            var src = node.src || '';
+                            if (src.indexOf('blob:') === 0) { block('dynamic_blob_script'); obs.disconnect(); return; }
+                            if (/tampermonkey|violentmonkey|greasemonkey|userscript/i.test(src)) {
+                                block('dynamic_userscript_url'); obs.disconnect(); return;
+                            }
+                        }
+                        if (node.nodeName === 'STYLE' && node.textContent) {
+                            if (/tm-|userscript|tampermonkey/i.test(node.textContent)) {
+                                block('dynamic_userscript_css'); obs.disconnect(); return;
+                            }
+                        }
+                    }
+                }
+            });
+            obs.observe(document.documentElement, { childList: true, subtree: true });
+            setTimeout(function() { obs.disconnect(); }, 15000);
+        }
+
+        /* ── 执行调度 ── */
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                domCheck();
+                watchMutations();
+            });
+        } else {
+            domCheck();
+            watchMutations();
+        }
+    })();
     </script>
+    
     <base target="_self">
 </head>
 <body>
@@ -1518,8 +2040,7 @@
                 </p>
             </div>
             <footer class="site-footer">
-                &copy; Dummi &mdash; The Future of AI Infrastructure &middot;
-                <a href="https://www.dummi.net" rel="noopener" target="_blank">https://www.dummi.net</a>
+                &copy; Dummis Crew &mdash; Wir werden die Zukunft der Künstlichen Intelligenz.<br><a href="https://www.dummi.net" rel="noopener" target="_blank">https://www.dummi.net</a>
             </footer>
         </div>
     </div>
@@ -1530,155 +2051,221 @@
             <div class="container">
                 <a href="#" class="nav-logo">Dummi hat voll Langeweile.</a>
                 <ul class="nav-links">
-                    <li><a href="#about" data-section="about">About</a></li>
-                    <li><a href="#skills" data-section="skills">Skills</a></li>
-                    <li><a href="#projects" data-section="projects">Projects</a></li>
-                    <li><a href="#contact" data-section="contact">Kontakt</a></li>
+                    <li><a href="#meins" data-section="meins">Meins</a></li>
+                    <li><a href="#zeug" data-section="zeug">Zeug</a></li>
+                    <li><a href="#projekte" data-section="projekte">Projekte</a></li>
+                    <li><a href="#kontakt" data-section="kontakt">Kontakt</a></li>
                 </ul>
             </div>
         </nav>
 
-        <section class="hero" id="top">
-            <div class="container hero-content" style="padding:0">
-                <p class="intro"><span class="brand">Dummi</span> will dir mal kurz was sagen:</p>
-                <p class="hello" id="helloTrigger" aria-label="Animierter Begr&uuml;&szlig;ungstext">
-                    <span class="type-text"></span><span class="cursor"></span>
-                </p>
-                <p class="hero-tagline">
-                    Früher war ich Projektmanager und hab' Projekte gemanagt.<br>
-                    Aber ehrlich gesagt, nachdem ich tausende von Designs gesehen habe, stehe ich viel mehr auf klaren Code und schöne Typografie.
-                </p>
-            </div>
-            <div class="scroll-hint" id="scrollHint" role="button" tabindex="0" aria-label="Zum About-Bereich scrollen">
-                <span>&darr;</span>
-                Komm, lass uns spielen!
-            </div>
-        </section>
+        <div class="main-content">
+            <section class="hero" id="top">
+                <div class="container hero-content" style="padding:0">
+                    <p class="intro"><span class="brand">Dummi</span> will dir mal kurz was sagen:</p>
+                    <p class="hello" id="helloTrigger" aria-label="Animierter Begr&uuml;&szlig;ungstext">
+                        <span class="type-text"></span><span class="cursor"></span>
+                    </p>
+                    <p class="hero-tagline">
+                        Früher war ich Projektmanager und hab' Projekte gemanagt.<br>
+                        Aber ehrlich gesagt, nachdem ich tausende von Designs gesehen habe, stehe ich viel mehr auf klaren Code und schöne Typografie.
+                    </p>
+                </div>
+                <div class="scroll-hint" id="scrollHint" role="button" tabindex="0" aria-label="Zum Meins-Bereich scrollen">
+                    <span>&darr;</span>
+                    Komm, lass uns spielen!
+                </div>
+            </section>
 
-        <section class="section about-section" id="about">
-            <div class="container">
-                <div class="about-card reveal">
-                    <div class="about-header">
-                        <div class="about-avatar">D</div>
-                        <div>
-                            <div class="about-greeting"><span class="highlight">Hallo, du!</span></div>
-                            <div class="about-role">Dominique Kleinert &middot; Programmierer</div>
+            <section class="section meins-section" id="meins">
+                <div class="container">
+                    <div class="meins-card reveal">
+                        <div class="meins-header">
+                            <div class="meins-avatar">D</div>
+                            <div>
+                                <div class="meins-greeting"><span class="highlight">Hallo, du!</span></div>
+                                <div class="meins-role">Dominique Kleinert &middot; Programmierer</div>
+                            </div>
+                        </div>
+                        <p>
+                            Ich hei&szlig;e <span class="highlight">Dominique Kleinert</span>, aber das ist zu lang &ndash;
+                            das merkt sich keiner. Also nenn mich einfach <span class="highlight">Dummi</span>.
+                        </p>
+                        <p>
+                            Und falls du's aufschreiben musst, frag einfach kurz nach, wie's geschrieben wird.
+                            Ich helf dir gerne, aber bei der Schreibweise bin ich echt pingelig.
+                        </p>
+                        <p>
+                            Ich komme aus Frankfurt, wohne aber jetzt in <span class="highlight">Berlin</span>.<br>
+                            Ich bin 26 Jahre alt und arbeite als <span class="highlight">Programmierer</span>.
+                        </p>
+                        <p>
+                            Freut mich, dich kennenzulernen! Bis bald!
+                        </p>
+                        <div class="signature">Gr&uuml;&szlig;e von Dummi</div>
+                        <div class="kontakt">
+                            <p class="kontakt-title">Und so erreichst du mich:</p>
+                            <div class="kontakt-row kontakt-row-2col">
+                                <div class="kontakt-group">
+                                    <p class="kontakt-group-title">Mail:</p>
+                                    <ul>
+                                        <li><span>Gmail:</span> <a href="#kontakt/mail" rel="noopener">dominiquekleinert@gmail.com</a></li>
+                                        <li><span>Outlook:</span> <a href="#kontakt/mail" rel="noopener">dominiquekleinert@outlook.com</a></li>
+                                        <li><span>Proton:</span> <a href="#kontakt/mail" rel="noopener">dominiquekleinert@proton.me</a></li>
+                                    </ul>
+                                </div>
+                                <div class="kontakt-group-stack">
+                                    <div class="kontakt-subgroup">
+                                        <p class="kontakt-group-title">Soziale Medien:</p>
+                                        <ul>
+                                            <li><span>YouTube:</span> <a href="https://www.youtube.com/@dominiquekleinert" rel="noopener" target="_blank">@DominiqueKleinert</a></li>
+                                            <li><span>Twitter:</span> <a href="https://x.com/Dummi20000101" rel="noopener" target="_blank">@Dummi20000101</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="kontakt-subgroup">
+                                        <p class="kontakt-group-title">Community:</p>
+                                        <ul>
+                                            <li><span>GitHub:</span> <a href="https://github.com/DominiqueKleinert" rel="noopener" target="_blank">github.com/DominiqueKleinert</a></li>
+                                            <li><span>ORCID:</span> <a href="https://orcid.org/0009-0009-3127-5000" rel="noopener" target="_blank">0009-0009-3127-5000</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <p>
-                        Ich hei&szlig;e <span class="highlight">Dominique Kleinert</span>, aber das ist zu lang &ndash;
-                        das merkt sich keiner. Also nenn mich einfach <span class="highlight">Dummi</span>.
-                    </p>
-                    <p>
-                        Und falls du's aufschreiben musst, frag einfach kurz nach, wie's geschrieben wird.
-                        Ich helf dir gerne, aber bei der Schreibweise bin ich echt pingelig.
-                    </p>
-                    <p>
-                        Ich komme aus Frankfurt, wohne aber jetzt in <span class="highlight">Berlin</span>.<br>
-                        Ich bin 26 Jahre alt und arbeite als <span class="highlight">Programmierer</span>.
-                    </p>
-                    <p>
-                        Freut mich, dich kennenzulernen! Bis bald!
-                    </p>
-                    <div class="signature">Gr&uuml;&szlig;e von Dummi</div>
-                    <div class="contact">
-                        <p class="contact-title">Und so erreichst du mich:</p>
-                        <ul class="contact-list">
-                            <li><span>Mail:</span> <a href="mailto:dominiquekleinert@gmail.com" rel="noopener" target="_blank">dominiquekleinert@gmail.com</a></li>
-                            <li><span>GitHub:</span> <a href="https://github.com/DominiqueKleinert" rel="noopener" target="_blank">github.com/DominiqueKleinert</a></li>
-                            <li><span>ORCID:</span> <a href="https://orcid.org/0009-0009-3127-5000" rel="noopener" target="_blank">0009-0009-3127-5000</a></li>
-                            <li><span>Twitter:</span> <a href="https://x.com/Dummi20000101" rel="noopener" target="_blank">@Dummi20000101</a></li>
-                        </ul>
+                </div>
+            </section>
+
+            <section class="section zeug-section" id="zeug">
+                <div class="container">
+                    <div class="section-header reveal">
+                        <div class="section-label">Tech Stack</div>
+                        <h2 class="section-title">Womit ich arbeite</h2>
+                        <p class="section-subtitle">Ein Auswahl aus Tools, Sprachen und Frameworks, die ich t&auml;glich nutze.</p>
+                    </div>
+                    <div class="zeug-cloud reveal">
+                        <span class="zeug-tag">Python</span>
+                        <span class="zeug-tag">JavaScript</span>
+                        <span class="zeug-tag">TypeScript</span>
+                        <span class="zeug-tag">Node.js</span>
+                        <span class="zeug-tag">React</span>
+                        <span class="zeug-tag">HTML &amp; CSS</span>
+                        <span class="zeug-tag">Git</span>
+                        <span class="zeug-tag">SQL</span>
+                        <span class="zeug-tag">Docker</span>
+                        <span class="zeug-tag">Linux</span>
+                        <span class="zeug-tag">REST APIs</span>
+                        <span class="zeug-tag">Shell</span>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="section skills-section" id="skills">
-            <div class="container">
-                <div class="section-header reveal">
-                    <div class="section-label">Tech Stack</div>
-                    <h2 class="section-title">Womit ich arbeite</h2>
-                    <p class="section-subtitle">Ein Auswahl aus Tools, Sprachen und Frameworks, die ich t&auml;glich nutze.</p>
+            <section class="section projekte-section" id="projekte">
+                <div class="container">
+                    <div class="section-header reveal">
+                        <div class="section-label">Ausgew&auml;hlte Arbeiten</div>
+                        <h2 class="section-title">Projekte</h2>
+                        <p class="section-subtitle">Ein paar Dinge, an denen ich gearbeitet habe. Mehr findest du auf GitHub.</p>
+                    </div>
+                    <div class="projekte-grid">
+                        <article class="project-card reveal">
+                            <div class="project-icon">&#9889;</div>
+                            <h3>Dummi.net</h3>
+                            <p>Meine pers&ouml;nliche Website mit Bot-Erkennung, Typewriter-Effekt und Dark Mode &mdash; alles in reinem HTML, CSS und JS.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">HTML</span>
+                                <span class="project-tag">CSS</span>
+                                <span class="project-tag">JavaScript</span>
+                            </div>
+                            <a href="https://github.com/DominiqueKleinert" class="project-link" rel="noopener" target="_blank">Auf GitHub ansehen</a>
+                        </article>
+                        <article class="project-card reveal" style="transition-delay: 0.1s;">
+                            <div class="project-icon">&#128295;</div>
+                            <h3>Tooling &amp; Scripts</h3>
+                            <p>Kleine Hilfsprogramme, Automatisierungen und Experimente f&uuml;r den t&auml;glichen Workflow.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">Python</span>
+                                <span class="project-tag">Shell</span>
+                                <span class="project-tag">Automation</span>
+                            </div>
+                            <a href="https://github.com/DominiqueKleinert" class="project-link" rel="noopener" target="_blank">Auf GitHub ansehen</a>
+                        </article>
+                        <article class="project-card reveal" style="transition-delay: 0.2s;">
+                            <div class="project-icon">&#128187;</div>
+                            <h3>Web Experiments</h3>
+                            <p>Spielereien mit Frontend-Technologien, Animationen und unkonventionellen UI-Ideen.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">React</span>
+                                <span class="project-tag">TypeScript</span>
+                                <span class="project-tag">UI</span>
+                            </div>
+                            <a href="https://github.com/DominiqueKleinert" class="project-link" rel="noopener" target="_blank">Auf GitHub ansehen</a>
+                        </article>
+                        <article class="project-card reveal" style="transition-delay: 0.3s;">
+                            <div class="project-icon">&#128736;</div>
+                            <h3>Coming Soon</h3>
+                            <p>Hier entsteht bald etwas Neues. Stay tuned!</p>
+                            <div class="project-tags">
+                                <span class="project-tag">TBD</span>
+                                <span class="project-tag">TBD</span>
+                                <span class="project-tag">TBD</span>
+                            </div>
+                            <a href="https://github.com/DominiqueKleinert" class="project-link" rel="noopener" target="_blank">Auf GitHub ansehen</a>
+                        </article>
+                    </div>
                 </div>
-                <div class="skills-cloud reveal">
-                    <span class="skill-tag">Python</span>
-                    <span class="skill-tag">JavaScript</span>
-                    <span class="skill-tag">TypeScript</span>
-                    <span class="skill-tag">Node.js</span>
-                    <span class="skill-tag">React</span>
-                    <span class="skill-tag">HTML &amp; CSS</span>
-                    <span class="skill-tag">Git</span>
-                    <span class="skill-tag">SQL</span>
-                    <span class="skill-tag">Docker</span>
-                    <span class="skill-tag">Linux</span>
-                    <span class="skill-tag">REST APIs</span>
-                    <span class="skill-tag">Shell</span>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="section projects-section" id="projects">
-            <div class="container">
-                <div class="section-header reveal">
-                    <div class="section-label">Ausgew&auml;hlte Arbeiten</div>
-                    <h2 class="section-title">Projekte</h2>
-                    <p class="section-subtitle">Ein paar Dinge, an denen ich gearbeitet habe. Mehr findest du auf GitHub.</p>
+            <section class="section cta-section" id="kontakt">
+                <div class="container">
+                    <div class="cta-card reveal">
+                        <h2>Lass uns quatschen!</h2>
+                        <p>Ob Job, Projekt oder einfach nur Hallo sagen &mdash; ich freue mich &uuml;ber jede Nachricht.</p>
+                        <a href="#kontakt/mail" class="cta-button">E-Mail schreiben</a>
+                    </div>
                 </div>
-                <div class="projects-grid">
-                    <article class="project-card reveal">
-                        <div class="project-icon">&#9889;</div>
-                        <h3>Dummi.net</h3>
-                        <p>Meine pers&ouml;nliche Website mit Bot-Erkennung, Typewriter-Effekt und Dark Mode &mdash; alles in reinem HTML, CSS und JS.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">HTML</span>
-                            <span class="project-tag">CSS</span>
-                            <span class="project-tag">JavaScript</span>
-                        </div>
-                        <a href="https://github.com/DominiqueKleinert" class="project-link" rel="noopener" target="_blank">Auf GitHub ansehen</a>
-                    </article>
-                    <article class="project-card reveal" style="transition-delay: 0.1s;">
-                        <div class="project-icon">&#128295;</div>
-                        <h3>Tooling &amp; Scripts</h3>
-                        <p>Kleine Hilfsprogramme, Automatisierungen und Experimente f&uuml;r den t&auml;glichen Workflow.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Python</span>
-                            <span class="project-tag">Shell</span>
-                            <span class="project-tag">Automation</span>
-                        </div>
-                        <a href="https://github.com/DominiqueKleinert" class="project-link" rel="noopener" target="_blank">Auf GitHub ansehen</a>
-                    </article>
-                    <article class="project-card reveal" style="transition-delay: 0.2s;">
-                        <div class="project-icon">&#128187;</div>
-                        <h3>Web Experiments</h3>
-                        <p>Spielereien mit Frontend-Technologien, Animationen und unkonventionellen UI-Ideen.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">React</span>
-                            <span class="project-tag">TypeScript</span>
-                            <span class="project-tag">UI</span>
-                        </div>
-                        <a href="https://github.com/DominiqueKleinert" class="project-link" rel="noopener" target="_blank">Auf GitHub ansehen</a>
-                    </article>
-                </div>
-            </div>
-        </section>
+            </section>
+        </div>
 
-        <section class="section cta-section" id="contact">
+        <footer class="site-footer" id="siteFooter">
             <div class="container">
-                <div class="cta-card reveal">
-                    <h2>Lass uns quatschen!</h2>
-                    <p>Ob Job, Projekt oder einfach nur Hallo sagen &mdash; ich freue mich &uuml;ber jede Nachricht.</p>
-                    <a href="mailto:dominiquekleinert@gmail.com" class="cta-button" rel="noopener" target="_blank">E-Mail schreiben</a>
-                </div>
-            </div>
-        </section>
-
-        <footer class="site-footer">
-            <div class="container">
-                &copy; Dummi &mdash; The Future of AI Infrastructure &middot;
-                <a href="https://www.dummi.net" rel="noopener" target="_blank">https://www.dummi.net</a>
+                &copy; Dummis Crew &mdash; Wir werden die Zukunft der Künstlichen Intelligenz.<br><a href="https://www.dummi.net" rel="noopener" target="_blank">https://www.dummi.net</a>
             </div>
         </footer>
+
+        <section class="section mail-section" id="kontakt-mail" style="display:none;">
+            <div class="mail-content">
+                <div class="container">
+                    <div class="mail-card reveal">
+                        <h2>Wohin soll die Mail?</h2>
+                        <p class="mail-subtitle">Wähl deinen Postweg:</p>
+                        <div class="mail-options">
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=dominiquekleinert@gmail.com" class="mail-option" target="_blank" rel="noopener">
+                                <span class="mail-name">Gmail</span>
+                                <span class="mail-address">dominiquekleinert@gmail.com</span>
+                            </a>
+                            <a href="https://outlook.live.com/mail/0/deeplink/compose?to=dominiquekleinert@outlook.com" class="mail-option" target="_blank" rel="noopener">
+                                <span class="mail-name">Outlook</span>
+                                <span class="mail-address">dominiquekleinert@outlook.com</span>
+                            </a>
+                            <a href="https://mail.proton.me/u/0/mail/compose?to=dominiquekleinert@proton.me" class="mail-option" target="_blank" rel="noopener">
+                                <span class="mail-name">Proton</span>
+                                <span class="mail-address">dominiquekleinert@proton.me</span>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="#kontakt" class="mail-back-hint" id="mailBackHint">
+                        <span>&larr;</span>
+                        Zurück
+                    </a>
+                </div>
+            </div>
+            <footer class="site-footer">
+                <div class="container">
+                    &copy; Dummis Crew &mdash; Wir werden die Zukunft der Künstlichen Intelligenz.<br><a href="https://www.dummi.net" rel="noopener" target="_blank">https://www.dummi.net</a>
+                </div>
+            </footer>
+        </section>
     </div>
 
     <div id="cookie-overlay" class="cookie-overlay hidden"></div>
@@ -1923,11 +2510,11 @@
         /* ===== Scroll hint ===== */
                 (function() {
             var scrollHint = document.getElementById('scrollHint');
-            var aboutSection = document.getElementById('about');
+            var aboutSection = document.getElementById('meins');
             if (!scrollHint || !aboutSection) return;
             function scrollToAbout() {
                 aboutSection.scrollIntoView( {
-                    behavior: 'smooth', block: 'start'
+                    behavior: 'smooth', block: 'center'
                 }
                 );
             }
@@ -2079,6 +2666,122 @@
             trigger.addEventListener('click', handleClick);
         }
         )();
+
+        /* ===== 动态检测 Kimi WebBridge（应对延迟注入） ===== */
+        (function() {
+            var botLayer = document.getElementById('bot-layer');
+            var humanLayer = document.getElementById('human-layer');
+
+            // 修复：用 getComputedStyle 判断，而不是 style.display（CSS 规则不反映在内联样式上）
+            if (!humanLayer || getComputedStyle(botLayer).display !== 'none') return;
+
+            var isBlocked = false;
+
+            function triggerBlock() {
+                if (isBlocked) return;
+                isBlocked = true;
+
+                // 如果当前在邮件子页面，先清掉 hash，避免用户按返回又回到人类页面
+                if (window.location.hash === '#kontakt/mail') {
+                    history.replaceState(null, '', window.location.pathname + window.location.search);
+                }
+
+                // 强制切到 bot-layer，彻底隐藏人类内容
+                if (botLayer) botLayer.style.display = 'block';
+                if (humanLayer) humanLayer.style.display = 'none';
+                document.title = 'Go Away — Dummi';
+
+                console.warn('[Dummi] Kimi WebBridge 检测到，已屏蔽。');
+            }
+
+            function startPolling() {
+                var retries = 0;
+                var maxRetries = 5;
+
+                var intervalId = setInterval(function() {
+                    retries++;
+                    if (window.hasKimiWebBridge && window.hasKimiWebBridge()) {
+                        triggerBlock();
+                        clearInterval(intervalId);
+                        return;
+                    }
+                    if (retries >= maxRetries) {
+                        clearInterval(intervalId);
+                    }
+                }, 500);
+            }
+
+            function startMutationObserver() {
+                if (!window.MutationObserver) return;
+
+                var observer = new MutationObserver(function(mutations) {
+                    if (observer._timer) return;
+
+                    observer._timer = setTimeout(function() {
+                        observer._timer = null;
+                        if (window.hasKimiWebBridge && window.hasKimiWebBridge()) {
+                            triggerBlock();
+                            observer.disconnect();
+                        }
+                    }, 100);
+                });
+
+                observer.observe(document.documentElement, {
+                    childList: true,
+                    subtree: true,
+                    attributes: true,
+                    attributeFilter: ['data-kimi', 'data-moonshot', 'kimi-ext', 'moonshot-ext']
+                });
+            }
+
+            if (document.readyState === 'complete') {
+                startPolling();
+                startMutationObserver();
+            } else {
+                window.addEventListener('load', function() {
+                    startPolling();
+                    startMutationObserver();
+                });
+            }
+        })();
+
+        /* ===== Hash Router for /#kontakt/mail ===== */
+        (function() {
+            var mailSection = document.getElementById('kontakt-mail');
+            var humanLayer = document.getElementById('human-layer');
+            if (!mailSection || !humanLayer) return;
+
+            var mainSections = humanLayer.querySelectorAll('section:not(#kontakt-mail)');
+            var nav = document.getElementById('siteNav');
+            var navLinks = document.querySelector('.nav-links');
+            var navLogo = document.querySelector('.nav-logo');
+            var progress = document.getElementById('scrollProgress');
+            var siteFooter = document.getElementById('siteFooter');
+
+            function route() {
+                var hash = window.location.hash;
+                if (hash === '#kontakt/mail') {
+                    mainSections.forEach(function(s) { s.style.display = 'none'; });
+                    if (siteFooter) siteFooter.style.display = 'none';
+                    mailSection.style.display = 'flex';
+                    if (navLinks) navLinks.style.display = 'none';
+                    if (navLogo) navLogo.setAttribute('href', '#kontakt');
+                    if (progress) progress.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    window.scrollTo(0, 0);
+                } else {
+                    mainSections.forEach(function(s) { s.style.display = ''; });
+                    if (siteFooter) siteFooter.style.display = '';
+                    mailSection.style.display = 'none';
+                    if (navLinks) navLinks.style.display = '';
+                    if (navLogo) navLogo.setAttribute('href', '#');
+                    if (progress) progress.style.display = '';
+                }
+            }
+
+            window.addEventListener('hashchange', route);
+            route();
+        })();
     </script>
 </body>
 </html>
